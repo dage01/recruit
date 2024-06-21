@@ -1,0 +1,394 @@
+* {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+body {
+  background-color: #ececec;
+}
+
+.container {
+  width: 1250px;
+  background-color: white;
+}
+
+.headline {
+  font-weight: bold;
+  padding: 0px;
+  padding-bottom: 15px;
+  font-size: 26px;
+}
+
+/* 날짜 입력 */
+#request_date,
+#user_birth,
+#mil_start_date,
+#mil_end_date,
+#high_start_date,
+#high_end_date,
+#college_start_date,
+#college_end_date,
+#univ_start_date,
+#univ_end_date,
+#univ_start_date_2,
+#univ_end_date_2,
+#grad_start_date,
+#grad_end_date,
+#grad_start_date_2,
+#grad_end_date_2,
+#college_crd,
+#college_crd_max,
+#univ_crd,
+#univ_crd_max,
+#univ_crd,
+#univ_crd_max,
+#grad_crd_2,
+#grad_crd_max_2,
+#grad_crd_2,
+#grad_crd_max_2,
+#co_start_date_1,
+#co_start_date_2,
+#co_start_date_3,
+#co_start_date_4,
+#co_start_date_5,
+#co_end_date_1,
+#co_end_date_2,
+#co_end_date_3,
+#co_end_date_4,
+#co_end_date_5,
+#lang_dt_1,
+#lang_dt_2,
+#lang_dt_3,
+#lang_dt_4,
+#lang_dt_5,
+#cert_dt_1,
+#cert_dt_2,
+#cert_dt_3,
+#cert_dt_4,
+#cert_dt_5,
+#cert_date,
+#act_start_date,
+#act_end_date,
+#awd_date {
+  text-align: center;
+}
+
+
+.list-group {
+  list-style: none;
+  border-top: 1px solid;
+  border-color: #e4e4e4;
+}
+
+.subtitle {
+  font-weight: bold;
+  font-size: 22px;
+}
+
+.list-group-item {
+  padding: 25px;
+}
+
+.map {
+  margin-right: 10px;
+}
+
+
+#checking {
+  border-radius: 0;
+  background-color: white;
+}
+
+.modal-content,
+.btn,
+.form-control {
+  border-radius: 0;
+}
+
+.form-select {
+  border-radius: 0;
+  color: #646464;
+}
+
+#btn_next,
+#btn_prev {
+  width: 150px;
+  height: 50px;
+  border: 1px solid;
+  border-color: rgba(204, 204, 204, 0.795);
+}
+
+#btn_save {
+  width: 150px;
+  height: 50px;
+  border: 1px solid;
+  border-color: rgba(204, 204, 204, 0.795);
+  background-color: #910000;
+}
+
+#btn_save:hover {
+  width: 150px;
+  height: 50px;
+  border: 1px solid;
+  border-color: rgba(204, 204, 204, 0.795);
+  background-color: rgb(114, 1, 1);
+}
+
+#regPhoto {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.marking {
+  color: rgb(228, 33, 33);
+  font-size: 20px;
+}
+
+.table {
+  border-top: #cacaca 1px solid;
+  border-bottom: #000000 1px solid;
+}
+
+th.table-light {
+  background-color: rgb(230, 230, 230);
+  font-size: 16px;
+  height: 60px;
+  width: 160px;
+  display: table-cell;
+  vertical-align: middle;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 20px;
+}
+
+#idPhoto {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  width: 200px;
+  height: 20px;
+}
+
+.userPhoto {
+  width: 150px;
+  height: 200px;
+  border: 1px solid #b3b3b3;
+}
+
+.table-light {
+  background-color: rgb(230, 230, 230);
+  font-size: 16px;
+  height: 60px;
+  width: 160px;
+  display: table-cell;
+  vertical-align: middle;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 20px;
+}
+
+.ref {
+  font-size: 14px;
+  margin-top: 7px;
+}
+
+.hypen {
+  display: flex;
+  align-items: center;
+  padding: 0;
+  font-size: 14px;
+  color: #4b4b4b;
+}
+
+.style_width {
+  width: 35%;
+}
+
+.style_width_2 {
+  width: 25%;
+}
+
+.style_width_3 {
+  width: 50%;
+}
+
+#btn_reset,
+#btn_add_univ,
+#btn_add_grad,
+#btn_add,
+#projResetBtn,
+#deleteBtn,
+#coDeleteBtn,
+#projDeleteBtn,
+#addDeleteBtn,
+#addDeleteBtn_co,
+#addDeleteBtn_proj {
+  border: 1px solid #000000;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+#btn_reset:hover,
+#btn_add_univ:hover,
+#btn_add_grad:hover,
+#deleteBtn:hover,
+#coResetBtn:hover,
+#coDeleteBtn:hover,
+#projResetBtn:hover,
+#projDeleteBtn:hover {
+  border: 1px solid #000000;
+  background-color: #000000;
+  color: #ffffff;
+}
+
+#btn_reset:active,
+#btn_add_univ:active,
+#btn_add_grad:active,
+#deleteBtn:active,
+#coResetBtn:active,
+#coDeleteBtn:active,
+#projResetBtn:active,
+#projDeleteBtn:active {
+  border: 1px solid #414141;
+  background-color: #414141;
+  color: #ffffff;
+}
+
+select {
+  font-size: 90%;
+}
+
+textarea {
+  resize: none;
+}
+
+.btn-primary {
+  border: 1px solid #000436;
+  background-color: #000436;
+}
+
+
+input::-webkit-input-placeholder {
+  font-size: 90%;
+}
+
+input::-moz-placeholder {
+  font-size: 90%;
+}
+
+input:-ms-input-placeholder {
+  font-size: 90%;
+}
+
+input:-moz-placeholder {
+  font-size: 90%;
+}
+
+input::placeholder {
+  font-size: 90%;
+}
+
+.nav-link {
+  color: #000000;
+  font-size: large;
+  font-weight: bold;
+}
+
+.nav-link :active {
+  color: #000000;
+}
+
+.table_margin {
+  margin-bottom: 100px;
+}
+
+hr {
+  border: 0;
+  height: 3px;
+  background: #000000;
+}
+
+.modal-title,
+.input-group-text,
+.form-select,
+option,
+input::placeholder,
+input[type=text],
+label,
+.form-control {
+  font-weight: bold;
+  color: #666666;
+}
+
+.searchBox {
+  border: 1px solid rgb(230, 230, 230);
+  height: 250px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+/* 아래의 모든 코드는 영역::코드로 사용 */
+.searchBox::-webkit-scrollbar {
+  width: 10px;
+  /* 스크롤바의 너비 */
+}
+
+.searchBox::-webkit-scrollbar-thumb {
+  height: 30%;
+  /* 스크롤바의 길이 */
+  background: #313131;
+  /* 스크롤바의 색상 */
+
+
+}
+
+.searchBox::-webkit-scrollbar-track {
+  background: rgba(33, 122, 244, .1);
+  /*스크롤바 뒷 배경 색상*/
+}
+
+.searchResultItem {
+  cursor: pointer;
+}
+
+.searchResultItem:hover {
+  background-color: #e9e9e9;
+}
+
+/* .datepicker datepicker-dropdown dropdown-menu datepicker-orient-left datepicker-orient-top {
+  top: 30px;
+} */
+
+/* select2 */
+.select2-container--default .select2-selection--single {
+  background-color: #fff;
+  border: 1px solid rgb(220, 220, 220);
+  border-radius: 0px;
+  font-weight: bold;
+  height: 38px;
+  top: 80px;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+  top: 3px;
+  position: relative;
+  color: #666666;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  position: absolute;
+  top: 6px;
+}
+
+.select2-results__options {
+  font-weight: bold;
+  color: #666666;
+}
+
+input[type="checkbox"] {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  border: 1px solid #999;
+  appearance: none;
+  cursor: pointer;
+}

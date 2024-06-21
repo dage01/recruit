@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="resumeTabFragment">
+    <div class="col-sm mx-3 mb-5">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link" th:class="${currentUrl == '/resume/basic-info' ? 'nav-link active' : 'nav-link'}"
+                    href="/resume/basic-info" th:href="@{/resume/basic-info}">기본정보</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:class="${currentUrl == '/resume/education' ? 'nav-link active' : 'nav-link'}"
+                    href="/resume/education" th:href="@{/resume/education}">학력사항</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:class="${currentUrl == '/resume/experience' ? 'nav-link active' : 'nav-link'}"
+                    href="/resume/experience" th:href="@{/resume/experience}">경력사항</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:class="${currentUrl == '/resume/language' ? 'nav-link active' : 'nav-link'}"
+                    href="/resume/language" th:href="@{/resume/language}">외국어</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:class="${currentUrl == '/resume/certifications' ? 'nav-link active' : 'nav-link'}"
+                    href="/resume/certifications" th:href="@{/resume/certifications}">자격사항</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:class="${currentUrl == '/resume/self-introduction' ? 'nav-link active' : 'nav-link'}"
+                    href="/resume/self-introduction" th:href="@{/resume/self-introduction}">자기소개</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:class="${currentUrl == '/resume/upload-file' ? 'nav-link active' : 'nav-link'}"
+                    href="/resume/self-introduction" th:href="@{/resume/upload-file}">제출서류</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:class="${currentUrl == '/resume/submit-application' ? 'nav-link active' : 'nav-link'}"
+                    href="/resume/submit-application" th:href="@{/resume/submit-application}">지원서 제출</a>
+            </li>
+        </ul>
+    </div>
+</th:block>
+
+</html>

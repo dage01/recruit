@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 공통 헤드-->
+<th:block th:replace="~{fragments/head :: headFragment}"></th:block>
+
+<!-- Custom Stylesheets -->
+<link rel="stylesheet" href="/css/layout/top.css" th:href="@{/css/layout/top.css}">
+<link rel="stylesheet" href="/css/form/form.css" th:href="@{/css/form/form.css}">
+
+
+</head>
+<!-- 공통 Nav -->
+<th:block th:replace="~{fragments/top :: topbarFragment}"></th:block>
+
+<body>
+    <!-- content -->
+    <div class="container my-5">
+        <div class="row p-5">
+            <div class="col text-left">
+                <h4 class="headline" th:text="${remarks}"></h4>
+            </div>
+            <div class="row-sm-12 mt-3">
+                <th:block th:replace="~{fragments/resume_tab :: resumeTabFragment}"></th:block>
+                <div class="tab-content mx-5 my-4" id="myTabContent">
+                    <form name="experienceForm" id="experienceForm">
+                        <div class="row-sm-12 mx-2 table_margin">
+                            <div class="wrap">
+                                <div class="row mx-2">
+                                    <div class="col-sm-6 p-0">
+                                        <h4 class="subtitle ms-3">경력사항</h4>
+                                    </div>
+                                    <div class="col-sm-6 text-end p-0">
+                                        <p class="mb-0"><span class="marking">&#42; </span>필수입력항목</p>
+                                    </div>
+                                </div>
+                                <hr class="mt-0">
+                                <div class="row justify-content-sm-end mb-3">
+                                    <div class="col-sm-auto">
+                                        <button type="button" class="btn btn-outline-primary btncolor btn_reset"
+                                            id="btn_reset">초기화</button>
+                                        <button type="button" class="btn btn-outline-primary btncolor btn_add"
+                                            id="btn_add">추가</button>
+                                    </div>
+                                </div>
+                                <table class="table mb-3">
+                                    <tbody>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>회사명</th>
+                                            <td class="table-light style_width" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control" name="co_name_1"
+                                                            id="co_name_1" th:value="${experienceFormDTO.w106}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>근무기간</th>
+                                            <td class="table-light style_width" colspan="1">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="input-group dateMonth">
+                                                            <input type="text" class="form-control" id="co_start_date_1"
+                                                                name="co_start_date_1"
+                                                                th:value="${experienceFormDTO.w1Sdt}">
+                                                            <span class="input-group-text">~</span>
+                                                            <input type="text" class="form-control" id="co_end_date_1"
+                                                                name="co_end_date_1"
+                                                                th:value="${experienceFormDTO.w1Edt}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>직무정보</th>
+                                            <td class="table-light" colspan="3">
+                                                <div class="row">
+                                                    <div class="col-sm-5">
+                                                        <input type="text" class="form-control" name="co_dept_1" id="co_dept_1"
+                                                            th:value="${experienceFormDTO.w107}" placeholder="근무부서">
+                                                    </div>
+                                                    <div class="col-sm-3 ps-0">
+                                                        <input type="text" class="form-control" name="co_rank_1" id="co_rank_1"
+                                                            th:value="${experienceFormDTO.w108}" placeholder="직위">
+                                                    </div>
+                                                    <div class="col-sm-3 ps-0">
+                                                        <input type="text" class="form-control" name="co_salary_1" id="co_salary_1"
+                                                            th:value="${experienceFormDTO.w109}"
+                                                            oninput="this.value = this.value.replace(/[^0-9\.]/g, '')"
+                                                            placeholder="연봉">
+                                                    </div>
+                                                    <div class="col-sm-auto p-0">
+                                                        <span class="marking">
+                                                        </span>만원
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>담당업무</th>
+                                            <td class="table-light" colspan="3">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <textarea class="form-control" id="co_work_1" name="co_work_1"
+                                                            rows="5" maxlength="500"
+                                                            th:text="${experienceFormDTO.w110}"></textarea>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>퇴직사유</th>
+                                            <td class="table-light" colspan="3">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <select class="form-select " name="co_retire_1"
+                                                            id="co_retire_1">
+                                                            <option th:if="${experienceFormDTO.w111!=null}" selected
+                                                                th:value="${experienceFormDTO.w111}"
+                                                                th:text="${experienceFormDTO.w111}"></option>
+                                                            <option th:if="${experienceFormDTO.w111==null}" value=""
+                                                                disabled selected style="display: none;">선택
+                                                            <option value="개인사정">개인사정</option>
+                                                            <option value="근무조건">근무조건</option>
+                                                            <option value="경영악화">경영악화</option>
+                                                            <option value="계약만료">계약만료</option>
+                                                            <option value="출산/육아">출산/육아</option>
+                                                            <option value="학업/유학">학업/유학</option>
+                                                            <option value="업/직종전환">업/직종전환</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="wrap" id="co_add_2">
+                                <hr class="mt-0" style="height: 1px;">
+                                <div class="row justify-content-sm-end mb-3">
+                                    <div class="col-sm-auto">
+                                        <button type="button" class="btn btn-outline-primary btncolor btn_reset"
+                                            id="btn_reset">초기화</button>
+                                    </div>
+                                </div>
+                                <table class="table mb-3">
+                                    <tbody>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>회사명</th>
+                                            <td class="table-light style_width" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control" name="co_name_2"
+                                                            id="co_name_2" th:value="${experienceFormDTO.w206}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>근무기간</th>
+                                            <td class="table-light style_width" colspan="1">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="input-group dateMonth">
+                                                            <input type="text" class="form-control" id="co_start_date_2"
+                                                                name="co_start_date_2"
+                                                                th:value="${experienceFormDTO.w2Sdt}">
+                                                            <span class="input-group-text">~</span>
+                                                            <input type="text" class="form-control" id="co_end_date_2"
+                                                                name="co_end_date_2"
+                                                                th:value="${experienceFormDTO.w2Edt}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>직무정보</th>
+                                            <td class="table-light" colspan="3">
+                                                <div class="row">
+                                                    <div class="col-sm-5">
+                                                        <input type="text" class="form-control" name="co_dept_2" id="co_dept_2"
+                                                            th:value="${experienceFormDTO.w207}" placeholder="근무부서">
+                                                    </div>
+                                                    <div class="col-sm-3 ps-0">
+                                                        <input type="text" class="form-control" name="co_rank_2" id="co_rank_2"
+                                                            th:value="${experienceFormDTO.w208}" placeholder="직위">
+                                                    </div>
+                                                    <div class="col-sm-3 ps-0">
+                                                        <input type="text" class="form-control" name="co_salary_2" id="co_salary_2"
+                                                            th:value="${experienceFormDTO.w209}"
+                                                            oninput="this.value = this.value.replace(/[^0-9\.]/g, '')"
+                                                            placeholder="연봉">
+                                                    </div>
+                                                    <div class="col-sm-auto p-0">
+                                                        <span class="marking">
+                                                        </span>만원
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>담당업무</th>
+                                            <td class="table-light" colspan="3">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <textarea class="form-control" id="co_work_2" name="co_work_2"
+                                                            rows="5" maxlength="500"
+                                                            th:text="${experienceFormDTO.w210}"></textarea>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>퇴직사유</th>
+                                            <td class="table-light" colspan="3">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <select class="form-select " name="co_retire_2"
+                                                            id="co_retire_2">
+                                                            <option th:if="${experienceFormDTO.w211!=null}" selected
+                                                                th:value="${experienceFormDTO.w211}"
+                                                                th:text="${experienceFormDTO.w211}"></option>
+                                                            <option th:if="${experienceFormDTO.w211==null}" value=""
+                                                                disabled selected style="display: none;">선택
+                                                            <option value="개인사정">개인사정</option>
+                                                            <option value="근무조건">근무조건</option>
+                                                            <option value="경영악화">경영악화</option>
+                                                            <option value="계약만료">계약만료</option>
+                                                            <option value="출산/육아">출산/육아</option>
+                                                            <option value="학업/유학">학업/유학</option>
+                                                            <option value="업/직종전환">업/직종전환</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="wrap" id="co_add_3">
+                                <hr class="mt-0" style="height: 1px;">
+                                <div class="row justify-content-sm-end mb-3">
+                                    <div class="col-sm-auto">
+                                        <button type="button" class="btn btn-outline-primary btncolor btn_reset"
+                                            id="btn_reset">초기화</button>
+                                    </div>
+                                </div>
+                                <table class="table mb-3">
+                                    <tbody>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>회사명</th>
+                                            <td class="table-light style_width" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control" name="co_name_3"
+                                                            id="co_name_3" th:value="${experienceFormDTO.w306}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>근무기간</th>
+                                            <td class="table-light style_width" colspan="1">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="input-group dateMonth">
+                                                            <input type="text" class="form-control" id="co_start_date_3"
+                                                                name="co_start_date_3"
+                                                                th:value="${experienceFormDTO.w3Sdt}">
+                                                            <span class="input-group-text">~</span>
+                                                            <input type="text" class="form-control" id="co_end_date_3"
+                                                                name="co_end_date_3"
+                                                                th:value="${experienceFormDTO.w3Edt}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>직무정보</th>
+                                            <td class="table-light" colspan="3">
+                                                <div class="row">
+                                                    <div class="col-sm-5">
+                                                        <input type="text" class="form-control" name="co_dept_3" id="co_dept_3"
+                                                            th:value="${experienceFormDTO.w307}" placeholder="근무부서">
+                                                    </div>
+                                                    <div class="col-sm-3 ps-0">
+                                                        <input type="text" class="form-control" name="co_rank_3" id="co_rank_3"
+                                                            th:value="${experienceFormDTO.w308}" placeholder="직위">
+                                                    </div>
+                                                    <div class="col-sm-3 ps-0">
+                                                        <input type="text" class="form-control" name="co_salary_3" id="co_salary_3"
+                                                            th:value="${experienceFormDTO.w309}"
+                                                            oninput="this.value = this.value.replace(/[^0-9\.]/g, '')"
+                                                            placeholder="연봉">
+                                                    </div>
+                                                    <div class="col-sm-auto p-0">
+                                                        <span class="marking">
+                                                        </span>만원
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>담당업무</th>
+                                            <td class="table-light" colspan="3">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <textarea class="form-control" id="co_work_3" name="co_work_3"
+                                                            rows="5" maxlength="500"
+                                                            th:text="${experienceFormDTO.w310}"></textarea>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>퇴직사유</th>
+                                            <td class="table-light" colspan="3">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <select class="form-select " name="co_retire_3"
+                                                            id="co_retire_3">
+                                                            <option th:if="${experienceFormDTO.w311!=null}" selected
+                                                                th:value="${experienceFormDTO.w311}"
+                                                                th:text="${experienceFormDTO.w311}"></option>
+                                                            <option th:if="${experienceFormDTO.w311==null}" value=""
+                                                                disabled selected style="display: none;">선택
+                                                            <option value="개인사정">개인사정</option>
+                                                            <option value="근무조건">근무조건</option>
+                                                            <option value="경영악화">경영악화</option>
+                                                            <option value="계약만료">계약만료</option>
+                                                            <option value="출산/육아">출산/육아</option>
+                                                            <option value="학업/유학">학업/유학</option>
+                                                            <option value="업/직종전환">업/직종전환</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="wrap" id="co_add_4">
+                                <hr class="mt-0" style="height: 1px;">
+                                <div class="row justify-content-sm-end mb-3">
+                                    <div class="col-sm-auto">
+                                        <button type="button" class="btn btn-outline-primary btncolor btn_reset"
+                                            id="btn_reset">초기화</button>
+                                    </div>
+                                </div>
+                                <table class="table mb-3">
+                                    <tbody>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>회사명</th>
+                                            <td class="table-light style_width" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control" name="co_name_4"
+                                                            id="co_name_4" th:value="${experienceFormDTO.w406}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>근무기간</th>
+                                            <td class="table-light style_width" colspan="1">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="input-group dateMonth">
+                                                            <input type="text" class="form-control" id="co_start_date_4"
+                                                                name="co_start_date_4"
+                                                                th:value="${experienceFormDTO.w4Sdt}">
+                                                            <span class="input-group-text">~</span>
+                                                            <input type="text" class="form-control" id="co_end_date_4"
+                                                                name="co_end_date_4"
+                                                                th:value="${experienceFormDTO.w4Edt}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>직무정보</th>
+                                            <td class="table-light" colspan="3">
+                                                <div class="row">
+                                                    <div class="col-sm-5">
+                                                        <input type="text" class="form-control" name="co_dept_4" id="co_dept_4"
+                                                            th:value="${experienceFormDTO.w407}" placeholder="근무부서">
+                                                    </div>
+                                                    <div class="col-sm-3 ps-0">
+                                                        <input type="text" class="form-control" name="co_rank_4" id="co_rank_4"
+                                                            th:value="${experienceFormDTO.w408}" placeholder="직위">
+                                                    </div>
+                                                    <div class="col-sm-3 ps-0">
+                                                        <input type="text" class="form-control" name="co_salary_4" id="co_salary_4"
+                                                            th:value="${experienceFormDTO.w409}"
+                                                            oninput="this.value = this.value.replace(/[^0-9\.]/g, '')"
+                                                            placeholder="연봉">
+                                                    </div>
+                                                    <div class="col-sm-auto p-0">
+                                                        <span class="marking">
+                                                        </span>만원
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>담당업무</th>
+                                            <td class="table-light" colspan="3">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <textarea class="form-control" id="co_work_4" name="co_work_4"
+                                                            rows="5" maxlength="500"
+                                                            th:text="${experienceFormDTO.w410}"></textarea>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>퇴직사유</th>
+                                            <td class="table-light" colspan="3">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <select class="form-select " name="co_retire_4"
+                                                            id="co_retire_4">
+                                                            <option th:if="${experienceFormDTO.w411!=null}" selected
+                                                                th:value="${experienceFormDTO.w411}"
+                                                                th:text="${experienceFormDTO.w411}"></option>
+                                                            <option th:if="${experienceFormDTO.w411==null}" value=""
+                                                                disabled selected style="display: none;">선택
+                                                            <option value="개인사정">개인사정</option>
+                                                            <option value="근무조건">근무조건</option>
+                                                            <option value="경영악화">경영악화</option>
+                                                            <option value="계약만료">계약만료</option>
+                                                            <option value="출산/육아">출산/육아</option>
+                                                            <option value="학업/유학">학업/유학</option>
+                                                            <option value="업/직종전환">업/직종전환</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="wrap" id="co_add_5">
+                                <hr class="mt-0" style="height: 1px;">
+                                <div class="row justify-content-sm-end mb-3">
+                                    <div class="col-sm-auto">
+                                        <button type="button" class="btn btn-outline-primary btncolor btn_reset"
+                                            id="btn_reset">초기화</button>
+                                    </div>
+                                </div>
+                                <table class="table mb-3">
+                                    <tbody>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>회사명</th>
+                                            <td class="table-light style_width" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control" name="co_name_5"
+                                                            id="co_name_5" th:value="${experienceFormDTO.w506}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>근무기간</th>
+                                            <td class="table-light style_width" colspan="1">
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <div class="input-group dateMonth">
+                                                            <input type="text" class="form-control" id="co_start_date_5"
+                                                                name="co_start_date_5"
+                                                                th:value="${experienceFormDTO.w5Sdt}">
+                                                            <span class="input-group-text">~</span>
+                                                            <input type="text" class="form-control" id="co_end_date_5"
+                                                                name="co_end_date_5"
+                                                                th:value="${experienceFormDTO.w5Edt}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>직무정보</th>
+                                            <td class="table-light" colspan="3">
+                                                <div class="row">
+                                                    <div class="col-sm-5">
+                                                        <input type="text" class="form-control" name="co_dept_5" id="co_dept_5"
+                                                            th:value="${experienceFormDTO.w507}" placeholder="근무부서">
+                                                    </div>
+                                                    <div class="col-sm-3 ps-0">
+                                                        <input type="text" class="form-control" name="co_rank_5" id="co_rank_5"
+                                                            th:value="${experienceFormDTO.w508}" placeholder="직위">
+                                                    </div>
+                                                    <div class="col-sm-3 ps-0">
+                                                        <input type="text" class="form-control" name="co_salary_5" id="co_salary_5"
+                                                            th:value="${experienceFormDTO.w509}"
+                                                            oninput="this.value = this.value.replace(/[^0-9\.]/g, '')"
+                                                            placeholder="연봉">
+                                                    </div>
+                                                    <div class="col-sm-auto p-0">
+                                                        <span class="marking">
+                                                        </span>만원
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>담당업무</th>
+                                            <td class="table-light" colspan="3">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <textarea class="form-control" id="co_work_5" name="co_work_5"
+                                                            rows="5" maxlength="500"
+                                                            th:text="${experienceFormDTO.w510}"></textarea>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>퇴직사유</th>
+                                            <td class="table-light" colspan="3">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <select class="form-select " name="co_retire_5"
+                                                            id="co_retire_5">
+                                                            <option th:if="${experienceFormDTO.w511!=null}" selected
+                                                                th:value="${experienceFormDTO.w511}"
+                                                                th:text="${experienceFormDTO.w511}"></option>
+                                                            <option th:if="${experienceFormDTO.w511==null}" value=""
+                                                                disabled selected style="display: none;">선택
+                                                            </option>
+                                                            <option value="개인사정">개인사정</option>
+                                                            <option value="근무조건">근무조건</option>
+                                                            <option value="경영악화">경영악화</option>
+                                                            <option value="계약만료">계약만료</option>
+                                                            <option value="출산/육아">출산/육아</option>
+                                                            <option value="학업/유학">학업/유학</option>
+                                                            <option value="업/직종전환">업/직종전환</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            <!-- 버튼 -->
+            <th:block th:replace="~{fragments/form_btn :: formBtnFragment}"></th:block>
+        </div>
+    </div>
+
+    <!-- 공통 스크립트-->
+    <th:block th:replace="~{fragments/script :: scriptFragment}"></th:block>
+    <th:block th:replace="~{fragments/resume_script :: resumeScriptFragment}"></th:block>
+    <script src="/js/layout/form.js" th:src="@{/js/layout/form.js}"></script>
+    <script>
+
+        selectOpt("retire");
+
+        /* 초기화 버튼 */
+        $(".btn_reset").on("click", function () {
+            var parentDiv = $(this).closest('.wrap');
+            parentDiv.find('input[type="text"]').val('').trigger("change");
+            parentDiv.find('select').val('').trigger("change");
+        });
+
+        for (var i = 2; i <= 5; i++) {
+            if ($("#co_name_" + i).val() === "" || $("#co_name_" + i).val() === null) {
+                $("#co_add_" + i).hide();
+            }
+        }
+
+        $(".btn_add").on("click", function () {
+            var len = $(".wrap").length;
+            var cnt = $(".wrap:visible").length;
+
+            // 추가할 요소의 ID 계산
+            var nextID = cnt + 1; // 이미 #co_add_2가 있으므로 2를 더해줍니다.
+
+            // 추가할 요소가 있는지 확인
+            if (cnt < len) {
+                $(".wrap:hidden").first().show();
+            } else {
+                alert("최대 5개까지 가능합니다.");
+            }
+        });
+
+        /* 저장 */
+        $("#btn_next, #btn_save, #btn_prev").on("click", function (e) {
+
+            for (var i = 1; i <= 5; i++) {
+                if ($('#co_name_' + i).val().trim() !== "") {
+                    if (!validateField('co_name_' + i, '회사명을 입력해 주세요.') ||
+                        !validateDate('co_start_date_' + i, 'co_end_date_' + i) ||
+                        !validateField('co_dept_' + i, '근무부서를 입력해 주세요.') ||
+                        !validateField('co_rank_' + i, '직위를 입력해 주세요.') ||
+                        !validateField('co_salary_' + i, '직전연봉을 입력해 주세요.') ||
+                        !validateField('co_work_' + i, '담당업무를 입력해 주세요.') ||
+                        !validateSelect('co_retire_' + i, '퇴직사유를 선택해 주세요.')
+                    ) {
+                        return false;
+                    }
+                }
+            }
+
+            var href = '';
+
+            // FormData 객체 생성
+            var formData = $("#experienceForm").serialize();
+
+            // "다음" 또는 "이전" 버튼인 경우에만 href 설정
+            if ($(this).attr('id') === "btn_next") {
+                href = "/resume/language";
+            } else if ($(this).attr('id') === "btn_prev") {
+                href = "/resume/education";
+            } else if ($(this).attr('id') === "btn_save") {
+                href = "";
+            } else {
+                // var isValid = user_info_valid(true);
+                href = $(this).find('a').attr('href');
+            }
+
+            $.ajax({
+                method: "POST",
+                url: "/api_resume/experience",
+                data: formData
+            }).done(function (data) {
+                if (href == '') {
+                    alert("저장되었습니다.");
+                } else {
+                    location.href = href;
+                }
+            }).fail(function (data, textStatus, errorThrown) {
+                alert("부득이한 사정으로 인해 현재 서비스 이용이 제한될 수 있습니다.\n\n불편을 드려 죄송합니다. 관리자에게 문의하여 주십시오.\n\n문의번호 : 051-580-5546");
+                callback(data);
+            });
+
+        });
+    </script>
+</body>
+
+</html>

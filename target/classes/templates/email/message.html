@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+    <div class="row">
+        <div class="col-6">
+            <!-- <img src="http://localhost:8080/images/logo_clear.png" th:src="@{http://localhost:8080/images/logo_clear.png}" alt="logo"
+                style="width: 100%; max-width: 300px;"> -->
+
+            <h2>이메일 인증을 완료해주세요</h2>
+            <hr>
+            <p>가입해주셔서 감사합니다! 아래의 버튼을 클릭하여 이메일 인증을 완료해주세요.</p>
+            <a th:href="${confirmationUrl}"
+                style="background-color: #c71818ea; color: white; padding: 14px 20px; text-align: center; text-decoration: none; display: inline-block; border-radius: 8px;">인증하기</a>
+        </div>
+    </div>
+</body>
+
+
+</html>

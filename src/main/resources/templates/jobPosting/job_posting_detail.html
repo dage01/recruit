@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 공통 헤드-->
+<th:block th:replace="~{fragments/head :: headFragment}"></th:block>
+
+<link rel="stylesheet" href="/css/layout/top.css" th:href="@{/css/layout/top.css}">
+<link rel="stylesheet" href="/css/jobposting/job-posting-detail.css" th:href="@{/css/jobposting/job-posting-detail.css}">
+
+</head>
+<!-- 공통 Nav -->
+<th:block th:replace="~{fragments/top :: topbarFragment}"></th:block>
+
+<body>
+    <!-- content -->
+    <div class="container my-5">
+        <div class="row title" style="border-top: 1px solid; border-bottom: 1px solid gray;">
+            <div class="col-9 my-3 ms-3">
+                <h5 class="m-0" th:text="${appBoard.appTitle}"></h5>
+            </div>
+            <div class="col my-3 me-3 text-end">
+                <p class="m-0"
+                    th:text="|${#dates.format(appBoard.appStartDate, 'yyyy.MM.dd')} ~ ${#dates.format(appBoard.appEndDate, 'yyyy.MM.dd')}|">
+                </p>
+            </div>
+        </div>
+        <div class="col content m-3" th:utext="${appBoard.appContent}">
+        </div>
+        <hr>
+    </div>
+
+    <div class="col mb-5 text-center">
+        <button type="button" class="btn btn-secondary btn-lg mx-2" id="prev_btn">목록</button>
+        <button type="button" class="btn btn-secondary btn-lg mx-2" id="next_btn"
+            th:data-app-no="${appBoard.appNo}">지원하기</button>
+    </div>
+
+    <!-- 공통 스크립트-->
+    <th:block th:replace="~{fragments/script :: scriptFragment}"></th:block>
+    <th:block th:replace="~{fragments/resume_script :: resumeScriptFragment}"></th:block>
+    <script>
+        $("#next_btn, #prev_btn").click(function () {
+            if ($(this).is("#next_btn")) {
+                var appNo = $(this).data("app-no");
+                window.location.href = '/app_form';
+            } else if ($(this).is("#prev_btn")) {
+                window.location.href = '/anno_list';
+            }
+        });
+    </script>
+</body>
+
+</html>

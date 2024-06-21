@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 공통 헤드-->
+<th:block th:replace="~{fragments/head :: headFragment}"></th:block>
+
+<link rel="stylesheet" href="/css/layout/top.css" th:href="@{/css/layout/top.css}">
+<link rel="stylesheet" href="/css/layout/jobposting.css" th:href="@{/css/layout/jobposting.css}">
+
+</head>
+<!-- 공통 Nav -->
+<th:block th:replace="~{fragments/top :: topbarFragment}"></th:block>
+<body>
+    <!-- content -->
+    <div class="container my-5">
+        <h1 class="mt-4 mb-4">입사지원</h1>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <!-- 채용공고 카드 -->
+            <div class="col" th:each="jobPostingDTO, i: ${jobPostingList}">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-title job" th:text="|[${jobPostingDTO.yyyy}년도 ${jobPostingDTO.degrees}차]|"></p>
+                        <h5 class="card-text" th:text="${jobPostingDTO.remarks}"></h5>
+                        <div class="d-day rounded-5" th:if="${jobPostingDTO.endDate != null }" th:text="${jobPostingDTO.closingDay != 0 ? 'D-' + jobPostingDTO.closingDay : 'D-Day'}"></div>
+                        <p class="card-title anno_date ms-3" th:if="${jobPostingDTO.endDate} != null"
+                            th:text="|${jobPostingDTO.endDate} 마감|"></p>
+                        <p class="card-title anno_date ms-3" th:if="${jobPostingDTO.endDate} == null">채용 시 마감</p>
+                        <button class="btn btn-primary float-end rounded-5 border border-secondary" id="btnApply" th:onclick="btnApplyOnclick([[${i.index}]])">지원하기</button>    
+                    </div>
+                </div>
+                <form th:id="|fill_form_${i.index}|" action="job-posting/fill-form" th:action="@{/job-posting/fill-form}" method="get" enctype="multipart/form-data">
+                    <input type="hidden" name="yyyy" th:value="${jobPostingDTO.yyyy}"/>
+                    <input type="hidden" name="degrees" th:value="${jobPostingDTO.degrees}"/>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- 공통 스크립트-->
+    <th:block th:replace="~{fragments/script :: scriptFragment}"></th:block>
+    <th:block th:replace="~{fragments/resume_script :: resumeScriptFragment}"></th:block>
+    <script>
+        function btnApplyOnclick(index){
+            $("#fill_form_"+index).submit();
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 공통 헤드-->
+<th:block th:replace="~{fragments/head :: headFragment}"></th:block>
+
+<!-- Custom Stylesheets -->
+<link rel="stylesheet" href="/css/layout/top.css" th:href="@{/css/layout/top.css}">
+<link rel="stylesheet" href="/css/form/form.css" th:href="@{/css/form/form.css}">
+<style>
+    .drop-zone {
+        border: 1px solid #afafaf;
+        border-radius: 5px;
+        padding: 20px;
+        text-align: center;
+        color: #0f1316;
+    }
+
+    .drop-zone.dragover {
+        background-color: #ebebebad;
+    }
+</style>
+</head>
+<!-- 공통 Nav -->
+<th:block th:replace="~{fragments/top :: topbarFragment}"></th:block>
+
+<body>
+    <!-- content -->
+    <div class="container my-5">
+        <div class="row p-5">
+            <div class="col text-left">
+                <h4 class="headline" th:text="${remarks}"></h4>
+            </div>
+            <div class="row-sm-12 mt-3">
+                <th:block th:replace="~{fragments/resume_tab :: resumeTabFragment}"></th:block>
+                <div class="tab-content mx-5 my-4" id="myTabContent">
+                    <div class="row-sm-12 mx-2 table_margin">
+                        <div class="row mx-2">
+                            <div class="col-sm-6 p-0">
+                                <h4 class="subtitle mb-1"><span class="marking">&nbsp;
+                                    </span>제출서류</h4>
+                            </div>
+                        </div>
+                        <hr class="mt-0">
+                        <div class="m-3">
+                            <label for="formFileMultiple" class="form-label">졸업(예정) 및 성적증명서, 가족관계증명서, 자격증 사본
+                                등</label>
+                            <div class="m-3 drop-zone" id="dropZone">
+                                <input class="form-control" type="file" id="formFileMultiple" multiple
+                                    style="display: none;">
+                                <p>파일을 여기에 끌어다 놓거나 <strong>여기</strong>를 선택하세요</p>
+                                <ul id="fileList" class="list-group">
+                                    <li th:each="file : ${fileList}"
+                                        class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span th:text="${file}"></span>
+                                        <button class="btn btn-danger btn-sm item" th:data-file="${file}">삭제</button>
+                                    </li>
+                                    <div id="add_list"></div>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <!-- 버튼 -->
+            <th:block th:replace="~{fragments/form_btn :: formBtnFragment}"></th:block>
+        </div>
+    </div>
+
+    <!-- 공통 스크립트-->
+    <th:block th:replace="~{fragments/script :: scriptFragment}"></th:block>
+    <th:block th:replace="~{fragments/resume_script :: resumeScriptFragment}"></th:block>
+    <script src="/js/layout/form.js" th:src="@{/js/layout/form.js}"></script>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        let files = [];
+
+        $('#formFileMultiple').on('change', function (event) {
+            const newFiles = Array.from(event.target.files);
+            files = files.concat(newFiles);
+            renderFileList();
+            event.target.value = ''; // Clear the input value to allow the same file selection
+        });
+
+        $('#fileSelectButton').on('click', function () {
+            $('#formFileMultiple').trigger('click');
+        });
+
+        $('#dropZone').on('click', function (event) {
+            // Prevent triggering the input click multiple times
+            if (event.target.tagName.toLowerCase() !== 'input' && event.target.tagName.toLowerCase() !== 'button') {
+                $('#formFileMultiple').trigger('click');
+            }
+        });
+
+        $('#dropZone').on('dragover', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            $(this).addClass('dragover');
+        });
+
+        $('#dropZone').on('dragleave', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            $(this).removeClass('dragover');
+        });
+
+        $('#dropZone').on('drop', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            $(this).removeClass('dragover');
+            const newFiles = Array.from(event.originalEvent.dataTransfer.files);
+            files = files.concat(newFiles);
+            renderFileList();
+        });
+
+        $(".btn-danger.btn-sm.item").on('click', function () {
+            var formData = new FormData();
+            
+            var email = [[${ user.email }]];
+            var seq = [[${ user.seq }]];
+            var yyyy = [[${ user.yyyy }]];
+            var cnt = [[${ user.cnt }]];
+            var remarks = [[${ user.remarks }]];
+            var file = $(this).data('file');
+
+            formData.append("email", email);
+            formData.append("seq", seq);
+            formData.append("yyyy", yyyy);
+            formData.append("cnt", cnt);
+            formData.append("remarks", remarks);
+            formData.append("file", file);
+
+            $.ajax({
+                method: "POST",
+                url: "/api_resume/file_delete",
+                data: formData,
+                processData: false,
+                contentType: false,
+            }).done(function (data) {
+                location.reload();
+            }).fail(function (data, textStatus, errorThrown) {
+                alert("부득이한 사정으로 인해 현재 서비스 이용이 제한될 수 있습니다.\n\n불편을 드려 죄송합니다. 관리자에게 문의하여 주십시오.\n\n문의번호 : 051-580-5546");
+                callback(data);
+            });
+        });
+
+        function renderFileList() {
+            const fileList = $('#add_list');
+            fileList.empty();
+
+            // 기존 파일 목록 유지
+            fileList.children().each(function () {
+                $(this).appendTo(fileList);
+            });
+
+            // 새 파일 추가
+            files.forEach((file, index) => {
+                const listItem = $('<li></li>')
+                    .addClass('list-group-item d-flex justify-content-between align-items-center')
+                    .text(file.name);
+
+                const removeButton = $('<button></button>')
+                    .addClass('btn btn-danger btn-sm')
+                    .text('삭제')
+                    .on('click', function (event) {
+                        event.stopPropagation(); // Prevent the event from bubbling up to the dropZone
+                        removeFile(index);
+                    });
+
+                listItem.append(removeButton);
+                fileList.append(listItem);
+            });
+        }
+
+        function removeFile(index) {
+            files.splice(index, 1);
+            renderFileList();
+        }
+
+
+        $("#btn_next, #btn_save, #btn_prev").on('click', function () {
+            var href = '';
+
+            if ($(this).attr('id') === "btn_next") {
+                href = "/resume/submit-application";
+            } else if ($(this).attr('id') === "btn_prev") {
+                href = "/resume/self-introduction";
+            } else if ($(this).attr('id') === "btn_save") {
+                href = "";
+            } else {
+                // var isValid = user_info_valid(true);
+                href = $(this).find('a').attr('href');
+            }
+
+
+            const formData = new FormData();
+            files.forEach((file, index) => {
+                formData.append('files[' + index + ']', file);
+            });
+
+            $.ajax({
+                url: '/api_resume/upload-file', // 서버 업로드 엔드포인트로 변경하세요
+                type: 'POST',
+                data: formData,
+                processData: false, // 데이터를 쿼리 스트링으로 변환하지 않음
+                contentType: false, // 콘텐츠 타입 설정을 하지 않음
+                success: function (response) {
+                    files = []; // 업로드 후 파일 목록 초기화
+                    renderFileList();
+                    if (href == '') {
+                        alert("저장되었습니다.");
+                        location.reload();
+                    } else {
+                        location.href = href;
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert('이미지(jpg, jpeg, png, gif) 또는 문서파일(pdf, doc, docx, xls, xlsx, ppt, pptx, hwp)만 업로드 가능합니다.');
+                }
+            });
+        });
+        /*]]>*/
+    </script>
+    <!-- <script>
+
+        /* 저장 */
+        $("#btn_next, #btn_save, #btn_prev").on("click", function (e) {
+
+            // if (!validateField("high_name", "고등학교를 선택해 주세요.") ||
+            //     !validateField("high_loc", "소재지를 입력해 주세요.") ||
+            //     !validateField("high_ser", "계열을 입력해 주세요.") ||
+            //     !validateField("high_grd", "고등학교 졸업구분을 선택해 주세요.") ||
+            //     !validateDate("high_start_date", "high_end_date")) {
+            //     return false;
+            // }
+
+
+            // if (!validateSelect('univ_edu', '학력을 선택해 주세요.') ||
+            //     !validateInput('univ_loc', '소재지를 입력해 주세요.') ||
+            //     !validateSelect('univ_branch', '본/분교를 선택해 주세요.') ||
+            //     !validateDate('univ_start_date', 'univ_end_date') ||
+            //     !validateSelect('univ_dn', '주야구분을 선택해 주세요.') ||
+            //     !validateSelect('univ_ser', '전공계열을 선택해 주세요.') ||
+            //     !validateCrd('univ_crd', 'univ_crd_max') ||
+            //     !validateSelect('univ_grd', '대학교 졸업구분을 선택해 주세요.')
+            // ) {
+            //     return false;
+            // }
+
+            var href = '';
+
+            // FormData 객체 생성
+            var formData = $("#introSelfForm").serialize();
+
+            // "다음" 또는 "이전" 버튼인 경우에만 href 설정
+            if ($(this).attr('id') === "btn_next") {
+                href = "/resume/certifications";
+            } else if ($(this).attr('id') === "btn_prev") {
+                href = "/resume/submit-application";
+            } else if ($(this).attr('id') === "btn_save") {
+                href = "";
+            } else {
+                // var isValid = user_info_valid(true);
+                href = $(this).find('a').attr('href');
+            }
+
+            $.ajax({
+                method: "POST",
+                url: "/api_resume/self-introduction",
+                data: formData
+            }).done(function (data) {
+                if (href == '') {
+                    alert("저장되었습니다.");
+                } else {
+                    location.href = href;
+                }
+            }).fail(function (data, textStatus, errorThrown) {
+                alert("부득이한 사정으로 인해 현재 서비스 이용이 제한될 수 있습니다.\n\n불편을 드려 죄송합니다. 관리자에게 문의하여 주십시오.\n\n문의번호 : 051-580-5546");
+                callback(data);
+            });
+
+        });
+    </script> -->
+</body>
+
+</html>

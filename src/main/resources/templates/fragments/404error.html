@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 공통 헤드-->
+<th:block th:replace="~{fragments/head :: headFragment}"></th:block>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="mt-5 ">
+            <h2 class="fw-bold">해당페이지를 찾을수 없습니다.</h2>
+        </div>
+        <div class="card mt-5" style="width: auto;">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col col-sm-2">
+                        <span class="d-flex align-items-center mb-3 mb-md-0 me-md-auto  text-decoration-none">
+                            <img src="/images/layout/dgmark.png" style="width: 20%;">
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <h5 class="card-title fw-bold">
+                    <i class="bi bi-exclamation-triangle-fill fw-2 text-danger"></i>
+                    요청 페이지를 찾을수 없습니다.
+                </h5>
+                <p class="card-text">
+                    페이지 또는 파일을 찾을수 없습니다.
+                </p>
+            </div>
+            <div class="card-footer text-end">
+                <a href="/job-posting/list" class="btn btn-danger">돌아가기</a>
+            </div>
+        </div>
+    </div>
+    <th:block th:replace="~{fragments/script :: scriptFragment}"></th:block>
+</body>
+
+</html>

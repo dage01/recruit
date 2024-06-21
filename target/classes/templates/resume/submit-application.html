@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 공통 헤드-->
+<th:block th:replace="~{fragments/head :: headFragment}"></th:block>
+
+<!-- Custom Stylesheets -->
+<link rel="stylesheet" href="/css/layout/top.css" th:href="@{/css/layout/top.css}">
+<link rel="stylesheet" href="/css/form/form.css" th:href="@{/css/form/form.css}">
+<link rel="stylesheet" href="/css/form/submit-application.css" th:href="@{/css/form/submit-application.css}">
+
+</head>
+<!-- 공통 Nav -->
+<th:block th:replace="~{fragments/top :: topbarFragment}"></th:block>
+
+<body>
+    <!-- content -->
+    <div class="container my-5">
+        <div class="row p-5">
+            <div class="col text-left">
+                <h4 class="headline" th:text="${formDTO.remarks}"></h4>
+            </div>
+            <div class="row-sm-12 mt-3">
+                <th:block th:replace="~{fragments/resume_tab :: resumeTabFragment}"></th:block>
+                <!-- 지원서제출 탭-->
+                <div class="tab-content mx-5 my-4" id="myTabContent">
+                    <div class="row-sm-12 mx-2 table_margin">
+                        <div class="row mx-2">
+                            <div class="col-sm-6 p-0">
+                                <h4 class="subtitle m-0"><span class="marking">&nbsp;
+                                    </span>지원서 제출</h4>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row align-items-center">
+                            <div class="col text-end">
+                                <img src="/images/layout/dgmark.png" alt="dgmark">
+                            </div>
+                            <div class="col-sm-8 d-flex align-items-center">
+                                <em style="font-weight: bold;">
+                                    입사지원상의 모든 기재사항이 사실과 다름이 없으며‚ <br>
+                                    합격 후 또는 입사후에라도 허위 기재 사실이 확인되어<br>
+                                    불합격 또는 입사가 취소되더라도 이의를 제기하지 않을 것을 서약합니다.
+                                </em>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row my-3">
+                            <div class="col text-center">
+                                <button type="button" class="btn btn-dark m-1" data-bs-toggle="modal" id="previewBtn"
+                                    data-bs-target="#previewModal">미리보기</button>
+                                <!-- Modal -->
+                                <div class="modal" id="previewModal" tabindex="-1">
+                                    <div class="modal-dialog modal-xl">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">지원서 미리보기</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row my-3 ps-3 text-start">
+                                                    <h4 class="title"
+                                                        th:text="|[${formDTO.yyyy}-${formDTO.cnt}] ${formDTO.remarks}  [${formDTO.appjobName}]|">
+                                                    </h4>
+                                                    <hr>
+                                                </div>
+                                                <div class="row ps-3 text-start">
+                                                    <h4 class="title">기본정보</h4>
+                                                </div>
+                                                <table class="table mb-3">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="table-light" id="idPhoto" colspan="4"
+                                                                rowspan="7">
+                                                                <div class="row-sm">
+                                                                    <div class="col-sm">
+                                                                        <img class="userPhoto" th:src="@{/file/{photo}(photo=${formDTO.email})}"
+                                                alt="profile"/>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="table-light" scope="row">
+                                                                <span>성명</span>
+                                                            <td class="table-light" colspan="2">
+                                                                <div class="row-sm">
+                                                                    <div class="col-sm">
+                                                                        <span th:text="${formDTO.name}"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <th class="table-light" scope="row">
+                                                                <div class="row-sm">
+                                                                    <div class="col-sm">
+                                                                        <span>생년월일</span>
+                                                                    </div>
+                                                                </div>
+                                                            </th>
+                                                            <td class="table-light" colspan="2">
+                                                                <div class="row-sm">
+                                                                    <div class="col-sm">
+                                                                        <span
+                                                                            th:text="${#strings.substring(formDTO.birthDay, 0, 4) + '.' + #strings.substring(formDTO.birthDay, 4, 6) + '.' + #strings.substring(formDTO.birthDay, 6, 8)}"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="table-light" scope="row">
+                                                                <div class="row-sm">
+                                                                    <div class="col-sm">
+                                                                        <span>성별</span>
+                                                                    </div>
+                                                                </div>
+                                                            <td class="table-light" colspan="2">
+                                                                <div class="row-sm">
+                                                                    <div class="col-sm">
+                                                                        <span
+                                                                            th:text="${formDTO.sexTag== 'M' ? '남성' : formDTO.sexTag == 'W' ? '여성' : formDTO.sexTag}"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <th class="table-light" scope="row">
+                                                                <div class="row-sm">
+                                                                    <div class="col-sm">
+                                                                        <span>이메일</span>
+                                                                    </div>
+                                                                </div>
+                                                            </th>
+                                                            <td class="table-light" colspan="2">
+                                                                <div class="row-sm">
+                                                                    <div class="col-sm">
+                                                                        <span th:text="${formDTO.email}"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="table-light" scope="row">
+                                                                <div class="row-sm">
+                                                                    <div class="col-sm">
+                                                                        <span>휴대전화</span>
+                                                                    </div>
+                                                                </div>
+                                                            <td class="table-light" colspan="2">
+                                                                <div class="row-sm">
+                                                                    <div class="col-sm">
+                                                                        <span th:text="${formDTO.phoneMobile}"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <th class="table-light" scope="row">
+                                                                <div class="row-sm">
+                                                                    <div class="col-sm">
+                                                                        <span>비상연락처</span>
+                                                                    </div>
+                                                                </div>
+                                                            </th>
+                                                            <td class="table-light" colspan="2">
+                                                                <div class="row-sm">
+                                                                    <div class="col-sm">
+                                                                        <span th:text="${formDTO.phone}"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="table-light" scope="row">
+                                                                <div class="row-sm">
+                                                                    <div class="col-sm">
+                                                                        <span>주소지</span>
+                                                                    </div>
+                                                                </div>
+                                                            </th>
+                                                            <td class="table-light" colspan="4">
+                                                                <div class="row-sm">
+                                                                    <div class="col-sm">
+                                                                        <span
+                                                                            th:text="|[${formDTO.postNumH}] ${formDTO.addressH} ${formDTO.addressH2}|"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <table class="table mb-5">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="table-light thTitle" colspan="2" scope="row">
+                                                                <div class="row-sm">
+                                                                    <div class="col-sm text-center">
+                                                                        <span>보훈여부</span>
+                                                                    </div>
+                                                                </div>
+                                                            </th>
+                                                            <td class="table-light" colspan="1">
+                                                                <div class="row-sm">
+                                                                    <div class="col-sm text-center">
+                                                                        <span
+                                                                            th:text="${formDTO.welfareTag== '01' ? '해당' : formDTO.welfareTag == '02' ? '비해당' : formDTO.welfareTag}"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <th class="table-light thTitle" colspan="2" scope="row">
+                                                                <div class="row-sm">
+                                                                    <div class="col-sm text-center">
+                                                                        <span>장애여부</span>
+                                                                    </div>
+                                                                </div>
+                                                            </th>
+                                                            <td class="table-light" colspan="1">
+                                                                <div class="row-sm">
+                                                                    <div class="col-sm text-center">
+                                                                        <span
+                                                                            th:text="${formDTO.obstacleTag== '01' ? '해당' : formDTO.obstacleTag == '02' ? '비해당' : formDTO.obstacleTag}"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th class="table-light thTitle" colspan="2" scope="row">
+                                                                <div class="row-sm">
+                                                                    <div class="col-sm text-center">
+                                                                        <span>병역사항</span>
+                                                                    </div>
+                                                                </div>
+                                                            </th>
+                                                            <td class="table-light" colspan="5">
+                                                                <div class="row"
+                                                                    th:if="${formDTO.a101} != '면제' and ${formDTO.a101} != '비대상' and ${formDTO.a101} != '미필'">
+                                                                    <div class="col-sm-auto">
+                                                                        <span class="subTag">[병역여부]</span>
+                                                                        <span
+                                                                            th:text="|${formDTO.a101} (${formDTO.a103}/${formDTO.a104})|"></span>
+                                                                    </div>
+                                                                    <div class="col-sm-auto">
+                                                                        <span class="subTag">[복무기간]</span>
+                                                                        <span
+                                                                            th:text="|${formDTO.a1Sdt} ~ ${formDTO.a1Edt}|"></span>
+                                                                    </div>
+                                                                    <div class="col-sm-auto">
+                                                                        <span class="subTag">[전역사유]</span>
+                                                                        <span th:text="${formDTO.a105}"></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row"
+                                                                    th:if="${formDTO.a101} == '비대상' or ${formDTO.a101} == '미필'">
+                                                                    <div class="col-sm-auto">
+                                                                        <span class="subTag">[병역여부]</span>
+                                                                        <span th:text="${formDTO.a101}"></span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row" th:if="${formDTO.a101} == '면제'">
+                                                                    <div class="col-sm-auto">
+                                                                        <span class="subTag">[병역여부]</span>
+                                                                        <span th:text="${formDTO.a101}"></span>
+                                                                    </div>
+                                                                    <div class="col-sm-auto">
+                                                                        <span class="subTag">[면제사유]</span>
+                                                                        <span th:text="${formDTO.a112}"></span>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div class="row ps-3 text-start">
+                                                    <h4 class="title">학력사항</h4>
+                                                </div>
+                                                <table class="table mb-5">
+                                                    <tbody>
+                                                        <tr>
+                                                            <th class="table-light thTitle" colspan="2" scope="row">
+                                                                <span>고등학교</span>
+                                                            </th>
+                                                            <td class="table-light padding" colspan="1">
+                                                                <div class="row">
+                                                                    <div class="row content my-1">
+                                                                        <div class="col-sm-auto pe-0 me-3">
+                                                                            <h5 class="infoTitle mb-0"
+                                                                                th:text="${formDTO.h106}">
+                                                                            </h5>
+                                                                        </div>
+                                                                        <div class="col-sm-auto infoTag">
+                                                                            <span
+                                                                                th:text="|${formDTO.h1Sdt} ~ ${formDTO.h1Edt} (${formDTO.h105})|"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="my-2" th:text="${formDTO.h108}">
+                                                                    </div>
+                                                                    <span th:if="${formDTO.h107 == 'True'}"
+                                                                        class="subTag">[검정고시해당]</span>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr
+                                                            th:if="${formDTO.h206 != null or formDTO.h306 != null or formDTO.h406 != null or formDTO.h506 != null or formDTO.h606 != null}">
+                                                            <th class="table-light thTitle" colspan="2" scope="row">
+                                                                <span>대학교</span>
+                                                            <td class="table-light padding" colspan="1">
+                                                                <div class="row"
+                                                                    th:if="${formDTO.h206 != null and formDTO.h206 != ''}">
+                                                                    <div class="row content my-1">
+                                                                        <div class="col-sm-auto pe-0 me-3">
+                                                                            <h5 style="display:inline;"
+                                                                                class="infoTitle mb-0"
+                                                                                th:text="|${formDTO.h206}(전문대 / ${formDTO.h208})|">
+                                                                            </h5>
+                                                                        </div>
+                                                                        <div class="col-sm-auto infoTag">
+                                                                            <span
+                                                                                th:text="|${formDTO.h2Sdt} ~ ${formDTO.h2Edt} (${formDTO.h205})|"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="my-2">
+                                                                        <span class="me-5"
+                                                                            th:text="|[${formDTO.h209}] ${formDTO.h210}|"></span>
+                                                                        <span class="me-5"
+                                                                            th:if="${formDTO.h211 != null and formDTO.h211 != ''}"
+                                                                            th:text="|[${formDTO.h211}]${formDTO.h212}|"></span>
+                                                                    </div>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-sm-1 pe-0 me-3">
+                                                                            지역
+                                                                        </div>
+                                                                        <div class="col-sm-auto infoTag"
+                                                                            th:text="${formDTO.h207}">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-sm-1 pe-0 me-3">
+                                                                            학점
+                                                                        </div>
+                                                                        <div class="col-sm-auto infoTag"
+                                                                            th:text="|${formDTO.h213} / ${formDTO.h214}|">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row"
+                                                                    th:if="${formDTO.h306 != null and formDTO.h306 != ''}">
+                                                                    <div th:if="${formDTO.h206 != null and formDTO.h206 != ''}"
+                                                                        class="row my-3 contour"></div>
+                                                                    <div class="row content my-1">
+                                                                        <div class="col-sm-auto pe-0 me-3">
+                                                                            <h5 style="display:inline;"
+                                                                                class="infoTitle mb-0"
+                                                                                th:text="|${formDTO.h306}(대학교 / ${formDTO.h308})|">
+                                                                            </h5>
+                                                                        </div>
+                                                                        <div class="col-sm-auto infoTag">
+                                                                            <span
+                                                                                th:text="|${formDTO.h3Sdt} ~ ${formDTO.h3Edt} (${formDTO.h305})|"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="my-2">
+                                                                        <span class="me-5"
+                                                                            th:text="|[${formDTO.h309}] ${formDTO.h310}|"></span>
+                                                                        <span class="me-5"
+                                                                            th:if="${formDTO.h311 != null and formDTO.h311 != ''}"
+                                                                            th:text="|[${formDTO.h311}]${formDTO.h312}|"></span>
+                                                                    </div>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-sm-1 pe-0 me-3">
+                                                                            지역
+                                                                        </div>
+                                                                        <div class="col-sm-auto infoTag"
+                                                                            th:text="${formDTO.h307}">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-sm-1 pe-0 me-3">
+                                                                            학점
+                                                                        </div>
+                                                                        <div class="col-sm-auto infoTag"
+                                                                            th:text="|${formDTO.h313} / ${formDTO.h314}|">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row"
+                                                                    th:if="${formDTO.h406 != null and formDTO.h406 != ''}">
+                                                                    <div th:if="${formDTO.h306 != null and formDTO.h306 != ''}"
+                                                                        class="row my-3 contour"></div>
+                                                                    <div class="row content my-1">
+                                                                        <div class="col-sm-auto pe-0 me-3">
+                                                                            <h5 style="display:inline;"
+                                                                                class="infoTitle mb-0"
+                                                                                th:text="|${formDTO.h406}(대학교 / ${formDTO.h408})|">
+                                                                            </h5>
+                                                                        </div>
+                                                                        <div class="col-sm-auto infoTag">
+                                                                            <span
+                                                                                th:text="|${formDTO.h4Sdt} ~ ${formDTO.h4Edt} (${formDTO.h405})|"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="my-2">
+                                                                        <span class="me-5"
+                                                                            th:text="|[${formDTO.h409}] ${formDTO.h410}|"></span>
+                                                                        <span class="me-5"
+                                                                            th:if="${formDTO.h411 != null and formDTO.h411 != ''}"
+                                                                            th:text="|[${formDTO.h411}]${formDTO.h412}|"></span>
+                                                                    </div>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-sm-1 pe-0 me-3">
+                                                                            지역
+                                                                        </div>
+                                                                        <div class="col-sm-auto infoTag"
+                                                                            th:text="${formDTO.h407}">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-sm-1 pe-0 me-3">
+                                                                            학점
+                                                                        </div>
+                                                                        <div class="col-sm-auto infoTag"
+                                                                            th:text="|${formDTO.h413} / ${formDTO.h414}|">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="row"
+                                                                    th:if="${formDTO.h506 != null and formDTO.h506 != ''}">
+                                                                    <div th:if="${formDTO.h406 != null and formDTO.h406 != ''}"
+                                                                        class="row my-3 contour"></div>
+                                                                    <div class="row content my-1">
+                                                                        <div class="col-sm-auto pe-0 me-3">
+                                                                            <h5 style="display:inline;"
+                                                                                class="infoTitle mb-0"
+                                                                                th:text="|${formDTO.h506}(대학원/${formDTO.h508})|">
+                                                                            </h5>
+                                                                        </div>
+                                                                        <div class="col-sm-auto infoTag">
+                                                                            <span
+                                                                                th:text="|${formDTO.h5Sdt} ~ ${formDTO.h5Edt} (${formDTO.h505})|"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="my-2">
+                                                                        <span class="me-5"
+                                                                            th:text="|[${formDTO.h509}] ${formDTO.h510}|"></span>
+                                                                        <span class="me-5"
+                                                                            th:if="${formDTO.h511 != null and formDTO.h511 != ''}"
+                                                                            th:text="|[${formDTO.h511}]${formDTO.h512}|"></span>
+                                                                    </div>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-sm-1 pe-0 me-3">
+                                                                            지역
+                                                                        </div>
+                                                                        <div class="col-sm-auto infoTag"
+                                                                            th:text="${formDTO.h507}">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-sm-1 pe-0 me-3">
+                                                                            학점
+                                                                        </div>
+                                                                        <div class="col-sm-auto infoTag"
+                                                                            th:text="|${formDTO.h513} / ${formDTO.h514}|">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-sm-1 pe-0 me-3">
+                                                                            논문
+                                                                        </div>
+                                                                        <div class="col-sm-auto infoTag"
+                                                                            th:text="${formDTO.h515}">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row"
+                                                                    th:if="${formDTO.h606 != null and formDTO.h606 != ''}">
+                                                                    <div th:if="${formDTO.h506 != null and formDTO.h506 != ''}"
+                                                                        class="row my-3 contour"></div>
+                                                                    <div class="row content my-1">
+                                                                        <div class="col-sm-auto pe-0 me-3">
+                                                                            <h5 style="display:inline;"
+                                                                                class="infoTitle mb-0"
+                                                                                th:text="|${formDTO.h606}(대학원/${formDTO.h608})|">
+                                                                            </h5>
+                                                                        </div>
+                                                                        <div class="col-sm-auto infoTag">
+                                                                            <span
+                                                                                th:text="|${formDTO.h6Sdt} ~ ${formDTO.h6Edt} (${formDTO.h605})|"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="my-2">
+                                                                        <span class="me-5"
+                                                                            th:text="|[${formDTO.h609}] ${formDTO.h610}|"></span>
+                                                                        <span class="me-5"
+                                                                            th:if="${formDTO.h611 != null and formDTO.h611 != ''}"
+                                                                            th:text="|[${formDTO.h611}]${formDTO.h612}|"></span>
+                                                                    </div>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-sm-1 pe-0 me-3">
+                                                                            지역
+                                                                        </div>
+                                                                        <div class="col-sm-auto infoTag"
+                                                                            th:text="${formDTO.h607}">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-sm-1 pe-0 me-3">
+                                                                            학점
+                                                                        </div>
+                                                                        <div class="col-sm-auto infoTag"
+                                                                            th:text="|${formDTO.h613} / ${formDTO.h614}|">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row mb-2">
+                                                                        <div class="col-sm-1 pe-0 me-3">
+                                                                            논문
+                                                                        </div>
+                                                                        <div class="col-sm-auto infoTag"
+                                                                            th:text="${formDTO.h615}">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div class="exp"
+                                                    th:if="${formDTO.w106 != null or formDTO.w206 != null or formDTO.w306 != null or formDTO.w406 != null or formDTO.w506 != null}">
+                                                    <div class="row ps-3 text-start">
+                                                        <h4 class="title">경력사항</h4>
+                                                    </div>
+                                                    <table class="table mb-5">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th class="table-light thTitle" colspan="2" scope="row">
+                                                                    <span>경력사항</span>
+                                                                <td class="table-light padding" colspan="1">
+                                                                    <div class="row mb-3"
+                                                                        th:if="${formDTO.w106 != null and formDTO.w106 != ''}">
+                                                                        <div class="row content my-1">
+                                                                            <div class="col-sm-auto pe-0 me-3">
+                                                                                <h5 class="infoTitle mb-0"
+                                                                                    th:text="${formDTO.w106}">
+                                                                                </h5>
+                                                                            </div>
+                                                                            <div class="col-sm-auto infoTag">
+                                                                                <span
+                                                                                    th:text="|${formDTO.w1Sdt} ~ ${formDTO.w1Edt}|"></span>
+                                                                                <span
+                                                                                    th:if="${formDTO.w105 != null and formDTO.w105 != ''}"
+                                                                                    th:text="|(${formDTO.w105}개월)|"
+                                                                                    class="period ms-1"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="my-2">
+                                                                            <span class="me-5"
+                                                                                th:text="|${formDTO.w107} ${formDTO.w108}|"></span>
+                                                                        </div>
+                                                                        <div class="mb-2">
+                                                                            <span class="me-5 text-wrap text-break"
+                                                                                th:text="${formDTO.w110}"></span>
+                                                                        </div>
+                                                                        <div class="row mb-2">
+                                                                            <div class="col-sm-1 pe-0 me-3">
+                                                                                연봉
+                                                                            </div>
+                                                                            <div class="col-sm-auto infoTag">
+                                                                                <span
+                                                                                    th:text="|${formDTO.w109} 만원|"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row mb-2">
+                                                                            <div class="col-sm-1 pe-0 me-3">
+                                                                                퇴직사유
+                                                                            </div>
+                                                                            <div class="col-sm-auto infoTag"
+                                                                                th:text="${formDTO.w111}">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row mb-3"
+                                                                        th:if="${formDTO.w206 != null and formDTO.w206 != ''}">
+                                                                        <div th:if="${formDTO.w106 != null and formDTO.w106 != ''}"
+                                                                            class="row my-3 contour"></div>
+                                                                        <div class="row content my-1">
+                                                                            <div class="col-sm-auto pe-0 me-3">
+                                                                                <h5 class="infoTitle mb-0"
+                                                                                    th:text="${formDTO.w206}">
+                                                                                </h5>
+                                                                            </div>
+                                                                            <div class="col-sm-auto infoTag">
+                                                                                <span
+                                                                                    th:text="|${formDTO.w2Sdt} ~ ${formDTO.w2Edt}|"></span>
+                                                                                <span
+                                                                                    th:if="${formDTO.w205 != null and formDTO.w205 != ''}"
+                                                                                    th:text="|(${formDTO.w205}개월)|"
+                                                                                    class="period ms-1"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="my-2">
+                                                                            <span class="me-5"
+                                                                                th:text="|${formDTO.w207} ${formDTO.w208}|"></span>
+                                                                        </div>
+                                                                        <div class="mb-2">
+                                                                            <span class="me-5 text-wrap text-break"
+                                                                                th:text="${formDTO.w210}"></span>
+                                                                        </div>
+                                                                        <div class="row mb-2">
+                                                                            <div class="col-sm-1 pe-0 me-3">
+                                                                                연봉
+                                                                            </div>
+                                                                            <div class="col-sm-auto infoTag">
+                                                                                <span
+                                                                                    th:text="|${formDTO.w209} 만원|"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row mb-2">
+                                                                            <div class="col-sm-1 pe-0 me-3">
+                                                                                퇴직사유
+                                                                            </div>
+                                                                            <div class="col-sm-auto infoTag"
+                                                                                th:text="${formDTO.w211}">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row mb-3"
+                                                                        th:if="${formDTO.w306 != null and formDTO.w306 != ''}">
+                                                                        <div th:if="${formDTO.w206 != null and formDTO.w206 != ''}"
+                                                                            class="row my-3 contour"></div>
+                                                                        <div class="row content my-1">
+                                                                            <div class="col-sm-auto pe-0 me-3">
+                                                                                <h5 class="infoTitle mb-0"
+                                                                                    th:text="${formDTO.w306}">
+                                                                                </h5>
+                                                                            </div>
+                                                                            <div class="col-sm-auto infoTag">
+                                                                                <span
+                                                                                    th:text="|${formDTO.w3Sdt} ~ ${formDTO.w3Edt}|"></span>
+                                                                                <span
+                                                                                    th:if="${formDTO.w305 != null and formDTO.w305 != ''}"
+                                                                                    th:text="|(${formDTO.w305}개월)|"
+                                                                                    class="period ms-1"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="my-2">
+                                                                            <span class="me-5"
+                                                                                th:text="|${formDTO.w307} ${formDTO.w308}|"></span>
+                                                                        </div>
+                                                                        <div class="mb-2">
+                                                                            <span class="me-5 text-wrap text-break"
+                                                                                th:text="${formDTO.w310}"></span>
+                                                                        </div>
+                                                                        <div class="row mb-2">
+                                                                            <div class="col-sm-1 pe-0 me-3">
+                                                                                연봉
+                                                                            </div>
+                                                                            <div class="col-sm-auto infoTag">
+                                                                                <span
+                                                                                    th:text="|${formDTO.w309} 만원|"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row mb-2">
+                                                                            <div class="col-sm-1 pe-0 me-3">
+                                                                                퇴직사유
+                                                                            </div>
+                                                                            <div class="col-sm-auto infoTag"
+                                                                                th:text="${formDTO.w311}">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row mb-3"
+                                                                        th:if="${formDTO.w406 != null and formDTO.w406 != ''}">
+                                                                        <div th:if="${formDTO.w306 != null and formDTO.w306 != ''}"
+                                                                            class="row my-3 contour"></div>
+                                                                        <div class="row content my-1">
+                                                                            <div class="col-sm-auto pe-0 me-3">
+                                                                                <h5 class="infoTitle mb-0"
+                                                                                    th:text="${formDTO.w406}">
+                                                                                </h5>
+                                                                            </div>
+                                                                            <div class="col-sm-auto infoTag">
+                                                                                <span
+                                                                                    th:text="|${formDTO.w4Sdt} ~ ${formDTO.w4Edt}|"></span>
+                                                                                <span
+                                                                                    th:if="${formDTO.w405 != null and formDTO.w405 != ''}"
+                                                                                    th:text="|(${formDTO.w405}개월)|"
+                                                                                    class="period ms-1"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="my-2">
+                                                                            <span class="me-5"
+                                                                                th:text="|${formDTO.w407} ${formDTO.w408}|"></span>
+                                                                        </div>
+                                                                        <div class="mb-2">
+                                                                            <span class="me-5 text-wrap text-break"
+                                                                                th:text="${formDTO.w410}"></span>
+                                                                        </div>
+                                                                        <div class="row mb-2">
+                                                                            <div class="col-sm-1 pe-0 me-3">
+                                                                                연봉
+                                                                            </div>
+                                                                            <div class="col-sm-auto infoTag"
+                                                                                th:text="|${formDTO.w409} 만원|">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row mb-2">
+                                                                            <div class="col-sm-1 pe-0 me-3">
+                                                                                퇴직사유
+                                                                            </div>
+                                                                            <div class="col-sm-auto infoTag"
+                                                                                th:text="${formDTO.w411}">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row mb-3"
+                                                                        th:if="${formDTO.w506 != null and formDTO.w506 != ''}">
+                                                                        <div th:if="${formDTO.w406 != null and formDTO.w406 != ''}"
+                                                                            class="row my-3 contour"></div>
+                                                                        <div class="row content my-1">
+                                                                            <div class="col-sm-auto pe-0 me-3">
+                                                                                <h5 class="infoTitle mb-0"
+                                                                                    th:text="${formDTO.w506}">
+                                                                                </h5>
+                                                                            </div>
+                                                                            <div class="col-sm-auto infoTag">
+                                                                                <span
+                                                                                    th:text="|${formDTO.w5Sdt} ~ ${formDTO.w5Edt}|"></span>
+                                                                                <span
+                                                                                    th:if="${formDTO.w505 != null and formDTO.w505 != ''}"
+                                                                                    th:text="|(${formDTO.w505}개월)|"
+                                                                                    class="period ms-1"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="my-2">
+                                                                            <span class="me-5"
+                                                                                th:text="|${formDTO.w507} ${formDTO.w508}|"></span>
+                                                                        </div>
+                                                                        <div class="mb-2">
+                                                                            <span class="me-5 text-wrap text-break"
+                                                                                th:text="${formDTO.w510}"></span>
+                                                                        </div>
+                                                                        <div class="row mb-2">
+                                                                            <div class="col-sm-1 pe-0 me-3">
+                                                                                연봉
+                                                                            </div>
+                                                                            <div class="col-sm-auto infoTag">
+                                                                                <span
+                                                                                    th:text="|${formDTO.w509} 만원|"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row mb-2">
+                                                                            <div class="col-sm-1 pe-0 me-3">
+                                                                                퇴직사유
+                                                                            </div>
+                                                                            <div class="col-sm-auto infoTag"
+                                                                                th:text="${formDTO.w511}">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="lang"
+                                                    th:if="${formDTO.f101 != null or formDTO.f201 != null or formDTO.f301 != null or formDTO.f401 != null or formDTO.f501 != null}">
+                                                    <div class="row ps-3 text-start">
+                                                        <h4 class="title">외국어</h4>
+                                                    </div>
+                                                    <table class="table mb-5">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th class="table-light thTitle" colspan="2" scope="row">
+                                                                    <span>취득언어</span>
+                                                                <td class="table-light padding" colspan="1">
+                                                                    <div class="row content my-2"
+                                                                        th:if="${formDTO.f101 != '' and formDTO.f101 != null}">
+                                                                        <div class="col-sm-auto pe-0 me-3">
+                                                                            <h5 class="infoTitle mb-0"
+                                                                                th:text="${formDTO.f101}">
+                                                                            </h5>
+                                                                        </div>
+                                                                        <div class="col-sm-auto infoTag">
+                                                                            <span
+                                                                                th:text="|${formDTO.f102} (${formDTO.f103} - ${formDTO.f107}) ${formDTO.f1Dt} 취득|"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row content my-2"
+                                                                        th:if="${formDTO.f201 != '' and formDTO.f201 != null}">
+                                                                        <div th:if="${formDTO.f101 != '' and formDTO.f101 != null}"
+                                                                            class="row my-3 contour"></div>
+                                                                        <div class="col-sm-auto pe-0 me-3">
+                                                                            <h5 class="infoTitle mb-0"
+                                                                                th:text="${formDTO.f201}">
+                                                                            </h5>
+                                                                        </div>
+                                                                        <div class="col-sm-auto infoTag">
+                                                                            <span
+                                                                                th:text="|${formDTO.f202} (${formDTO.f203} - ${formDTO.f207}) ${formDTO.f2Dt} 취득|"></span>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row content my-2"
+                                                                        th:if="${formDTO.f301 != '' and formDTO.f301 != null}">
+                                                                        <div th:if="${formDTO.f201 != '' and formDTO.f201 != null}"
+                                                                            class="row my-3 contour"></div>
+                                                                        <div class="col-sm-auto pe-0 me-3">
+                                                                            <h5 class="infoTitle mb-0"
+                                                                                th:text="${formDTO.f301}">
+                                                                            </h5>
+                                                                        </div>
+                                                                        <div class="col-sm-auto infoTag">
+                                                                            <span
+                                                                                th:text="|${formDTO.f302} (${formDTO.f303} - ${formDTO.f307}) ${formDTO.f3Dt} 취득|"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row content my-2"
+                                                                        th:if="${formDTO.f401 != '' and formDTO.f401 != null}">
+                                                                        <div th:if="${formDTO.f301 != '' and formDTO.f301 != null}"
+                                                                            class="row my-3 contour"></div>
+                                                                        <div class="col-sm-auto pe-0 me-3">
+                                                                            <h5 class="infoTitle mb-0"
+                                                                                th:text="${formDTO.f401}">
+                                                                            </h5>
+                                                                        </div>
+                                                                        <div class="col-sm-auto infoTag">
+                                                                            <span
+                                                                                th:text="|${formDTO.f402} (${formDTO.f403} - ${formDTO.f407}) ${formDTO.f4Dt} 취득|"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row content my-2"
+                                                                        th:if="${formDTO.f501 != '' and formDTO.f501 != null}">
+                                                                        <div th:if="${formDTO.f401 != '' and formDTO.f401 != null}"
+                                                                            class="row my-3 contour"></div>
+                                                                        <div class="col-sm-auto pe-0 me-3">
+                                                                            <h5 class="infoTitle mb-0"
+                                                                                th:text="${formDTO.f501}">
+                                                                            </h5>
+                                                                        </div>
+                                                                        <div class="col-sm-auto infoTag">
+                                                                            <span
+                                                                                th:text="|${formDTO.f502} (${formDTO.f503} - ${formDTO.f507}) ${formDTO.f5Dt} 취득|"></span>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="cert"
+                                                    th:if="${formDTO.c101 != null or formDTO.c201 != null or formDTO.c301 != null or formDTO.c401 != null or formDTO.word != null or formDTO.excel != null or formDTO.ppt != null or formDTO.cad != null or formDTO.etcName != null}">
+                                                    <div class="row ps-3 text-start">
+                                                        <h4 class="title">자격사항</h4>
+                                                    </div>
+                                                    <table class="table mb-5">
+                                                        <tbody>
+                                                            <tr
+                                                                th:if="${formDTO.c101 != null or formDTO.c201 != null or formDTO.c301 != null or formDTO.c401 != null}">
+                                                                <th class="table-light thTitle" colspan="2" scope="row">
+                                                                    <span>자격증</span>
+                                                                <td class="table-light padding" colspan="1">
+                                                                    <div
+                                                                        th:if="${formDTO.c101 != '' and formDTO.c101 != null}">
+                                                                        <div class="row content my-1">
+                                                                            <div class="col-sm-auto pe-0 me-3">
+                                                                                <h5 class="infoTitle mb-0"
+                                                                                    th:text="${formDTO.c101}">
+                                                                                </h5>
+                                                                            </div>
+                                                                            <div class="col-sm-auto infoTag">
+                                                                                <span th:text="${formDTO.c1Dt}"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row my-2"
+                                                                            th:if="${formDTO.c105 != null and formDTO.c105 != ''}">
+                                                                            <div class="col-sm-1 pe-0 me-3">
+                                                                                발급기관
+                                                                            </div>
+                                                                            <div class="col-sm-auto infoTag"
+                                                                                th:text="${formDTO.c105}">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row mb-2"
+                                                                            th:if="${formDTO.c106 != null and formDTO.c106 != ''}">
+                                                                            <div class="col-sm-1 pe-0 me-3">
+                                                                                등록번호
+                                                                            </div>
+                                                                            <div class="col-sm-auto infoTag"
+                                                                                th:text="${formDTO.c106}">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        th:if="${formDTO.c201 != '' and formDTO.c201 != null}">
+                                                                        <div th:if="${formDTO.c101 != null and formDTO.c101 != ''}"
+                                                                            class="row my-3 contour"></div>
+                                                                        <div class="row content my-1">
+                                                                            <div class="col-sm-auto pe-0 me-3">
+                                                                                <h5 class="infoTitle mb-0"
+                                                                                    th:text="${formDTO.c201}">
+                                                                                </h5>
+                                                                            </div>
+                                                                            <div class="col-sm-auto infoTag">
+                                                                                <span th:text="${formDTO.c2Dt}"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row my-2"
+                                                                            th:if="${formDTO.c205 != null and formDTO.c205 != ''}">
+                                                                            <div class="col-sm-1 pe-0 me-3">
+                                                                                발급기관
+                                                                            </div>
+                                                                            <div class="col-sm-auto infoTag"
+                                                                                th:text="${formDTO.c205}">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row mb-2"
+                                                                            th:if="${formDTO.c206 != null and formDTO.c206 != ''}">
+                                                                            <div class="col-sm-1 pe-0 me-3">
+                                                                                등록번호
+                                                                            </div>
+                                                                            <div class="col-sm-auto infoTag"
+                                                                                th:text="${formDTO.c206}">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div
+                                                                        th:if="${formDTO.c301 != '' and formDTO.c301 != null}">
+                                                                        <div th:if="${formDTO.c201 != null and formDTO.c201 != ''}"
+                                                                            class="row my-3 contour"></div>
+                                                                        <div class="row content my-1">
+                                                                            <div class="col-sm-auto pe-0 me-3">
+                                                                                <h5 class="infoTitle mb-0"
+                                                                                    th:text="${formDTO.c301}">
+                                                                                </h5>
+                                                                            </div>
+                                                                            <div class="col-sm-auto infoTag">
+                                                                                <span th:text="${formDTO.c3Dt}"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row my-2"
+                                                                            th:if="${formDTO.c305 != null and formDTO.c305 != ''}">
+                                                                            <div class="col-sm-1 pe-0 me-3">
+                                                                                발급기관
+                                                                            </div>
+                                                                            <div class="col-sm-auto infoTag"
+                                                                                th:text="${formDTO.c305}">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row mb-2"
+                                                                            th:if="${formDTO.c306 != null and formDTO.c306 != ''}">
+                                                                            <div class="col-sm-1 pe-0 me-3">
+                                                                                등록번호
+                                                                            </div>
+                                                                            <div class="col-sm-auto infoTag"
+                                                                                th:text="${formDTO.c306}">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div
+                                                                        th:if="${formDTO.c401 != '' and formDTO.c401 != null}">
+                                                                        <div th:if="${formDTO.c301 != null and formDTO.c301 != ''}"
+                                                                            class="row my-3 contour"></div>
+                                                                        <div class="row content my-1">
+                                                                            <div class="col-sm-auto pe-0 me-3">
+                                                                                <h5 class="infoTitle mb-0"
+                                                                                    th:text="${formDTO.c401}">
+                                                                                </h5>
+                                                                            </div>
+                                                                            <div class="col-sm-auto infoTag">
+                                                                                <span th:text="${formDTO.c4Dt}"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row my-2"
+                                                                            th:if="${formDTO.c405 != null and formDTO.c405 != ''}">
+                                                                            <div class="col-sm-1 pe-0 me-3">
+                                                                                발급기관
+                                                                            </div>
+                                                                            <div class="col-sm-auto infoTag"
+                                                                                th:text="${formDTO.c405}">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row mb-2"
+                                                                            th:if="${formDTO.c406 != null and formDTO.c406 != ''}">
+                                                                            <div class="col-sm-1 pe-0 me-3">
+                                                                                등록번호
+                                                                            </div>
+                                                                            <div class="col-sm-auto infoTag"
+                                                                                th:text="${formDTO.c406}">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                            <tr
+                                                                th:if="${formDTO.word != null or formDTO.excel != null or formDTO.ppt != null or formDTO.cad != null or formDTO.etcName != null}">
+                                                                <th class="table-light thTitle" colspan="2" scope="row">
+                                                                    <span>PC활용능력</span>
+                                                                <td class="table-light padding" colspan="1">
+                                                                    <div class="my-2">
+                                                                        <span class="me-5"
+                                                                            th:if="${formDTO.word != null and formDTO.word != ''}"
+                                                                            th:text="|[워드] ${formDTO.word}|"></span>
+                                                                        <span class="me-5"
+                                                                            th:if="${formDTO.excel != null and formDTO.excel != ''}"
+                                                                            th:text="|[엑셀] ${formDTO.excel}|"></span>
+                                                                        <span class="me-5"
+                                                                            th:if="${formDTO.ppt != null and formDTO.ppt != ''}"
+                                                                            th:text="|[PPT] ${formDTO.ppt}|"></span>
+                                                                        <span class="me-5"
+                                                                            th:if="${formDTO.cad != null and formDTO.cad != ''}"
+                                                                            th:text="|[CAD] ${formDTO.cad}|"></span>
+                                                                        <span class="me-5"
+                                                                            th:if="${formDTO.etcName != null and formDTO.etcName != ''}"
+                                                                            th:text="|[${formDTO.etcName}] ${formDTO.etc}|"></span>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="row ps-3 text-start">
+                                                    <h4 class="title">자기소개</h4>
+                                                </div>
+                                                <table class="table mb-5">
+                                                    <tbody>
+                                                        <td class="table-light padding" colspan="1">
+                                                            <div class="row content my-1">
+                                                                <div class="col-sm-auto pe-0 me-3 mb-3">
+                                                                    <h5 class="infoTitle mb-0">성장과정
+                                                                    </h5>
+                                                                </div>
+                                                                <div class="my-2">
+                                                                    <span class="me-5"
+                                                                        th:text="${formDTO.intro1}"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row my-4 contour"></div>
+                                                            <div class="row content my-1">
+                                                                <div class="col-sm-auto pe-0 me-3 mb-3">
+                                                                    <h5 class="infoTitle mb-0">장단점
+                                                                    </h5>
+                                                                </div>
+                                                                <div class="my-2">
+                                                                    <span class="me-5"
+                                                                        th:text="${formDTO.intro2}"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row my-4 contour"></div>
+                                                            <div class="row content my-1">
+                                                                <div class="col-sm-auto pe-0 me-3 mb-3">
+                                                                    <h5 class="infoTitle mb-0">지원동기
+                                                                    </h5>
+                                                                </div>
+                                                                <div class="my-2">
+                                                                    <span class="me-5"
+                                                                        th:text="${formDTO.intro3}"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row my-4 contour"></div>
+                                                            <div class="row content my-1">
+                                                                <div class="col-sm-auto pe-0 me-3 mb-3">
+                                                                    <h5 class="infoTitle mb-0">장래희망
+                                                                    </h5>
+                                                                </div>
+                                                                <div class="my-2">
+                                                                    <span class="me-5"
+                                                                        th:text="${formDTO.intro4}"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row my-4 contour"></div>
+                                                            <div class="row content my-1">
+                                                                <div class="col-sm-auto pe-0 me-3 mb-3">
+                                                                    <h5 class="infoTitle mb-0">특기사항
+                                                                    </h5>
+                                                                </div>
+                                                                <div class="my-2">
+                                                                    <span class="me-5"
+                                                                        th:text="${formDTO.intro5}"></span>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tbody>
+                                                </table>
+
+                                                <div class="row ps-3 text-start">
+                                                    <h4 class="title">제출서류</h4>
+                                                </div>
+                                                <table class="table mb-5">
+                                                    <tbody>
+                                                        <td class="table-light padding" colspan="1">
+                                                            <ul id="fileList" class="list-group">
+                                                                <li th:each="file : ${fileList}"
+                                                                    class="list-group-item d-flex justify-content-between align-items-center"
+                                                                    style="height: 20px;">
+                                                                    <span th:text="${file}"></span>
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                    </tbody>
+                                                </table>
+
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">닫기</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Modal -->
+                                <button class="btn btn-primary m-1" id="btn_app_submit">지원서
+                                    제출</button>
+                                <button type="" class="btn btn-danger m-1" id="btn_app_delete"
+                                    th:data-seq="${formDTO.seq}" th:data-email="${formDTO.email}"
+                                    th:data-yyyy="${formDTO.yyyy}" th:data-cnt="${formDTO.cnt}"
+                                    th:data-remarks="${formDTO.remarks}">지원서
+                                    삭제</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 버튼 -->
+            <div class="col mb-5 text-center">
+                <button type="button" class="btn btn-secondary btn-lg mx-2" id="prev_btn"
+                    onclick="location.href='/resume/upload-file'">이전</button>
+            </div>
+        </div>
+    </div>
+    <!-- 공통 스크립트-->
+    <th:block th:replace="~{fragments/script :: scriptFragment}"></th:block>
+    <th:block th:replace="~{fragments/resume_script :: resumeScriptFragment}"></th:block>
+    <script src="/js/layout/form.js" th:src="@{/js/layout/form.js}"></script>
+    <script>
+        $("#btn_app_submit").on("click", function (e) {
+            alert("지원이 완료되었습니다.\n(지원 기간 내에는 수정/저장 가능합니다.)")
+            location.href = "/job-posting/list";
+        });
+
+        $("#btn_app_delete").on("click", function (e) {
+            var seq = $(this).data('seq');
+            var email = $(this).data('email');
+            var yyyy = $(this).data('yyyy');
+            var cnt = $(this).data('cnt');
+            var remarks = $(this).data('remarks');
+
+            $.ajax({
+                method: "POST",
+                url: "/api_resume/delete?seq=" + seq + "&email=" + email + "&yyyy=" + yyyy + "&cnt=" + cnt + "&remarks=" + remarks
+            })
+                .done(function (msg) {
+                    alert("삭제되었습니다.")
+                    location.href = "/apply_list";
+                })
+                .fail(function (data, textStatus, errorThrown) {
+                    alert("실패")
+                    callback(data);
+                });
+
+        });
+    </script>
+</body>
+
+</html>

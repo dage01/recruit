@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 공통 헤드-->
+<th:block th:replace="~{fragments/head :: headFragment}"></th:block>
+
+<!-- Custom Stylesheets -->
+<link rel="stylesheet" href="/css/layout/top.css" th:href="@{/css/layout/top.css}">
+<link rel="stylesheet" href="/css/form/form.css" th:href="@{/css/form/form.css}">
+
+</head>
+<!-- 공통 Nav -->
+<th:block th:replace="~{fragments/top :: topbarFragment}"></th:block>
+
+<body>
+    <!-- content -->
+    <div class="container my-5">
+        <div class="row p-5">
+            <div class="col text-left">
+                <h4 class="headline" th:text="${remarks}"></h4>
+            </div>
+            <div class="row-sm-12 mt-3">
+                <th:block th:replace="~{fragments/resume_tab :: resumeTabFragment}"></th:block>
+                <div class="tab-content mx-5 my-4" id="myTabContent">
+                    <form name="introSelfForm" id="introSelfForm">
+                        <div class="row-sm-12 mx-2 table_margin">
+                            <div class="row mx-2">
+                                <div class="col-sm-6 p-0">
+                                    <h4 class="subtitle ms-3">자기소개</h4>
+                                </div>
+                                <div class="col-sm-6 text-end p-0">
+                                    <p class="mb-0"><span class="marking">&#42; </span>필수입력항목</p>
+                                </div>
+                            </div>
+                            <hr class="mt-0">
+                            <table class="table mb-5">
+                                <tbody>
+                                    <tr>
+                                        <th class="table-light" scope="row" colspan="5">
+                                            <span>성장과정</span>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-light" colspan="1">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="mx-3 mt-3">
+                                                        <textarea class="form-control" id="intro_1" name="intro_1"
+                                                            rows="10" minlength="300" maxlength="1000"
+                                                            th:text="${introSelfFormDTO.intro1}"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12 text-end">
+                                                    <div class="mt-3 ms-4 me-4  mb-2">
+                                                        <span id="text_count">0자 / 최소 300자, 최대 1000자</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table mb-5">
+                                <tbody>
+                                    <tr>
+                                        <th class="table-light" scope="row" colspan="5">
+                                            <span>장단점</span>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-light" colspan="1">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="mx-3 mt-3">
+                                                        <textarea class="form-control" id="intro_2" name="intro_2"
+                                                            rows="10" minlength="300" maxlength="1000"
+                                                            th:text="${introSelfFormDTO.intro2}"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12 text-end">
+                                                    <div class="mt-3 ms-4 me-4  mb-2">
+                                                        <span id="text_count">0자 / 최소 300자, 최대 1000자</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table mb-5">
+                                <tbody>
+                                    <tr>
+                                        <th class="table-light" scope="row" colspan="5">
+                                            <span>지원동기</span>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-light" colspan="1">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="mx-3 mt-3">
+                                                        <textarea class="form-control" id="intro_3" name="intro_3"
+                                                            rows="10" minlength="300" maxlength="1000"
+                                                            th:text="${introSelfFormDTO.intro3}"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12 text-end">
+                                                    <div class="mt-3 ms-4 me-4  mb-2">
+                                                        <span id="text_count_3">0자 / 최소 300자, 최대 1000자</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table mb-5">
+                                <tbody>
+                                    <tr>
+                                        <th class="table-light" scope="row" colspan="5">
+                                            <span>장래희망</span>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-light" colspan="1">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="mx-3 mt-3">
+                                                        <textarea class="form-control" id="intro_4" name="intro_4"
+                                                            rows="10" minlength="300" maxlength="1000"
+                                                            th:text="${introSelfFormDTO.intro4}"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12 text-end">
+                                                    <div class="mt-3 ms-4 me-4  mb-2">
+                                                        <span id="text_count_4">0자 / 최소 300자, 최대 1000자</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table class="table mb-5">
+                                <tbody>
+                                    <tr>
+                                        <th class="table-light" scope="row" colspan="5">
+                                            <span>특기사항</span>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td class="table-light" colspan="1">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="mx-3 mt-3">
+                                                        <textarea class="form-control" id="intro_5" name="intro_5"
+                                                            rows="10" minlength="300" maxlength="1000"
+                                                            th:text="${introSelfFormDTO.intro5}"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12 text-end">
+                                                    <div class="mt-3 ms-4 me-4  mb-2">
+                                                        <span id="text_count_5">0자 / 최소 300자, 최대 1000자</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- 버튼 -->
+            <th:block th:replace="~{fragments/form_btn :: formBtnFragment}"></th:block>
+        </div>
+    </div>
+
+    <!-- 공통 스크립트-->
+    <th:block th:replace="~{fragments/script :: scriptFragment}"></th:block>
+    <th:block th:replace="~{fragments/resume_script :: resumeScriptFragment}"></th:block>
+    <script src="/js/layout/form.js" th:src="@{/js/layout/form.js}"></script>
+    <script>
+
+        /* 초기화 버튼 */
+        $(".btn_reset").on("click", function () {
+            var parentDiv = $(this).closest('.wrap');
+            parentDiv.find('input[type="text"]').val('').trigger("change");
+        });
+
+        for (var i = 2; i <= 5; i++) {
+            if ($("#cert_cls_" + i).val() === "" || $("#cert_cls_" + i).val() === null) {
+                $("#cert_add_" + i).hide();
+            }
+        }
+
+        $(".btn_add").on("click", function () {
+            var len = $(".wrap").length;
+            var cnt = $(".wrap:visible").length;
+
+            // 추가할 요소의 ID 계산
+            var nextID = cnt + 1; // 이미 #co_add_2가 있으므로 2를 더해줍니다.
+
+            // 추가할 요소가 있는지 확인
+            if (cnt < len) {
+                $(".wrap:hidden").first().show();
+            } else {
+                alert("최대 4개까지 가능합니다.");
+            }
+        });
+
+        /* 저장 */
+        $("#btn_next, #btn_save, #btn_prev").on("click", function (e) {
+
+            // if (!validateField("high_name", "고등학교를 선택해 주세요.") ||
+            //     !validateField("high_loc", "소재지를 입력해 주세요.") ||
+            //     !validateField("high_ser", "계열을 입력해 주세요.") ||
+            //     !validateField("high_grd", "고등학교 졸업구분을 선택해 주세요.") ||
+            //     !validateDate("high_start_date", "high_end_date")) {
+            //     return false;
+            // }
+
+
+            // if (!validateSelect('univ_edu', '학력을 선택해 주세요.') ||
+            //     !validateInput('univ_loc', '소재지를 입력해 주세요.') ||
+            //     !validateSelect('univ_branch', '본/분교를 선택해 주세요.') ||
+            //     !validateDate('univ_start_date', 'univ_end_date') ||
+            //     !validateSelect('univ_dn', '주야구분을 선택해 주세요.') ||
+            //     !validateSelect('univ_ser', '전공계열을 선택해 주세요.') ||
+            //     !validateCrd('univ_crd', 'univ_crd_max') ||
+            //     !validateSelect('univ_grd', '대학교 졸업구분을 선택해 주세요.')
+            // ) {
+            //     return false;
+            // }
+
+            var href = '';
+
+            // FormData 객체 생성
+            var formData = $("#introSelfForm").serialize();
+
+            // "다음" 또는 "이전" 버튼인 경우에만 href 설정
+            if ($(this).attr('id') === "btn_next") {
+                href = "/resume/upload-file";
+            } else if ($(this).attr('id') === "btn_prev") {
+                href = "/resume/certifications";
+            } else if ($(this).attr('id') === "btn_save") {
+                href = "";
+            } else {
+                // var isValid = user_info_valid(true);
+                href = $(this).find('a').attr('href');
+            }
+
+            $.ajax({
+                method: "POST",
+                url: "/api_resume/self-introduction",
+                data: formData
+            }).done(function (data) {
+                if (href == '') {
+                    alert("저장되었습니다.");
+                } else {
+                    location.href = href;
+                }
+            }).fail(function (data, textStatus, errorThrown) {
+                alert("부득이한 사정으로 인해 현재 서비스 이용이 제한될 수 있습니다.\n\n불편을 드려 죄송합니다. 관리자에게 문의하여 주십시오.\n\n문의번호 : 051-580-5546");
+                callback(data);
+            });
+
+        });
+    </script>
+</body>
+
+</html>

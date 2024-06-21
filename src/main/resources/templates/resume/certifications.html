@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 공통 헤드-->
+<th:block th:replace="~{fragments/head :: headFragment}"></th:block>
+
+<!-- Custom Stylesheets -->
+<link rel="stylesheet" href="/css/layout/top.css" th:href="@{/css/layout/top.css}">
+<link rel="stylesheet" href="/css/form/form.css" th:href="@{/css/form/form.css}">
+
+</head>
+<!-- 공통 Nav -->
+<th:block th:replace="~{fragments/top :: topbarFragment}"></th:block>
+
+<body>
+    <!-- content -->
+    <div class="container my-5">
+        <div class="row p-5">
+            <div class="col text-left">
+                <h4 class="headline" th:text="${remarks}"></h4>
+            </div>
+            <div class="row-sm-12 mt-3">
+                <th:block th:replace="~{fragments/resume_tab :: resumeTabFragment}"></th:block>
+                <div class="tab-content mx-5 my-4" id="myTabContent">
+                    <form name="certForm" id="certForm">
+                        <div class="row-sm-12 mx-2 table_margin">
+                            <div class="wrap">
+                                <div class="row mx-2">
+                                    <div class="col-sm-6 p-0">
+                                        <h4 class="subtitle ms-3">자격사항</h4>
+                                    </div>
+                                    <div class="col-sm-6 text-end p-0">
+                                        <p class="mb-0"><span class="marking">&#42; </span>필수입력항목</p>
+                                    </div>
+                                </div>
+                                <hr class="mt-0">
+                                <div class="row justify-content-sm-end mb-3">
+                                    <div class="col-sm-auto">
+                                        <button type="button" class="btn btn-outline-primary btncolor btn_reset"
+                                            id="btn_reset">초기화</button>
+                                        <button type="button" class="btn btn-outline-primary btncolor btn_add"
+                                            id="btn_add">추가</button>
+                                    </div>
+                                </div>
+                                <table class="table mb-3">
+                                    <tbody>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>자격종류</th>
+                                            <td class="table-light style_width" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control" name="cert_cls_1"
+                                                            id="cert_cls_1" th:value="${certFormDTO.c101}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>취득일자</th>
+                                            <td class="table-light" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control date" name="cert_dt_1"
+                                                            id="cert_dt_1" th:value="${certFormDTO.c1Dt}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>발급기관</th>
+                                            <td class="table-light" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control" name="cert_isu_1"
+                                                            id="cert_isu_1" th:value="${certFormDTO.c105}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light" scope="row"><span class="marking">&nbsp;
+                                                </span>등록번호</th>
+                                            <td class="table-light style_width" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control" name="cert_reg_num_1"
+                                                            th:value="${certFormDTO.c106}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="wrap" id="cert_add_2">
+                                <hr class="mt-0" style="height: 1px;">
+                                <div class="row justify-content-sm-end mb-3">
+                                    <div class="col-sm-auto">
+                                        <button type="button" class="btn btn-outline-primary btncolor btn_reset"
+                                            id="btn_reset">초기화</button>
+                                    </div>
+                                </div>
+                                <table class="table mb-3">
+                                    <tbody>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>자격종류</th>
+                                            <td class="table-light style_width" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control" name="cert_cls_2"
+                                                            id="cert_cls_2" th:value="${certFormDTO.c201}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>취득일자</th>
+                                            <td class="table-light" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control date" name="cert_dt_2"
+                                                            id="cert_dt_2" th:value="${certFormDTO.c2Dt}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>발급기관</th>
+                                            <td class="table-light" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control" name="cert_isu_2"
+                                                            id="cert_isu_2" th:value="${certFormDTO.c205}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light" scope="row"><span class="marking">&nbsp;
+                                                </span>등록번호</th>
+                                            <td class="table-light style_width" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control" name="cert_reg_num_2"
+                                                            th:value="${certFormDTO.c206}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="wrap" id="cert_add_3">
+                                <hr class="mt-0" style="height: 1px;">
+                                <div class="row justify-content-sm-end mb-3">
+                                    <div class="col-sm-auto">
+                                        <button type="button" class="btn btn-outline-primary btncolor btn_reset"
+                                            id="btn_reset">초기화</button>
+                                    </div>
+                                </div>
+                                <table class="table mb-3">
+                                    <tbody>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>자격종류</th>
+                                            <td class="table-light style_width" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control" name="cert_cls_3"
+                                                            id="cert_cls_3" th:value="${certFormDTO.c301}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>취득일자</th>
+                                            <td class="table-light" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control date" name="cert_dt_3"
+                                                            id="cert_dt_3" th:value="${certFormDTO.c3Dt}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>발급기관</th>
+                                            <td class="table-light" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control" name="cert_isu_3"
+                                                            id="cert_isu_3" th:value="${certFormDTO.c305}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light" scope="row"><span class="marking">&nbsp;
+                                                </span>등록번호</th>
+                                            <td class="table-light style_width" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control" name="cert_reg_num_3"
+                                                            th:value="${certFormDTO.c306}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="wrap" id="cert_add_4">
+                                <hr class="mt-0" style="height: 1px;">
+                                <div class="row justify-content-sm-end mb-3">
+                                    <div class="col-sm-auto">
+                                        <button type="button" class="btn btn-outline-primary btncolor btn_reset"
+                                            id="btn_reset">초기화</button>
+                                    </div>
+                                </div>
+                                <table class="table mb-3">
+                                    <tbody>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>자격종류</th>
+                                            <td class="table-light style_width" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control" name="cert_cls_4"
+                                                            id="cert_cls_4" th:value="${certFormDTO.c401}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>취득일자</th>
+                                            <td class="table-light" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control date" name="cert_dt_4"
+                                                            id="cert_dt_4" th:value="${certFormDTO.c4Dt}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>발급기관</th>
+                                            <td class="table-light" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control" name="cert_isu_4"
+                                                            id="cert_isu_4" th:value="${certFormDTO.c405}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light" scope="row"><span class="marking">&nbsp;
+                                                </span>등록번호</th>
+                                            <td class="table-light style_width" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control" name="cert_reg_num_4"
+                                                            th:value="${certFormDTO.c406}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row-sm-12 mx-2 table_margin">
+                            <div class="row mx-2">
+                                <div class="col-sm-6 p-0">
+                                    <h4 class="subtitle ms-3">PC활용능력</h4>
+                                </div>
+                                <div class="col-sm-6 text-end p-0">
+                                    <p class="mb-0"><span class="marking">&#42; </span>필수입력항목</p>
+                                </div>
+                            </div>
+                            <hr class="mt-0">
+                            <table class="table mb-3">
+                                <tbody>
+                                    <tr>
+                                        <th class="table-light" scope="row"><span class="marking">&nbsp;
+                                            </span>워드</th>
+                                        <td class="table-light" colspan="1">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <select class="form-select pc" name="cert_word" id="cert_word">
+                                                        <option></option>
+                                                        <option th:if="${certFormDTO.word!=null}" selected
+                                                            th:value="${certFormDTO.word}"
+                                                            th:text="${certFormDTO.word}"></option>
+                                                        <option value="상">상</option>
+                                                        <option value="중">중</option>
+                                                        <option value="하">하</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <th class="table-light" scope="row"><span class="marking">&nbsp;
+                                            </span>엑셀</th>
+                                        <td class="table-light" colspan="1">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <select class="form-select pc" name="cert_excel" id="cert_excel">
+                                                        <option></option>
+                                                        <option th:if="${certFormDTO.excel!=null}" selected
+                                                            th:value="${certFormDTO.excel}"
+                                                            th:text="${certFormDTO.excel}"></option>
+                                                        <option value="상">상</option>
+                                                        <option value="중">중</option>
+                                                        <option value="하">하</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <th class="table-light" scope="row"><span class="marking">&nbsp;
+                                            </span>PPT</th>
+                                        <td class="table-light" colspan="1">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <select class="form-select pc" name="cert_ppt" id="cert_ppt">
+                                                        <option></option>
+                                                        <option th:if="${certFormDTO.ppt!=null}" selected
+                                                            th:value="${certFormDTO.ppt}" th:text="${certFormDTO.ppt}">
+                                                        </option>
+                                                        <option value="상">상</option>
+                                                        <option value="중">중</option>
+                                                        <option value="하">하</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <th class="table-light" scope="row"><span class="marking">&nbsp;
+                                            </span>캐드</th>
+                                        <td class="table-light" colspan="1">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <select class="form-select pc" name="cert_cad" id="cert_cad">
+                                                        <option></option>
+                                                        <option th:if="${certFormDTO.cad!=null}" selected
+                                                            th:value="${certFormDTO.cad}" th:text="${certFormDTO.cad}">
+                                                        </option>
+                                                        <option value="상">상</option>
+                                                        <option value="중">중</option>
+                                                        <option value="하">하</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="table-light" scope="row"><span class="marking">&nbsp;
+                                            </span>기타</th>
+                                        <td class="table-light" colspan="8">
+                                            <div class="row">
+                                                <div class="col-sm-5 pe-0">
+                                                    <input type="text" class="form-control" name="cert_etc_name"
+                                                        id="cert_etc_name" th:value="${certFormDTO.etcName}">
+
+                                                </div>
+                                                <div class="col-sm-2">
+                                                    <select class="form-select pc" name="cert_etc" id="cert_etc">
+                                                        <option></option>
+                                                        <option th:if="${certFormDTO.etc!=null}" selected
+                                                            th:value="${certFormDTO.etc}" th:text="${certFormDTO.etc}">
+                                                        </option>
+                                                        <option value="상">상</option>
+                                                        <option value="중">중</option>
+                                                        <option value="하">하</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- 버튼 -->
+            <th:block th:replace="~{fragments/form_btn :: formBtnFragment}"></th:block>
+        </div>
+    </div>
+
+    <!-- 공통 스크립트-->
+    <th:block th:replace="~{fragments/script :: scriptFragment}"></th:block>
+    <th:block th:replace="~{fragments/resume_script :: resumeScriptFragment}"></th:block>
+    <script src="/js/layout/form.js" th:src="@{/js/layout/form.js}"></script>
+    <script>
+
+        selectOpt("pc");
+
+        /* 초기화 버튼 */
+        $(".btn_reset").on("click", function () {
+            var parentDiv = $(this).closest('.wrap');
+            parentDiv.find('input[type="text"]').val('').trigger("change");
+        });
+
+        for (var i = 2; i <= 5; i++) {
+            if ($("#cert_cls_" + i).val() === "" || $("#cert_cls_" + i).val() === null) {
+                $("#cert_add_" + i).hide();
+            }
+        }
+
+        $(".btn_add").on("click", function () {
+            var len = $(".wrap").length;
+            var cnt = $(".wrap:visible").length;
+
+            // 추가할 요소의 ID 계산
+            var nextID = cnt + 1; // 이미 #co_add_2가 있으므로 2를 더해줍니다.
+
+            // 추가할 요소가 있는지 확인
+            if (cnt < len) {
+                $(".wrap:hidden").first().show();
+            } else {
+                alert("최대 4개까지 가능합니다.");
+            }
+        });
+
+        /* 저장 */
+        $("#btn_next, #btn_save, #btn_prev").on("click", function (e) {
+
+            for (var i = 1; i <= 4; i++) {
+                if ($('#cert_cls_' + i).val().trim() !== "") {
+                    if (!validateField('cert_cls_' + i, '자격증을 입력해 주세요.') ||
+                        !validateField('cert_dt_' + i, '취득일자를 입력해 주세요.') ||
+                        !validateField('cert_isu_' + i, '발급기관을 입력해 주세요.')
+                    ) {
+                        return false;
+                    }
+
+
+                }
+            }
+
+            if ($('#cert_etc_name').val().trim() !== '') {
+                if (!validateSelect('cert_etc', '활용능력 수준을 선택해 주세요.')
+                ) {
+                    return false;
+                }
+            }
+
+
+            var href = '';
+
+            // FormData 객체 생성
+            var formData = $("#certForm").serialize();
+
+            // "다음" 또는 "이전" 버튼인 경우에만 href 설정
+            if ($(this).attr('id') === "btn_next") {
+                href = "/resume/self-introduction";
+            } else if ($(this).attr('id') === "btn_prev") {
+                href = "/resume/language";
+            } else if ($(this).attr('id') === "btn_save") {
+                href = "";
+            } else {
+                // var isValid = user_info_valid(true);
+                href = $(this).find('a').attr('href');
+            }
+
+            $.ajax({
+                method: "POST",
+                url: "/api_resume/certifications",
+                data: formData
+            }).done(function (data) {
+                if (href == '') {
+                    alert("저장되었습니다.");
+                } else {
+                    location.href = href;
+                }
+            }).fail(function (data, textStatus, errorThrown) {
+                alert("부득이한 사정으로 인해 현재 서비스 이용이 제한될 수 있습니다.\n\n불편을 드려 죄송합니다. 관리자에게 문의하여 주십시오.\n\n문의번호 : 051-580-5546");
+                callback(data);
+            });
+
+        });
+    </script>
+</body>
+
+</html>

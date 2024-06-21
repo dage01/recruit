@@ -1,0 +1,52 @@
+* {
+    color: rgb(59, 59, 59);
+    font-weight: bold;
+    text-align: start;
+}
+
+.hoverable{
+    font-weight: normal;
+}
+
+.title,
+.modal-title {
+    color: black;
+    font-weight: bold;
+}
+
+th.table-light,
+#idPhoto {
+    width: 11%;
+}
+
+td.table-light.padding {
+    padding-left: 24px;
+}
+
+th.table-light.thTitle {
+    width: 15%;
+}
+
+.subTag {
+    font-size: 17px;
+    color: rgb(5, 1, 24);
+}
+
+.infoTag {
+    border-left: 2px solid rgb(175, 175, 175);
+}
+
+.infoTitle {
+    font-weight: bold;
+}
+
+.row.content .col-sm-auto {
+    padding-right: 0px;
+}
+
+.contour {
+    border-bottom: 0.5px solid rgb(192, 192, 192);
+    width: 98%;
+    height: 0.1px;
+    margin: 0 auto;
+}

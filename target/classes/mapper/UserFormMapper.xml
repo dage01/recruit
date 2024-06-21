@@ -1,0 +1,639 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dage.recruit.dao.FormDAO">
+    <!-- 기본 정보 -->
+    <select id="basicInfo" resultType="com.dage.recruit.dto.InfoBasicFormDTO">
+        SELECT
+            SEQ,
+            SEX_TAG,
+            (CASE
+                WHEN LENGTH(PHONE) = 11 THEN REGEXP_REPLACE(PHONE, '(\d{3})(\d{4})(\d{4})', '\1-\2-\3')
+                WHEN LENGTH(PHONE) = 10 THEN REGEXP_REPLACE(PHONE, '(\d{3})(\d{3})(\d{4})', '\1-\2-\3')
+                WHEN LENGTH(PHONE) = 9 THEN REGEXP_REPLACE(PHONE, '(\d{3})(\d{3})(\d{3})', '\1-\2-\3')
+            END) AS PHONE,
+            (CASE
+                WHEN PHONE_M IS NULL OR PHONE_M = '' THEN PHONE_FRONT
+                WHEN PHONE_BACK IS NULL OR PHONE_BACK = '' THEN PHONE_FRONT || '-' || PHONE_M
+                ELSE PHONE_FRONT || '-' || PHONE_M || '-' || PHONE_BACK
+            END) AS PHONE_MOBILE,
+            POST_NUM_H,
+            ADDRESS_H,
+            ADDRESS_H2,
+            WELFARE_TAG,
+            OBSTACLE_TAG,
+            A1_01,
+            A1_03,
+            A1_04,
+            A1_05,
+            (CASE
+                WHEN A1_06 IS NULL OR A1_06 = '' THEN ''
+                WHEN A1_07 IS NULL OR A1_07 = '' THEN ''
+                ELSE A1_06 || '-' || A1_07
+            END) AS A1_SDT,
+            (CASE
+                WHEN A1_09 IS NULL OR A1_09 = '' THEN ''
+                WHEN A1_10 IS NULL OR A1_10 = '' THEN ''
+                ELSE A1_09 || '-' || A1_10
+            END) AS A1_EDT,
+            A1_12
+        FROM
+            NEW_RECRUIT_TMP
+        WHERE SEQ = #{seq}
+    </select>
+    <update id="saveBasicInfo" parameterType="map">
+        UPDATE NEW_RECRUIT_TMP
+        SET
+            SEX_TAG = #{sex_tag},
+            PHONE = #{user_tel},
+            PHONE_FRONT = #{front},
+            PHONE_M = #{middle},
+            PHONE_BACK = #{back},
+            POST_NUM_H = #{post_num_h},
+            ADDRESS_H = #{address_h},
+            ADDRESS_H2 = #{address_h2},
+            WELFARE_TAG = #{welfare_tag},
+            OBSTACLE_TAG = #{obstacle_tag},
+            A1_01 = #{mil_srvc},
+            A1_03 = #{mil_type},
+            A1_04 = #{mil_type_rank},
+            A1_05 = #{mil_discharge},
+            A1_06 = #{sdt_y},
+            A1_07 = #{sdt_m},
+            A1_09 = #{edt_y},
+            A1_10 = #{edt_m},
+            A1_12 = #{mil_exem}
+        WHERE SEQ = #{seq}
+    </update>
+    <!-- 학력사항 -->
+    <select id="education" resultType="com.dage.recruit.dto.EducationFormDTO">
+        SELECT
+            SEQ,
+            (CASE
+                WHEN H1_01 IS NULL OR H1_01 = '' THEN ''
+                WHEN H1_02 IS NULL OR H1_02 = '' THEN ''
+                ELSE H1_01 || '-' || H1_02
+                END) AS H1_SDT,
+            (CASE
+                WHEN H1_03 IS NULL OR H1_03 = '' THEN ''
+                WHEN H1_04 IS NULL OR H1_04 = '' THEN ''
+                ELSE H1_03 || '-' || H1_04
+                END) AS H1_EDT,
+            H1_05,
+            H1_06,
+            H1_07,
+            H1_08,
+            (CASE
+                WHEN H2_01 IS NULL OR H1_01 = '' THEN ''
+                WHEN H2_02 IS NULL OR H2_02 = '' THEN ''
+                ELSE H2_01 || '-' || H2_02
+                END) AS H2_SDT,
+            (CASE
+                WHEN H1_03 IS NULL OR H2_03 = '' THEN ''
+                WHEN H2_04 IS NULL OR H2_04 = '' THEN ''
+                ELSE H2_03 || '-' || H2_04
+                END) AS H2_EDT,
+            H2_05,
+            H2_06,
+            H2_07,
+            H2_08,
+            H2_09,
+            H2_10,
+            H2_11,
+            H2_12,
+            H2_13,
+            H2_14,
+            (CASE
+                WHEN H3_01 IS NULL OR H3_01 = '' THEN ''
+                WHEN H3_02 IS NULL OR H3_02 = '' THEN ''
+                ELSE H3_01 || '-' || H3_02
+                END) AS H3_SDT,
+            (CASE
+                WHEN H3_03 IS NULL OR H3_03 = '' THEN ''
+                WHEN H3_04 IS NULL OR H3_04 = '' THEN ''
+                ELSE H3_03 || '-' || H3_04
+                END) AS H3_EDT,
+            H3_05,
+            H3_06,
+            H3_07,
+            H3_08,
+            H3_09,
+            H3_10,
+            H3_11,
+            H3_12,
+            H3_13,
+            H3_14,
+            (CASE
+                WHEN H4_01 IS NULL OR H4_01 = '' THEN ''
+                WHEN H4_02 IS NULL OR H4_02 = '' THEN ''
+                ELSE H4_01 || '-' || H4_02
+                END) AS H4_SDT,
+            (CASE
+                WHEN H4_03 IS NULL OR H4_03 = '' THEN ''
+                WHEN H4_04 IS NULL OR H4_04 = '' THEN ''
+                ELSE H4_03 || '-' || H4_04
+                END) AS H4_EDT,
+            H4_05,
+            H4_06,
+            H4_07,
+            H4_08,
+            H4_09,
+            H4_10,
+            H4_11,
+            H4_12,
+            H4_13,
+            H4_14,
+            (CASE
+                WHEN H5_01 IS NULL OR H5_01 = '' THEN ''
+                WHEN H5_02 IS NULL OR H5_02 = '' THEN ''
+                ELSE H5_01 || '-' || H5_02
+                END) AS H5_SDT,
+            (CASE
+                WHEN H5_03 IS NULL OR H5_03 = '' THEN ''
+                WHEN H5_04 IS NULL OR H5_04 = '' THEN ''
+                ELSE H5_03 || '-' || H5_04
+            END) AS H5_EDT,
+            H5_05,
+            H5_06,
+            H5_07,
+            H5_08,
+            H5_09,
+            H5_10,
+            H5_11,
+            H5_12,
+            H5_13,
+            H5_14,
+            H5_15,
+            (CASE
+                WHEN H6_01 IS NULL OR H6_01 = '' THEN ''
+                WHEN H6_02 IS NULL OR H6_02 = '' THEN ''
+                ELSE H6_01 || '-' || H6_02
+                END) AS H6_SDT,
+            (CASE
+                WHEN H6_03 IS NULL OR H6_03 = '' THEN ''
+                WHEN H6_04 IS NULL OR H6_04 = '' THEN ''
+                ELSE H6_03 || '-' || H6_04
+            END) AS H6_EDT,
+            H6_05,
+            H6_06,
+            H6_07,
+            H6_08,
+            H6_09,
+            H6_10,
+            H6_11,
+            H6_12,
+            H6_13,
+            H6_14,
+            H6_15
+        FROM
+            NEW_RECRUIT_TMP
+        WHERE SEQ = #{seq}
+    </select>
+    <update id="saveEducation" parameterType="map">
+        UPDATE NEW_RECRUIT_TMP
+        SET
+            H1_01 = #{high_sdt_y},
+            H1_02 = #{high_sdt_m},
+            H1_03 = #{high_edt_y},
+            H1_04 = #{high_edt_m},
+            H1_05 = #{high_grd},
+            H1_06 = #{high_name},
+            H1_07 = #{high_fn},
+            H1_08 = #{high_ser},
+            H2_01 = #{col_sdt_y},
+            H2_02 = #{col_sdt_m},
+            H2_03 = #{col_sdt_y},
+            H2_04 = #{col_sdt_m},
+            H2_05 = #{college_grd},
+            H2_06 = #{college_name},
+            H2_07 = #{college_loc},
+            H2_08 = #{college_dn},
+            H2_09 = #{h209},
+            H2_10 = #{college_cls},
+            H2_11 = #{college_cls_sub},
+            H2_12 = #{college_cls_sub_name},
+            H2_13 = #{college_crd},
+            H2_14 = #{college_crd_max},
+            H3_01 = #{univ_sdt_y},
+            H3_02 = #{univ_sdt_m},
+            H3_03 = #{univ_edt_y},
+            H3_04 = #{univ_edt_m},
+            H3_05 = #{univ_grd},
+            H3_06 = #{univ_name},
+            H3_07 = #{univ_loc},
+            H3_08 = #{univ_dn},
+            H3_09 = #{h309},
+            H3_10 = #{univ_cls},
+            H3_11 = #{univ_cls_sub},
+            H3_12 = #{univ_cls_sub_name},
+            H3_13 = #{univ_crd},
+            H3_14 = #{univ_crd_max},
+            H4_01 = #{univ_sdt_y_2},
+            H4_02 = #{univ_sdt_m_2},
+            H4_03 = #{univ_edt_y_2},
+            H4_04 = #{univ_edt_m_2},
+            H4_05 = #{univ_grd_2},
+            H4_06 = #{univ_name_2},
+            H4_07 = #{univ_loc_2},
+            H4_08 = #{univ_dn_2},
+            H4_09 = #{h409},
+            H4_10 = #{univ_cls_2},
+            H4_11 = #{univ_cls_sub_2},
+            H4_12 = #{univ_cls_sub_name_2},
+            H4_13 = #{univ_crd_2},
+            H4_14 = #{univ_crd_max_2},
+            H5_01 = #{grad_sdt_y},
+            H5_02 = #{grad_sdt_m},
+            H5_03 = #{grad_edt_y},
+            H5_04 = #{grad_edt_m},
+            H5_05 = #{grad_grd},
+            H5_06 = #{grad_name},
+            H5_07 = #{grad_loc},
+            H5_08 = #{grad_dn},
+            H5_09 = #{h509},
+            H5_10 = #{grad_cls},
+            H5_11 = #{grad_cls_sub},
+            H5_12 = #{grad_cls_sub_name},
+            H5_13 = #{grad_crd},
+            H5_14 = #{grad_crd_max},
+            H5_15 = #{grad_thesis},
+            H6_01 = #{grad_sdt_y_2},
+            H6_02 = #{grad_sdt_m_2},
+            H6_03 = #{grad_edt_y_2},
+            H6_04 = #{grad_edt_m_2},
+            H6_05 = #{grad_grd_2},
+            H6_06 = #{grad_name_2},
+            H6_07 = #{grad_loc_2},
+            H6_08 = #{grad_dn_2},
+            H6_09 = #{h609},
+            H6_10 = #{grad_cls_2},
+            H6_11 = #{grad_cls_sub_2},
+            H6_12 = #{grad_cls_sub_name_2},
+            H6_13 = #{grad_crd_2},
+            H6_14 = #{grad_crd_max_2},
+            H6_15 = #{grad_thesis_2}
+        WHERE SEQ = #{seq}
+    </update>
+    <!-- 경력사항 -->
+    <select id="experience" resultType="com.dage.recruit.dto.ExperienceFormDTO">
+        SELECT
+            SEQ,
+            (CASE
+                WHEN W1_01 IS NULL OR W1_01 = '' THEN ''
+                WHEN W1_02 IS NULL OR W1_02 = '' THEN ''
+                ELSE W1_01 || '-' || W1_02
+            END) AS W1_SDT,
+            (CASE
+                WHEN W1_03 IS NULL OR W1_03 = '' THEN ''
+                WHEN W1_04 IS NULL OR W1_04 = '' THEN ''
+                ELSE W1_03 || '-' || W1_04
+            END) AS W1_EDT,
+            W1_05,
+            W1_06,
+            W1_07,
+            W1_08,
+            W1_09,
+            W1_10,
+            W1_11,
+            (CASE
+                WHEN W2_01 IS NULL OR W1_01 = '' THEN ''
+                WHEN W2_02 IS NULL OR W2_02 = '' THEN ''
+                ELSE W2_01 || '-' || W2_02
+            END) AS W2_SDT,
+            (CASE
+                WHEN W1_03 IS NULL OR W2_03 = '' THEN ''
+                WHEN W2_04 IS NULL OR W2_04 = '' THEN ''
+                ELSE W2_03 || '-' || W2_04
+            END) AS W2_EDT,
+            W2_05,
+            W2_06,
+            W2_07,
+            W2_08,
+            W2_09,
+            W2_10,
+            W2_11,
+            (CASE
+                WHEN W3_01 IS NULL OR W3_01 = '' THEN ''
+                WHEN W3_02 IS NULL OR W3_02 = '' THEN ''
+                ELSE W3_01 || '-' || W3_02
+            END) AS W3_SDT,
+            (CASE
+                WHEN W3_03 IS NULL OR W3_03 = '' THEN ''
+                WHEN W3_04 IS NULL OR W3_04 = '' THEN ''
+                ELSE W3_03 || '-' || W3_04
+            END) AS W3_EDT,
+            W3_05,
+            W3_06,
+            W3_07,
+            W3_08,
+            W3_09,
+            W3_10,
+            W3_11,
+            (CASE
+                WHEN W4_01 IS NULL OR W4_01 = '' THEN ''
+                WHEN W4_02 IS NULL OR W4_02 = '' THEN ''
+                ELSE W4_01 || '-' || W4_02
+                END) AS W4_SDT,
+            (CASE
+                WHEN W4_03 IS NULL OR W4_03 = '' THEN ''
+                WHEN W4_04 IS NULL OR W4_04 = '' THEN ''
+                ELSE W4_03 || '-' || W4_04
+                END) AS W4_EDT,
+            W4_05,
+            W4_06,
+            W4_07,
+            W4_08,
+            W4_09,
+            W4_10,
+            W4_11,
+            (CASE
+                WHEN W5_01 IS NULL OR W5_01 = '' THEN ''
+                WHEN W5_02 IS NULL OR W5_02 = '' THEN ''
+                ELSE W5_01 || '-' || W5_02
+            END) AS W5_SDT,
+            (CASE
+                WHEN W5_03 IS NULL OR W5_03 = '' THEN ''
+                WHEN W5_04 IS NULL OR W5_04 = '' THEN ''
+                ELSE W5_03 || '-' || W5_04
+            END) AS W5_EDT,
+            W5_05,
+            W5_06,
+            W5_07,
+            W5_08,
+            W5_09,
+            W5_10,
+            W5_11
+        FROM
+            NEW_RECRUIT_TMP
+        WHERE SEQ = #{seq}
+    </select>
+    <update id="saveExperience" parameterType="map">
+        UPDATE NEW_RECRUIT_TMP
+        SET
+            W1_01 = #{co_sdt_y_1},
+            W1_02 = #{co_sdt_m_1},
+            W1_03 = #{co_edt_y_1},
+            W1_04 = #{co_edt_m_1},
+            W1_05 = #{co_month_1},
+            W1_06 = #{co_name_1},
+            W1_07 = #{co_dept_1},
+            W1_08 = #{co_rank_1},
+            W1_09 = #{co_salary_1},
+            W1_10 = #{co_work_1},
+            W1_11 = #{co_retire_1},
+            W2_01 = #{co_sdt_y_2},
+            W2_02 = #{co_sdt_m_2},
+            W2_03 = #{co_edt_y_2},
+            W2_04 = #{co_edt_m_2},
+            W2_05 = #{co_month_2},
+            W2_06 = #{co_name_2},
+            W2_07 = #{co_dept_2},
+            W2_08 = #{co_rank_2},
+            W2_09 = #{co_salary_2},
+            W2_10 = #{co_work_2},
+            W2_11 = #{co_retire_2},
+            W3_01 = #{co_sdt_y_3},
+            W3_02 = #{co_sdt_m_3},
+            W3_03 = #{co_edt_y_3},
+            W3_04 = #{co_edt_m_3},
+            W3_05 = #{co_month_3},
+            W3_06 = #{co_name_3},
+            W3_07 = #{co_dept_3},
+            W3_08 = #{co_rank_3},
+            W3_09 = #{co_salary_3},
+            W3_10 = #{co_work_3},
+            W3_11 = #{co_retire_3},
+            W4_01 = #{co_sdt_y_4},
+            W4_02 = #{co_sdt_m_4},
+            W4_03 = #{co_edt_y_4},
+            W4_04 = #{co_edt_m_4},
+            W4_05 = #{co_month_4},
+            W4_06 = #{co_name_4},
+            W4_07 = #{co_dept_4},
+            W4_08 = #{co_rank_4},
+            W4_09 = #{co_salary_4},
+            W4_10 = #{co_work_4},
+            W4_11 = #{co_retire_4},
+            W5_01 = #{co_sdt_y_5},
+            W5_02 = #{co_sdt_m_5},
+            W5_03 = #{co_edt_y_5},
+            W5_04 = #{co_edt_m_5},
+            W5_05 = #{co_month_5},
+            W5_06 = #{co_name_5},
+            W5_07 = #{co_dept_5},
+            W5_08 = #{co_rank_5},
+            W5_09 = #{co_salary_5},
+            W5_10 = #{co_work_5},
+            W5_11 = #{co_retire_5}
+        WHERE SEQ = #{seq}
+    </update>
+    <!-- 외국어사항 -->
+    <select id="language" resultType="com.dage.recruit.dto.LanguageFormDTO">
+        SELECT
+            SEQ,
+            F1_01,
+            F1_02,
+            F1_03,
+            (CASE
+                WHEN F1_04 IS NULL OR F1_04 = '' THEN ''
+                WHEN F1_05 IS NULL OR F1_05 = '' THEN ''
+                WHEN F1_06 IS NULL OR F1_06 = '' THEN ''
+                ELSE F1_04 || '-' || F1_05 || '-' || F1_06
+            END) AS F1_DT,
+            F1_07,
+            F2_01,
+            F2_02,
+            F2_03,
+            (CASE
+                WHEN F2_04 IS NULL OR F2_04 = '' THEN ''
+                WHEN F2_05 IS NULL OR F2_05 = '' THEN ''
+                WHEN F2_06 IS NULL OR F2_06 = '' THEN ''
+                ELSE F2_04 || '-' || F2_05 || '-' || F2_06
+            END) AS F2_DT,
+            F2_07,
+            F3_01,
+            F3_02,
+            F3_03,
+            (CASE
+                WHEN F3_04 IS NULL OR F3_04 = '' THEN ''
+                WHEN F3_05 IS NULL OR F3_05 = '' THEN ''
+                WHEN F3_06 IS NULL OR F3_06 = '' THEN ''
+                ELSE F3_04 || '-' || F3_05 || '-' || F3_06
+            END) AS F3_DT,
+            F3_07,
+            F4_01,
+            F4_02,
+            F4_03,
+            (CASE
+                WHEN F4_04 IS NULL OR F4_04 = '' THEN ''
+                WHEN F4_05 IS NULL OR F4_05 = '' THEN ''
+                WHEN F4_06 IS NULL OR F4_06 = '' THEN ''
+                ELSE F4_04 || '-' || F4_05 || '-' || F4_06
+            END) AS F4_DT,
+            F4_07,
+            F5_01,
+            F5_02,
+            F5_03,
+            (CASE
+                WHEN F5_04 IS NULL OR F5_04 = '' THEN ''
+                WHEN F5_05 IS NULL OR F5_05 = '' THEN ''
+                WHEN F5_06 IS NULL OR F5_06 = '' THEN ''
+                ELSE F5_04 || '-' || F5_05 || '-' || F5_06
+            END) AS F5_DT,
+            F5_07
+        FROM
+            NEW_RECRUIT_TMP
+        WHERE SEQ = #{seq}
+    </select>
+    <update id="saveLanguage" parameterType="map">
+        UPDATE NEW_RECRUIT_TMP
+        SET
+            F1_01 = #{lang_1},
+            F1_02 = #{lang_test_1},
+            F1_03 = #{lang_score_1},
+            F1_04 = #{lang_dt_y_1},
+            F1_05 = #{lang_dt_m_1},
+            F1_06 = #{lang_dt_d_1},
+            F1_07 = #{lang_lv_1},
+            F2_01 = #{lang_2},
+            F2_02 = #{lang_test_2},
+            F2_03 = #{lang_score_2},
+            F2_04 = #{lang_dt_y_2},
+            F2_05 = #{lang_dt_m_2},
+            F2_06 = #{lang_dt_d_2},
+            F2_07 = #{lang_lv_2},
+            F3_01 = #{lang_3},
+            F3_02 = #{lang_test_3},
+            F3_03 = #{lang_score_3},
+            F3_04 = #{lang_dt_y_3},
+            F3_05 = #{lang_dt_m_3},
+            F3_06 = #{lang_dt_d_3},
+            F3_07 = #{lang_lv_3},
+            F4_01 = #{lang_4},
+            F4_02 = #{lang_test_4},
+            F4_03 = #{lang_score_4},
+            F4_04 = #{lang_dt_y_4},
+            F4_05 = #{lang_dt_m_4},
+            F4_06 = #{lang_dt_d_4},
+            F4_07 = #{lang_lv_4},
+            F5_01 = #{lang_5},
+            F5_02 = #{lang_test_5},
+            F5_03 = #{lang_score_5},
+            F5_04 = #{lang_dt_y_5},
+            F5_05 = #{lang_dt_m_5},
+            F5_06 = #{lang_dt_d_5},
+            F5_07 = #{lang_lv_5}
+        WHERE SEQ = #{seq}
+    </update>
+    <!-- 자격사항 -->
+    <select id="certifications" resultType="com.dage.recruit.dto.CertFormDTO">
+        SELECT
+            SEQ,
+            C1_01,
+            (CASE
+                WHEN C1_02 IS NULL OR C1_02 = '' THEN ''
+                WHEN C1_03 IS NULL OR C1_03 = '' THEN ''
+                WHEN C1_04 IS NULL OR C1_04 = '' THEN ''
+                ELSE C1_02 || '-' || C1_03 || '-' || C1_04
+            END) AS C1_DT,
+            C1_05,
+            C1_06,
+            C2_01,
+            (CASE
+                WHEN C2_02 IS NULL OR C2_02 = '' THEN ''
+                WHEN C2_03 IS NULL OR C2_03 = '' THEN ''
+                WHEN C2_04 IS NULL OR C2_04 = '' THEN ''
+                ELSE C2_02 || '-' || C2_03 || '-' || C2_04
+            END) AS C2_DT,
+            C2_05,
+            C2_06,
+            C3_01,
+            (CASE
+                WHEN C3_02 IS NULL OR C3_02 = '' THEN ''
+                WHEN C3_03 IS NULL OR C3_03 = '' THEN ''
+                WHEN C3_04 IS NULL OR C3_04 = '' THEN ''
+                ELSE C3_02 || '-' || C3_03 || '-' || C3_04
+            END) AS C3_DT,
+            C3_05,
+            C3_06,
+            C4_01,
+            (CASE
+                WHEN C4_02 IS NULL OR C4_02 = '' THEN ''
+                WHEN C4_03 IS NULL OR C4_03 = '' THEN ''
+                WHEN C4_04 IS NULL OR C4_04 = '' THEN ''
+                ELSE C4_02 || '-' || C4_03 || '-' || C4_04
+            END) AS C4_DT,
+            C4_05,
+            C4_06,
+            C1_07 AS word,
+            C2_07 AS excel,
+            C3_07 AS ppt,
+            C4_07 AS cad,
+            C5_07 AS etc_name,
+            C5_08 AS etc
+        FROM
+            NEW_RECRUIT_TMP
+        WHERE SEQ = #{seq}
+    </select>
+    <update id="saveCertifications" parameterType="map">
+        UPDATE NEW_RECRUIT_TMP
+        SET
+            C1_01 = #{cert_cls_1},
+            C1_02 = #{cert_dt_y_1},
+            C1_03 = #{cert_dt_m_1},
+            C1_04 = #{cert_dt_d_1},
+            C1_05 = #{cert_isu_1},
+            C1_06 = #{cert_reg_num_1},
+            C2_01 = #{cert_cls_2},
+            C2_02 = #{cert_dt_y_2},
+            C2_03 = #{cert_dt_m_2},
+            C2_04 = #{cert_dt_d_2},
+            C2_05 = #{cert_isu_2},
+            C2_06 = #{cert_reg_num_2},
+            C3_01 = #{cert_cls_3},
+            C3_02 = #{cert_dt_y_3},
+            C3_03 = #{cert_dt_m_3},
+            C3_04 = #{cert_dt_d_3},
+            C3_05 = #{cert_isu_3},
+            C3_06 = #{cert_reg_num_3},
+            C4_01 = #{cert_cls_4},
+            C4_02 = #{cert_dt_y_4},
+            C4_03 = #{cert_dt_m_4},
+            C4_04 = #{cert_dt_d_4},
+            C4_05 = #{cert_isu_4},
+            C4_06 = #{cert_reg_num_4},
+            C1_07 = #{cert_word},
+            C2_07 = #{cert_excel},
+            C3_07 = #{cert_ppt},
+            C4_07 = #{cert_cad},
+            C5_07 = #{cert_etc_name},
+            C5_08 = #{cert_etc}
+        WHERE SEQ = #{seq}
+    </update>
+    <!-- 자격사항 -->
+    <select id="introSelf" resultType="com.dage.recruit.dto.IntroSelfFormDTO">
+        SELECT
+            SEQ,
+            INTRO1,
+            INTRO2,
+            INTRO3,
+            INTRO4,
+            INTRO5
+        FROM
+            NEW_RECRUIT_TMP
+        WHERE SEQ = #{seq}
+    </select>
+    <update id="saveIntroSelf" parameterType="map">
+        UPDATE NEW_RECRUIT_TMP
+        SET
+            INTRO1 = #{intro_1},
+            INTRO2 = #{intro_2},
+            INTRO3 = #{intro_3},
+            INTRO4 = #{intro_4},
+            INTRO5 = #{intro_5}
+        WHERE SEQ = #{seq}
+    </update>
+    <delete id="deleteForm">
+        DELETE FROM NEW_RECRUIT_TMP
+        WHERE SEQ = #{seq}
+    </delete>
+</mapper>

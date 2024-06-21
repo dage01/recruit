@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 공통 헤드-->
+<th:block th:replace="~{fragments/head :: headFragment}"></th:block>
+
+<!-- Custom Stylesheets -->
+<link rel="stylesheet" href="/css/layout/top.css" th:href="@{/css/layout/top.css}">
+<link rel="stylesheet" href="/css/form/form.css" th:href="@{/css/form/form.css}">
+
+<style>
+    #select2-univ_name_add-container,
+    #select2-grad_name_add-container {
+        min-width: 491px;
+    }
+</style>
+
+</head>
+<!-- 공통 Nav -->
+<th:block th:replace="~{fragments/top :: topbarFragment}"></th:block>
+
+<body>
+    <!-- content -->
+    <div class="container my-5">
+        <div class="row p-5">
+            <div class="col text-left">
+                <h4 class="headline" th:text="${remarks}"></h4>
+            </div>
+            <div class="row-sm-12 mt-3">
+                <th:block th:replace="~{fragments/resume_tab :: resumeTabFragment}"></th:block>
+                <div class="tab-content mx-5 my-4" id="myTabContent">
+                    <form name="educationForm" id="educationForm">
+                        <div class="row-sm-12 mx-2 table_margin">
+                            <div class="row mx-2">
+                                <div class="col-sm-6 p-0">
+                                    <h4 class="subtitle mb-1"><span class="marking">&#42;
+                                        </span>고등학교</h4>
+                                </div>
+                                <div class="col-sm-6 text-end p-0">
+                                    <p class="mb-1"><span class="marking">&#42; </span>필수입력항목</p>
+                                </div>
+                            </div>
+                            <hr class="mt-0">
+                            <table class="table mb-5">
+                                <tbody>
+                                    <div class="row mb-3 text-end">
+                                        <label id="fn">
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" type="checkbox" id="high_fn"
+                                                    name="high_fn" value="True"
+                                                    th:checked="${educationFormDTO.h107=='True'}">
+                                                <label class="form-check-label" for="fn">검정고시여부</label>
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <tr>
+                                        <th class="table-light" scope="row"><span class="marking">&#42;
+                                            </span>학교명
+                                        </th>
+                                        <td class="table-light style_width_3" colspan="2">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <input type="text" class="form-control high_name" name="high_name"
+                                                        id="high_name" th:value="${educationFormDTO.h106}">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <th class="table-light" scope="row"><span class="marking">&#42;
+                                            </span>계열구분</th>
+                                        <td class="table-light style_width_2" colspan="1">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <select class="form-select high_ser" name="high_ser" id="high_ser">
+                                                        <option></option>
+                                                        <option th:unless="${educationFormDTO.h108==null}" selected
+                                                            th:value="${educationFormDTO.h108}"
+                                                            th:text="${educationFormDTO.h108}"></option>
+                                                        <option value="인문계">인문계</option>
+                                                        <option value="실업계">실업계</option>
+                                                        <option value="상업계">상업계</option>
+                                                        <option value="공업계">공업계</option>
+                                                        <option value="예체능">예체능</option>
+                                                        <option value="기타">기타</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="table-light" scope="row"><span class="marking">&#42;
+                                            </span>재학기간</th>
+                                        <td class="table-light style_width_3" colspan="2">
+                                            <div class="row">
+                                                <div class="col-sm-10">
+                                                    <div class="input-group dateMonth">
+                                                        <input type="text" class="form-control" id="high_start_date"
+                                                            name="high_start_date" th:value="${educationFormDTO.h1Sdt}">
+                                                        <span class="input-group-text">~</span>
+                                                        <input type="text" class="form-control" id="high_end_date"
+                                                            name="high_end_date" th:value="${educationFormDTO.h1Edt}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <th class="table-light" scope="row"><span class="marking">&#42;
+                                            </span>졸업구분</th>
+                                        <td class="table-light style_width_2" colspan="1">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <select class="form-select grd" name="high_grd" id="high_grd">
+                                                        <option></option>
+                                                        <option th:unless="${educationFormDTO.h105==null}" selected
+                                                            th:value="${educationFormDTO.h105}"
+                                                            th:text="${educationFormDTO.h105}">
+                                                        </option>
+                                                        <option value="졸업예정">졸업예정</option>
+                                                        <option value="졸업">졸업</option>
+                                                        <option value="수료">수료</option>
+                                                        <option value="휴학">휴학</option>
+                                                        <option value="편입">편입</option>
+                                                        <option value="중퇴">중퇴</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row-sm-12 mx-2 table_margin">
+                            <div class="wrap">
+                                <div class="row mx-2">
+                                    <div class="col-sm-6 p-0">
+                                        <h4 class="subtitle ms-3">전문대학교</h4>
+                                    </div>
+                                    <div class="col-sm-6 text-end p-0">
+                                        <p class="mb-0"><span class="marking">&#42; </span>필수입력항목</p>
+                                    </div>
+                                </div>
+                                <hr class="mt-0">
+                                <div class="row justify-content-sm-end mb-3">
+                                    <div class="col-sm-auto">
+                                        <button type="button" class="btn btn-outline-primary btncolor btn_reset"
+                                            id="btn_reset">초기화</button>
+                                    </div>
+                                </div>
+                                <table class="table mb-3">
+                                    <tbody>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>학교명</th>
+                                            <td class="table-light style_width_3" colspan="2">
+                                                <div class="row">
+                                                    <div class="col-sm">
+                                                        <select class="form-select college_list" name="college_name"
+                                                            id="college_name">
+                                                            <option></option>
+                                                            <option th:unless="${educationFormDTO.h206==null}" selected
+                                                                th:value="${educationFormDTO.h206}"
+                                                                th:text="${educationFormDTO.h206}">
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light " scope="row"><span class="marking">&#42;
+                                                </span>소재지</th>
+                                            <td class="table-light style_width_2" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <select class="form-select univ_loc" name="college_loc"
+                                                            id="college_loc">
+                                                            <option></option>
+                                                            <option th:unless="${educationFormDTO.h207==null}" selected
+                                                                th:value="${educationFormDTO.h207}"
+                                                                th:text="${educationFormDTO.h207}">
+                                                            </option>
+                                                            <option value="서울">서울</option>
+                                                            <option value="경기">경기</option>
+                                                            <option value="부산">부산</option>
+                                                            <option value="인천">인천</option>
+                                                            <option value="광주">광주</option>
+                                                            <option value="대구">대구</option>
+                                                            <option value="울산">울산</option>
+                                                            <option value="대전">대전</option>
+                                                            <option value="강원">강원</option>
+                                                            <option value="충남">충남</option>
+                                                            <option value="충북">충북</option>
+                                                            <option value="전남">전남</option>
+                                                            <option value="전북">전북</option>
+                                                            <option value="경남">경남</option>
+                                                            <option value="경북">경북</option>
+                                                            <option value="제주">제주</option>
+                                                            <option value="해외">해외</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>재학기간</th>
+                                            <td class="table-light style_width_3" colspan="2">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <div class="input-group dateMonth">
+                                                            <input type="text" class="form-control"
+                                                                id="college_start_date" name="college_start_date"
+                                                                th:value="${educationFormDTO.h2Sdt}">
+                                                            <span class="input-group-text">~</span>
+                                                            <input type="text" class="form-control"
+                                                                id="college_end_date" name="college_end_date"
+                                                                th:value="${educationFormDTO.h2Edt}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>주야구분</th>
+                                            <td class="table-light style_width_2" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <select class="form-select univ_dn" name="college_dn"
+                                                            id="college_dn">
+                                                            <option></option>
+                                                            <option th:if="${educationFormDTO.h208 != null}" selected
+                                                                th:value="${educationFormDTO.h208}"
+                                                                th:text="${educationFormDTO.h208}">
+                                                            </option>
+                                                            <option value="주간">주간</option>
+                                                            <option value="야간">야간</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>주전공</th>
+                                            <td class="table-light style_width_3" colspan="2">
+                                                <div class="row">
+                                                    <div class="col-sm">
+                                                        <input type="text" class="form-control" id="college_cls"
+                                                            name="college_cls" th:value="${educationFormDTO.h210}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>취득학점</th>
+                                            <td class="table-light style_width_2" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" id="college_crd"
+                                                                name="college_crd" th:value="${educationFormDTO.h213}"
+                                                                oninput="this.value = this.value.replace(/[^0-9\.]/g, '')"
+                                                                placeholder="예) 3.0">
+                                                            <span class="input-group-text">/</span>
+                                                            <input type="text" class="form-control" id="college_crd_max"
+                                                                name="college_crd_max"
+                                                                th:value="${educationFormDTO.h214}"
+                                                                oninput="this.value = this.value.replace(/[^0-9\.]/g, '')"
+                                                                placeholder="예) 4.5">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&nbsp;
+                                                </span>추가전공</th>
+                                            <td class="table-light style_width_3" colspan="2">
+                                                <div class="row">
+                                                    <div class="col-sm-3 pe-0">
+                                                        <select class="form-select univ_cls_sub" name="college_cls_sub"
+                                                            id="college_cls_sub">
+                                                            <option></option>
+                                                            <option th:unless="${educationFormDTO.h211==null}" selected
+                                                                th:value="${educationFormDTO.h211}"
+                                                                th:text="${educationFormDTO.h211}">
+                                                            </option>
+                                                            <option value="부전공">부전공</option>
+                                                            <option value="복수전공">복수전공</option>
+                                                            <option value="이중전공">이중전공</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control"
+                                                            id="college_cls_sub_name" name="college_cls_sub_name"
+                                                            th:value="${educationFormDTO.h212}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>졸업구분</th>
+                                            <td class="table-light style_width_2" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <select class="form-select grd" name="college_grd">
+                                                            <option></option>
+                                                            <option th:unless="${educationFormDTO.h205==null}" selected
+                                                                th:value="${educationFormDTO.h205}"
+                                                                th:text="${educationFormDTO.h205}">
+                                                            </option>
+                                                            <option value="졸업예정">졸업예정</option>
+                                                            <option value="졸업">졸업</option>
+                                                            <option value="수료">수료</option>
+                                                            <option value="휴학">휴학</option>
+                                                            <option value="편입">편입</option>
+                                                            <option value="중퇴">중퇴</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row-sm-12 mx-2 table_margin">
+                            <div class="wrap">
+                                <div class="row mx-2">
+                                    <div class="col-sm-6 p-0">
+                                        <h4 class="subtitle ms-3">대학교</h4>
+                                    </div>
+                                    <div class="col-sm-6 text-end p-0">
+                                        <p class="mb-0"><span class="marking">&#42; </span>필수입력항목</p>
+                                    </div>
+                                </div>
+                                <hr class="mt-0">
+                                <div class="row justify-content-sm-end mb-3">
+                                    <div class="col-sm-auto">
+                                        <button type="button" class="btn btn-outline-primary btncolor btn_reset"
+                                            id="btn_reset">초기화</button>
+                                        <button type="button" class="btn btn-outline-primary btncolor"
+                                            id="btn_add_univ">추가</button>
+                                    </div>
+                                </div>
+                                <table class="table mb-3">
+                                    <tbody>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>학교명</th>
+                                            <td class="table-light style_width_3" colspan="2">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <select class="form-select univ_list" name="univ_name"
+                                                            id="univ_name">
+                                                            <option></option>
+                                                            <option th:unless="${educationFormDTO.h306==null}" selected
+                                                                th:value="${educationFormDTO.h306}"
+                                                                th:text="${educationFormDTO.h306}">
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light " scope="row"><span class="marking">&#42;
+                                                </span>소재지</th>
+                                            <td class="table-light style_width_2" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <select class="form-select univ_loc" name="univ_loc"
+                                                            id="univ_loc">
+                                                            <option></option>
+                                                            <option th:unless="${educationFormDTO.h307==null}" selected
+                                                                th:value="${educationFormDTO.h307}"
+                                                                th:text="${educationFormDTO.h307}">
+                                                            </option>
+                                                            <option value="서울">서울</option>
+                                                            <option value="경기">경기</option>
+                                                            <option value="부산">부산</option>
+                                                            <option value="인천">인천</option>
+                                                            <option value="광주">광주</option>
+                                                            <option value="대구">대구</option>
+                                                            <option value="울산">울산</option>
+                                                            <option value="대전">대전</option>
+                                                            <option value="강원">강원</option>
+                                                            <option value="충남">충남</option>
+                                                            <option value="충북">충북</option>
+                                                            <option value="전남">전남</option>
+                                                            <option value="전북">전북</option>
+                                                            <option value="경남">경남</option>
+                                                            <option value="경북">경북</option>
+                                                            <option value="제주">제주</option>
+                                                            <option value="해외">해외</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>재학기간</th>
+                                            <td class="table-light style_width_3" colspan="2">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <div class="input-group dateMonth">
+                                                            <input type="text" class="form-control" id="univ_start_date"
+                                                                name="univ_start_date"
+                                                                th:value="${educationFormDTO.h3Sdt}">
+                                                            <span class="input-group-text">~</span>
+                                                            <input type="text" class="form-control" id="univ_end_date"
+                                                                name="univ_end_date"
+                                                                th:value="${educationFormDTO.h3Edt}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>주야구분</th>
+                                            <td class="table-light style_width_2" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <select class="form-select univ_dn" name="univ_dn" id="univ_dn">
+                                                            <option></option>
+                                                            <option th:if="${educationFormDTO.h308 != null}" selected
+                                                                th:value="${educationFormDTO.h308}"
+                                                                th:text="${educationFormDTO.h308}">
+                                                            </option>
+                                                            <option value="주간">주간</option>
+                                                            <option value="야간">야간</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>주전공</th>
+                                            <td class="table-light style_width_3" colspan="2">
+                                                <div class="row">
+                                                    <div class="col-sm">
+                                                        <input type="text" class="form-control" id="univ_cls"
+                                                            name="univ_cls" th:value="${educationFormDTO.h310}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>취득학점</th>
+                                            <td class="table-light style_width_2" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" id="univ_crd"
+                                                                name="univ_crd" th:value="${educationFormDTO.h313}"
+                                                                oninput="this.value = this.value.replace(/[^0-9\.]/g, '')"
+                                                                placeholder="예) 3.0">
+                                                            <span class="input-group-text">/</span>
+                                                            <input type="text" class="form-control" id="univ_crd_max"
+                                                                name="univ_crd_max" th:value="${educationFormDTO.h314}"
+                                                                oninput="this.value = this.value.replace(/[^0-9\.]/g, '')"
+                                                                placeholder="예) 4.5">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&nbsp;
+                                                </span>추가전공</th>
+                                            <td class="table-light style_width_3" colspan="2">
+                                                <div class="row">
+                                                    <div class="col-sm-3 pe-0">
+                                                        <select class="form-select univ_cls_sub" name="univ_cls_sub"
+                                                            id="univ_cls_sub">
+                                                            <option></option>
+                                                            <option th:unless="${educationFormDTO.h311==null}" selected
+                                                                th:value="${educationFormDTO.h311}"
+                                                                th:text="${educationFormDTO.h311}">
+                                                            </option>
+                                                            <option value="부전공">부전공</option>
+                                                            <option value="복수전공">복수전공</option>
+                                                            <option value="이중전공">이중전공</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" id="univ_cls_sub_name"
+                                                            name="univ_cls_sub_name"
+                                                            th:value="${educationFormDTO.h312}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>졸업구분</th>
+                                            <td class="table-light style_width_2" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <select class="form-select grd" name="univ_grd" id="univ_grd">
+                                                            <option></option>
+                                                            <option th:unless="${educationFormDTO.h305==null}" selected
+                                                                th:value="${educationFormDTO.h305}"
+                                                                th:text="${educationFormDTO.h305}">
+                                                            </option>
+                                                            <option value="졸업예정">졸업예정</option>
+                                                            <option value="졸업">졸업</option>
+                                                            <option value="수료">수료</option>
+                                                            <option value="휴학">휴학</option>
+                                                            <option value="편입">편입</option>
+                                                            <option value="중퇴">중퇴</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="wrap" id="univ_add">
+                                <hr class="mt-0" style="height: 1px;">
+                                <div class="row justify-content-sm-end mb-3">
+                                    <div class="col-sm-auto">
+                                        <button type="button" class="btn btn-outline-primary btncolor btn_reset"
+                                            id="btn_reset">초기화</button>
+                                    </div>
+                                </div>
+                                <table class="table mb-3">
+                                    <tbody>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>학교명</th>
+                                            <td class="table-light style_width_3" colspan="2">
+                                                <div class="row">
+                                                    <div class="col-sm">
+                                                        <select class="form-select univ_list" name="univ_name_2"
+                                                            id="univ_name_add">
+                                                            <option></option>
+                                                            <option th:unless="${educationFormDTO.h406==null}" selected
+                                                                th:value="${educationFormDTO.h406}"
+                                                                th:text="${educationFormDTO.h406}">
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light " scope="row"><span class="marking">&#42;
+                                                </span>소재지</th>
+                                            <td class="table-light style_width_2" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <select class="form-select univ_loc" name="univ_loc_2"
+                                                            id="univ_loc_2">
+                                                            <option></option>
+                                                            <option th:unless="${educationFormDTO.h407==null}" selected
+                                                                th:value="${educationFormDTO.h407}"
+                                                                th:text="${educationFormDTO.h407}">
+                                                            </option>
+                                                            <option value="서울">서울</option>
+                                                            <option value="경기">경기</option>
+                                                            <option value="부산">부산</option>
+                                                            <option value="인천">인천</option>
+                                                            <option value="광주">광주</option>
+                                                            <option value="대구">대구</option>
+                                                            <option value="울산">울산</option>
+                                                            <option value="대전">대전</option>
+                                                            <option value="강원">강원</option>
+                                                            <option value="충남">충남</option>
+                                                            <option value="충북">충북</option>
+                                                            <option value="전남">전남</option>
+                                                            <option value="전북">전북</option>
+                                                            <option value="경남">경남</option>
+                                                            <option value="경북">경북</option>
+                                                            <option value="제주">제주</option>
+                                                            <option value="해외">해외</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>재학기간</th>
+                                            <td class="table-light style_width_3" colspan="2">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <div class="input-group dateMonth">
+                                                            <input type="text" class="form-control"
+                                                                id="univ_start_date_2" name="univ_start_date_2"
+                                                                th:value="${educationFormDTO.h4Sdt}">
+                                                            <span class="input-group-text">~</span>
+                                                            <input type="text" class="form-control" id="univ_end_date_2"
+                                                                name="univ_end_date_2"
+                                                                th:value="${educationFormDTO.h4Edt}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>주야구분</th>
+                                            <td class="table-light style_width_2" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <select class="form-select univ_dn" name="univ_dn_2"
+                                                            id="univ_dn_2">
+                                                            <option></option>
+                                                            <option th:if="${educationFormDTO.h408 != null}" selected
+                                                                th:value="${educationFormDTO.h408}"
+                                                                th:text="${educationFormDTO.h408}">
+                                                            </option>
+                                                            <option value="주간">주간</option>
+                                                            <option value="야간">야간</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>주전공</th>
+                                            <td class="table-light style_width_3" colspan="2">
+                                                <div class="row">
+                                                    <div class="col-sm">
+                                                        <input type="text" class="form-control" id="univ_cls_2"
+                                                            name="univ_cls_2" th:value="${educationFormDTO.h410}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>취득학점</th>
+                                            <td class="table-light style_width_2" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" id="univ_crd_2"
+                                                                name="univ_crd_2" th:value="${educationFormDTO.h413}"
+                                                                oninput="this.value = this.value.replace(/[^0-9\.]/g, '')"
+                                                                placeholder="예) 3.0">
+                                                            <span class="input-group-text">/</span>
+                                                            <input type="text" class="form-control" id="univ_crd_max_2"
+                                                                name="univ_crd_max_2"
+                                                                th:value="${educationFormDTO.h414}"
+                                                                oninput="this.value = this.value.replace(/[^0-9\.]/g, '')"
+                                                                placeholder="예) 4.5">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&nbsp;
+                                                </span>추가전공</th>
+                                            <td class="table-light style_width_3" colspan="2">
+                                                <div class="row">
+                                                    <div class="col-sm-3 pe-0">
+                                                        <select class="form-select univ_cls_sub" name="univ_cls_sub_2"
+                                                            id="univ_cls_sub_2">
+                                                            <option></option>
+                                                            <option th:unless="${educationFormDTO.h411==null}" selected
+                                                                th:value="${educationFormDTO.h411}"
+                                                                th:text="${educationFormDTO.h411}">
+                                                            </option>
+                                                            <option value="부전공">부전공</option>
+                                                            <option value="복수전공">복수전공</option>
+                                                            <option value="이중전공">이중전공</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" id="univ_cls_sub_name_2"
+                                                            name="univ_cls_sub_name_2"
+                                                            th:value="${educationFormDTO.h412}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>졸업구분</th>
+                                            <td class="table-light style_width_2" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <select class="form-select grd" name="univ_grd_2"
+                                                            id="univ_grd_2">
+                                                            <option></option>
+                                                            <option th:unless="${educationFormDTO.h405==null}" selected
+                                                                th:value="${educationFormDTO.h405}"
+                                                                th:text="${educationFormDTO.h405}">
+                                                            </option>
+                                                            <option value="졸업예정">졸업예정</option>
+                                                            <option value="졸업">졸업</option>
+                                                            <option value="수료">수료</option>
+                                                            <option value="휴학">휴학</option>
+                                                            <option value="편입">편입</option>
+                                                            <option value="중퇴">중퇴</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row-sm-12 mx-2 table_margin">
+                            <div class="wrap">
+                                <div class="row mx-2">
+                                    <div class="col-sm-6 p-0">
+                                        <h4 class="subtitle ms-3">대학원</h4>
+                                    </div>
+                                    <div class="col-sm-6 text-end p-0">
+                                        <p class="mb-0"><span class="marking">&#42; </span>필수입력항목</p>
+                                    </div>
+                                </div>
+                                <hr class="mt-0">
+                                <div class="row justify-content-sm-end mb-3">
+                                    <div class="col-sm-auto">
+                                        <button type="button" class="btn btn-outline-primary btncolor btn_reset"
+                                            id="btn_reset">초기화</button>
+                                        <button type="button" class="btn btn-outline-primary btncolor"
+                                            id="btn_add_grad">추가</button>
+                                    </div>
+                                </div>
+                                <table class="table mb-3">
+                                    <tbody>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>학교명</th>
+                                            <td class="table-light style_width_3" colspan="2">
+                                                <div class="row">
+                                                    <div class="col-sm">
+                                                        <select class="form-select univ_list" name="grad_name" id="grad_name">
+                                                            <option></option>
+                                                            <option th:unless="${educationFormDTO.h506==null}" selected
+                                                                th:value="${educationFormDTO.h506}"
+                                                                th:text="${educationFormDTO.h506}">
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light " scope="row"><span class="marking">&#42;
+                                                </span>소재지</th>
+                                            <td class="table-light style_width_2" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <select class="form-select univ_loc" name="grad_loc" id="grad_loc">
+                                                            <option></option>
+                                                            <option th:unless="${educationFormDTO.h507==null}" selected
+                                                                th:value="${educationFormDTO.h507}"
+                                                                th:text="${educationFormDTO.h507}">
+                                                            </option>
+                                                            <option value="서울">서울</option>
+                                                            <option value="경기">경기</option>
+                                                            <option value="부산">부산</option>
+                                                            <option value="인천">인천</option>
+                                                            <option value="광주">광주</option>
+                                                            <option value="대구">대구</option>
+                                                            <option value="울산">울산</option>
+                                                            <option value="대전">대전</option>
+                                                            <option value="강원">강원</option>
+                                                            <option value="충남">충남</option>
+                                                            <option value="충북">충북</option>
+                                                            <option value="전남">전남</option>
+                                                            <option value="전북">전북</option>
+                                                            <option value="경남">경남</option>
+                                                            <option value="경북">경북</option>
+                                                            <option value="제주">제주</option>
+                                                            <option value="해외">해외</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>재학기간</th>
+                                            <td class="table-light style_width_3" colspan="2">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <div class="input-group dateMonth">
+                                                            <input type="text" class="form-control" id="grad_start_date"
+                                                                name="grad_start_date"
+                                                                th:value="${educationFormDTO.h5Sdt}">
+                                                            <span class="input-group-text">~</span>
+                                                            <input type="text" class="form-control" id="grad_end_date"
+                                                                name="grad_end_date"
+                                                                th:value="${educationFormDTO.h5Edt}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>주야구분</th>
+                                            <td class="table-light style_width_2" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <select class="form-select univ_dn" name="grad_dn" id="grad_dn">
+                                                            <option></option>
+                                                            <option th:if="${educationFormDTO.h508 != null}" selected
+                                                                th:value="${educationFormDTO.h508}"
+                                                                th:text="${educationFormDTO.h508}">
+                                                            </option>
+                                                            <option value="주간">주간</option>
+                                                            <option value="야간">야간</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>주전공</th>
+                                            <td class="table-light style_width_3" colspan="2">
+                                                <div class="row">
+                                                    <div class="col-sm">
+                                                        <input type="text" class="form-control" id="grad_cls"
+                                                            name="grad_cls" th:value="${educationFormDTO.h510}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>취득학점</th>
+                                            <td class="table-light style_width_2" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" id="grad_crd"
+                                                                name="grad_crd" th:value="${educationFormDTO.h513}"
+                                                                oninput="this.value = this.value.replace(/[^0-9\.]/g, '')"
+                                                                placeholder="예) 3.0">
+                                                            <span class="input-group-text">/</span>
+                                                            <input type="text" class="form-control" id="grad_crd_max"
+                                                                name="grad_crd_max" th:value="${educationFormDTO.h514}"
+                                                                oninput="this.value = this.value.replace(/[^0-9\.]/g, '')"
+                                                                placeholder="예) 4.5">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&nbsp;
+                                                </span>추가전공</th>
+                                            <td class="table-light style_width_3" colspan="2">
+                                                <div class="row">
+                                                    <div class="col-sm-3 pe-0">
+                                                        <select class="form-select univ_cls_sub" name="grad_cls_sub" id="grad_cls_sub">
+                                                            <option></option>
+                                                            <option th:unless="${educationFormDTO.h511==null}" selected
+                                                                th:value="${educationFormDTO.h511}"
+                                                                th:text="${educationFormDTO.h511}">
+                                                            </option>
+                                                            <option value="부전공">부전공</option>
+                                                            <option value="복수전공">복수전공</option>
+                                                            <option value="이중전공">이중전공</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" id="grad_cls_sub_name"
+                                                            name="grad_cls_sub_name"
+                                                            th:value="${educationFormDTO.h512}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>졸업구분</th>
+                                            <td class="table-light style_width_2" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <select class="form-select grd" name="grad_grd" id="grad_grd">
+                                                            <option></option>
+                                                            <option th:unless="${educationFormDTO.h505==null}" selected
+                                                                th:value="${educationFormDTO.h505}"
+                                                                th:text="${educationFormDTO.h505}">
+                                                            </option>
+                                                            <option value="졸업예정">졸업예정</option>
+                                                            <option value="졸업">졸업</option>
+                                                            <option value="수료">수료</option>
+                                                            <option value="휴학">휴학</option>
+                                                            <option value="편입">편입</option>
+                                                            <option value="중퇴">중퇴</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&nbsp;
+                                                </span>논문명
+                                            </th>
+                                            <td class="table-light" colspan="4">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control" name="grad_thesis"
+                                                            id="grad_thesis" th:value="${educationFormDTO.h515}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="wrap" id="grad_add">
+                                <hr class="mt-0" style="height: 1px;">
+                                <div class="row justify-content-sm-end mb-3">
+                                    <div class="col-sm-auto">
+                                        <button type="button" class="btn btn-outline-primary btncolor btn_reset"
+                                            id="btn_reset">초기화</button>
+                                    </div>
+                                </div>
+                                <table class="table mb-3">
+                                    <tbody>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>학교명</th>
+                                            <td class="table-light style_width_3" colspan="2">
+                                                <div class="row">
+                                                    <div class="col-sm">
+                                                        <select class="form-select univ_list" name="grad_name_2"
+                                                            id="grad_name_add">
+                                                            <option></option>
+                                                            <option th:unless="${educationFormDTO.h606==null}" selected
+                                                                th:value="${educationFormDTO.h606}"
+                                                                th:text="${educationFormDTO.h606}">
+                                                            </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light " scope="row"><span class="marking">&#42;
+                                                </span>소재지</th>
+                                            <td class="table-light style_width_2" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <select class="form-select univ_loc" name="grad_loc_2"
+                                                            id="grad_loc_2">
+                                                            <option></option>
+                                                            <option th:unless="${educationFormDTO.h607==null}" selected
+                                                                th:value="${educationFormDTO.h607}"
+                                                                th:text="${educationFormDTO.h607}">
+                                                            </option>
+                                                            <option value="서울">서울</option>
+                                                            <option value="경기">경기</option>
+                                                            <option value="부산">부산</option>
+                                                            <option value="인천">인천</option>
+                                                            <option value="광주">광주</option>
+                                                            <option value="대구">대구</option>
+                                                            <option value="울산">울산</option>
+                                                            <option value="대전">대전</option>
+                                                            <option value="강원">강원</option>
+                                                            <option value="충남">충남</option>
+                                                            <option value="충북">충북</option>
+                                                            <option value="전남">전남</option>
+                                                            <option value="전북">전북</option>
+                                                            <option value="경남">경남</option>
+                                                            <option value="경북">경북</option>
+                                                            <option value="제주">제주</option>
+                                                            <option value="해외">해외</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>재학기간</th>
+                                            <td class="table-light style_width_3" colspan="2">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <div class="input-group dateMonth">
+                                                            <input type="text" class="form-control"
+                                                                id="grad_start_date_2" name="grad_start_date_2"
+                                                                th:value="${educationFormDTO.h6Sdt}">
+                                                            <span class="input-group-text">~</span>
+                                                            <input type="text" class="form-control" id="grad_end_date_2"
+                                                                name="grad_end_date_2"
+                                                                th:value="${educationFormDTO.h6Edt}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>주야구분</th>
+                                            <td class="table-light style_width_2" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <select class="form-select univ_dn" name="grad_dn_2"
+                                                            id="grad_dn_2">
+                                                            <option></option>
+                                                            <option th:if="${educationFormDTO.h608 != null}" selected
+                                                                th:value="${educationFormDTO.h608}"
+                                                                th:text="${educationFormDTO.h608}">
+                                                            </option>
+                                                            <option value="주간">주간</option>
+                                                            <option value="야간">야간</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>주전공</th>
+                                            <td class="table-light style_width_3" colspan="2">
+                                                <div class="row">
+                                                    <div class="col-sm">
+                                                        <input type="text" class="form-control" id="grad_cls_2"
+                                                            name="grad_cls_2" th:value="${educationFormDTO.h610}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>취득학점</th>
+                                            <td class="table-light style_width_2" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" id="grad_crd_2"
+                                                                name="grad_crd_2" th:value="${educationFormDTO.h613}"
+                                                                oninput="this.value = this.value.replace(/[^0-9\.]/g, '')"
+                                                                placeholder="예) 3.0">
+                                                            <span class="input-group-text">/</span>
+                                                            <input type="text" class="form-control" id="grad_crd_max_2"
+                                                                name="grad_crd_max_2"
+                                                                th:value="${educationFormDTO.h614}"
+                                                                oninput="this.value = this.value.replace(/[^0-9\.]/g, '')"
+                                                                placeholder="예) 4.5">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&nbsp;
+                                                </span>추가전공</th>
+                                            <td class="table-light style_width_3" colspan="2">
+                                                <div class="row">
+                                                    <div class="col-sm-3 pe-0">
+                                                        <select class="form-select univ_cls_sub" name="grad_cls_sub_2"
+                                                            id="grad_cls_sub_2">
+                                                            <option></option>
+                                                            <option th:unless="${educationFormDTO.h611==null}" selected
+                                                                th:value="${educationFormDTO.h611}"
+                                                                th:text="${educationFormDTO.h611}">
+                                                            </option>
+                                                            <option value="부전공">부전공</option>
+                                                            <option value="복수전공">복수전공</option>
+                                                            <option value="이중전공">이중전공</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-9">
+                                                        <input type="text" class="form-control" id="grad_cls_sub_name_2"
+                                                            name="grad_cls_sub_name_2"
+                                                            th:value="${educationFormDTO.h612}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light" scope="row"><span class="marking">&#42;
+                                                </span>졸업구분</th>
+                                            <td class="table-light style_width_2" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <select class="form-select grd" name="grad_grd_2"
+                                                            id="grad_grd_2">
+                                                            <option></option>
+                                                            <option th:unless="${educationFormDTO.h605==null}" selected
+                                                                th:value="${educationFormDTO.h605}"
+                                                                th:text="${educationFormDTO.h605}">
+                                                            </option>
+                                                            <option value="졸업예정">졸업예정</option>
+                                                            <option value="졸업">졸업</option>
+                                                            <option value="수료">수료</option>
+                                                            <option value="휴학">휴학</option>
+                                                            <option value="편입">편입</option>
+                                                            <option value="중퇴">중퇴</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th class="table-light" scope="row"><span class="marking">&nbsp;
+                                                </span>논문명
+                                            </th>
+                                            <td class="table-light" colspan="4">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <input type="text" class="form-control" name="grad_thesis_2"
+                                                            id="grad_thesis_2" th:value="${educationFormDTO.h615}">
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- 버튼 -->
+            <th:block th:replace="~{fragments/form_btn :: formBtnFragment}"></th:block>
+        </div>
+    </div>
+
+    <!-- 공통 스크립트-->
+    <th:block th:replace="~{fragments/script :: scriptFragment}"></th:block>
+    <th:block th:replace="~{fragments/resume_script :: resumeScriptFragment}"></th:block>
+    <script src="/js/layout/form.js" th:src="@{/js/layout/form.js}"></script>
+    <script>
+        selectOpt("high_ser");
+        selectOpt("grd");
+        selectOpt("univ_loc");
+        selectOpt("univ_dn");
+        selectOpt("univ_cls_sub");
+
+        $.get("/api_comm_code/selectCollegeCode", function (data) {
+            $(".form-select.college_list").select2({
+                data: data,
+                placeholder: "선택",
+                allowClear: false
+            });
+        });
+
+        $.get("/api_comm_code/selectUnivCode", function (data) {
+            $(".form-select.univ_list").select2({
+                data: data,
+                placeholder: "선택",
+                allowClear: false
+            });
+        });
+
+
+        /* 초기화 버튼 */
+        $(".btn_reset").on("click", function () {
+            var parentDiv = $(this).closest('.wrap');
+            parentDiv.find('input[type="text"]').val('').trigger("change");
+            parentDiv.find('select').val('').trigger("change");
+        });
+
+        if ($("#univ_name_add").val() === "" || $("#univ_name_add").val() === null) {
+            $("#univ_add").hide();
+        }
+
+        $("#btn_add_univ").on("click", function () {
+            if ($("#univ_add").is(":visible")) {
+                alert("이미 추가된 상태입니다.");
+            } else {
+                $("#univ_add").show();
+            }
+        });
+
+
+
+        if ($("#grad_name_add").val() === "" || $("#grad_name_add").val() === null) {
+            $("#grad_add").hide();
+        }
+
+        $("#btn_add_grad").on("click", function () {
+            if ($("#grad_add").is(":visible")) {
+                alert("이미 추가된 상태입니다.");
+            } else {
+                $("#grad_add").show();
+            }
+        });
+
+
+        /* 저장 */
+        $("#btn_next, #btn_save, #btn_prev").on("click", function (e) {
+
+            if (!validateField("high_name", "고등학교를 입력해 주세요.") ||
+                !validateField("high_ser", "계열을 선택해 주세요.") ||
+                !validateDate("high_start_date", "high_end_date") ||
+                !validateField("high_grd", "고등학교 졸업구분을 선택해 주세요.")) {
+                return false;
+            }
+
+
+            if ($('#college_name').val().trim() !== "") {
+                if (!validateSelect('college_name', '학교를 선택해 주세요.') ||
+                    !validateSelect('college_loc', '소재지를 선택해 주세요.') ||
+                    !validateDate('college_start_date', 'college_end_date') ||
+                    !validateSelect('college_dn', '주야구분을 선택해 주세요.') ||
+                    !validateField("college_cls", "주전공 입력해 주세요.") ||
+                    !validateCrd('college_crd', 'college_crd_max') ||
+                    !validateSelect('college_grd', '대학교 졸업구분을 선택해 주세요.')
+                ) {
+                    return false;
+                }
+
+                if ($('#college_cls_sub').val().trim() !== "") {
+                    if (!$("#college_cls_sub_name").val()) {
+                        alert("추가전공명을 입력해 주세요.");
+                        return false;
+                    }
+                }
+            }
+
+            if(!valid('univ')) return false;
+            if(!valid('grad')) return false;
+            if(!valid_add('univ')) return false;
+            if(!valid_add('grad')) return false;
+
+            function valid(name) {
+                if ($('#' + name + '_name_add').val().trim() !== "") {
+                    if (!validateSelect(name + '_name_add', '학교를 선택해 주세요.') ||
+                        !validateSelect(name + '_loc_2', '소재지를 선택해 주세요.') ||
+                        !validateDate(name + '_start_date_2', name + '_end_date_2') ||
+                        !validateSelect(name + '_dn_2', '주야구분을 선택해 주세요.') ||
+                        !validateField(name + '_cls_2', "주전공 입력해 주세요.") ||
+                        !validateCrd(name + '_crd_2', name + '_crd_max_2') ||
+                        !validateSelect(name + '_grd_2', '대학교 졸업구분을 선택해 주세요.')
+                    ) {
+                        return false;
+                    }
+
+                    if ($('#' + name + '_cls_sub_2').val().trim() !== "") {
+                        if (!$('#' + name + '_cls_sub_name_2').val()) {
+                            alert("추가전공명을 입력해 주세요.");
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+
+            function valid_add(name) {
+                if ($('#' + name + '_name').val().trim() !== "") {
+                    if (!validateSelect(name + '_name', '학교를 선택해 주세요.') ||
+                        !validateSelect(name + '_loc', '소재지를 선택해 주세요.') ||
+                        !validateDate(name + '_start_date', name + '_end_date') ||
+                        !validateSelect(name + '_dn', '주야구분을 선택해 주세요.') ||
+                        !validateField(name + '_cls', "주전공 입력해 주세요.") ||
+                        !validateCrd(name + '_crd', name + '_crd_max') ||
+                        !validateSelect(name + '_grd', '대학교 졸업구분을 선택해 주세요.')
+                    ) {
+                        return false;
+                    }
+
+                    if ($('#' + name + '_cls_sub').val().trim() !== "") {
+                        if (!$('#' + name + '_cls_sub_name').val()) {
+                            alert("추가전공명을 입력해 주세요.");
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
+
+            var href = '';
+
+            // FormData 객체 생성
+            var formData = $("#educationForm").serialize();
+
+            // "다음" 또는 "이전" 버튼인 경우에만 href 설정
+            if ($(this).attr('id') === "btn_next") {
+                href = "/resume/experience";
+            } else if ($(this).attr('id') === "btn_prev") {
+                href = "/resume/basic-info";
+            } else if ($(this).attr('id') === "btn_save") {
+                href = "";
+            } else {
+                href = $(this).find('a').attr('href');
+            }
+
+            $.ajax({
+                method: "POST",
+                url: "/api_resume/education",
+                data: formData
+            }).done(function (data) {
+                if (href == '') {
+                    alert("저장되었습니다.");
+                } else {
+                    location.href = href;
+                }
+            }).fail(function (data, textStatus, errorThrown) {
+                alert("부득이한 사정으로 인해 현재 서비스 이용이 제한될 수 있습니다.\n\n불편을 드려 죄송합니다. 관리자에게 문의하여 주십시오.\n\n문의번호 : 051-580-5546");
+                callback(data);
+            });
+
+        });
+    </script>
+</body>
+
+</html>

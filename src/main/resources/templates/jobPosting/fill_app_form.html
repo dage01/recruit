@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 공통 헤드-->
+<th:block th:replace="~{fragments/head :: headFragment}"></th:block>
+
+<link rel="stylesheet" href="/css/layout/top.css" th:href="@{/css/layout/top.css}">
+<link rel="stylesheet" href="/css/form/form.css" th:href="@{/css/form/form.css}">
+<style>
+    .modal-body li {
+        margin-bottom: 25px;
+    }
+</style>
+
+</head>
+<!-- 공통 Nav -->
+<th:block th:replace="~{fragments/top :: topbarFragment}"></th:block>
+
+<body>
+    <!-- content -->
+    <div class="container my-5">
+        <div class="row p-5">
+            <div class="col">
+                <h4 class="headline">개인정보 제공 및 활용 동의서</h4>
+            </div>
+            <div class="row-sm-12">
+                <form id="appRegForm">
+                    <input type="hidden" name="yyyy" id="yyyy" th:value="${jobPostingDTO.yyyy}" />
+                    <input type="hidden" name="degrees" id="degrees" th:value="${jobPostingDTO.degrees}" />
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-6">
+                                    <em>개인정보 제공 및 활용 동의서<b class="text-danger">(필수)</b></em>
+                                </div>
+                                <div class="col-6 text-end">
+                                    <a class="map" href="#per_agree" data-bs-toggle="modal">약관보기</a>
+                                    <label id="per_agree_ap">
+                                        <input type="radio" name="per_agree_ap" id="per_agree_ap_T" value="T">
+                                        <label for='per_agree_ap_T'> 동의 </label>
+                                        </input>&nbsp
+                                        <input type="radio" name="per_agree_ap" id="per_agree_ap_F" value="F"
+                                            checked="checked">
+                                        <label for='per_agree_ap_F'> 미동의 </label>
+                                        </input>
+                                    </label>
+                                </div>
+                            </div>
+                            <!-- Modal -->
+                            <div class="modal fade" id="per_agree" data-bs-backdrop="static" data-bs-keyboard="false"
+                                tabindex="-1" aria-labelledby="chk01Label" aria-hidden="true">
+                                <div class="modal-dialog modal-xl">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="chk01Label">개인정보 수집동의</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="modal-body">
+                                                <p>(주) 동아지질(이하 '회사')은 지원자의 개인정보를 중요시하며, "개인정보보호법" 제 15조 및 제 24조에 따라 귀하의
+                                                    개인정보 수집, 이용목적, 수집하려는 개인정보의 항목, 개인정보 보유기간등에 대한 내용은 아래와 같습니다.</p>
+                                                <p class="text-center"><b>- 아래 -</b></p>
+                                                <ol>
+                                                    <li>
+                                                        <b>개인정보의 수집 및 이용목적</b><br>
+                                                        지원자의 개인정보는 지원자 본인 식별, 채용 절차상의 선별 작업 및 채용절차 진행 관련 사항에 활용됩니다.
+                                                    </li>
+                                                    <li>
+                                                        <b>수집하려는 개인정보의 항목</b><br>
+                                                        성명, 생년월일, 본인 사진, 국적, 전화번호(휴대전화번호), 이메일, 주소, 출신학교, 경력사항, 건강검진 정보
+                                                        등 입사 지원 관련사항
+                                                    </li>
+                                                    <li>
+                                                        <b>개인정보의 보유 및 이용기간</b><br>
+                                                        회사는 개인정보 수집 목적이 달성된 시점으로부터 최대 3년간 수집된 개인정보를 보유합니다. 단, 지원자의 별도
+                                                        요청이 있는 경우 지체없이 보유한 개인정보를 파기합니다.<br>
+                                                        <b>※ 개인정보의 파기방법</b><br>
+                                                        출력된 개인정보 : 문서세단기를 통한 파쇄<br>
+                                                        파일형태의 개인정보 : 영구삭제
+                                                    </li>
+                                                    <li>
+                                                        <b>개인정보를 자동으로 수집하는 장치의 설치및 운영</b><br>
+                                                        회사는 개인정보를 자동으로 수집하는 인터넷 접속정보 파일 등을 활용하고 있지 않습니다.
+                                                    </li>
+                                                    <li>
+                                                        <b>개인정보 동의 거부 권리</b><br>
+                                                        본인은 개인정보 수집 및 활용에 대해 거부할 권리가 있으며, 거부를 하는 경우 채용 절차상 평가 정보의 불충분 등의
+                                                        이유로 불이익을 받게 될수 있음을 확인합니다.
+                                                    </li>
+                                                    <li>
+                                                        <b>개인정보 관리책임자</b><br>
+                                                        소속 : 동아지질<br>
+                                                        개인정보 책임자 : 경영지원팀 채용담당자<br>
+                                                        Email : insa@dage.co.kr, (051-580-5663)
+                                                    </li>
+                                                </ol>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-outline-secondary confirm-agreement"
+                                                data-bs-dismiss="modal" data-agree-target="per_agree_ap">확인</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th class="table-light" scope="row" style="width: 150px;">채용공고</th>
+                                <td class="table-light" colspan="3">
+                                    <div class="row">
+                                        <div class="col">
+                                            <span class="ps-2" th:if="${jobPostingDTO != null}"
+                                                th:text="${jobPostingDTO.remarks}" style="font-weight: bold;">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="table-light" scope="row">ID(이메일)</th>
+                                <td class="table-light" colspan="3">
+                                    <div class="row">
+                                        <div class="col-sm-5 pe-1">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="email_id">
+                                                <span class="input-group-text">@</span>
+                                                <input type="text" class="form-control" id="email_domain" readonly>
+                                                <input type="hidden" id="user_email" name="user_email">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3 ps-1">
+                                            <select class="form-select emailSelection">
+                                                <option></option>
+                                                <option value="typing">직접입력</option>
+                                                <option value="naver.com">naver.com</option>
+                                                <option value="daum.net">daum.net</option>
+                                                <option value="gmail.com">gmail.com</option>
+                                                <option value="kakao.com">kakao.com</option>
+                                                <option value="nate.com">nate.com</option>
+                                                <option value="hotmail.com">hotmail.com</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-sm-4 ps-0">
+                                            <button type="button" class="btn btn-dark"
+                                                id="btn_duplicate_check">중복확인</button>
+                                            <button type="button" class="btn btn-dark"
+                                                id="btn_auth_mail">인증메일발송</button>
+                                        </div>
+                                    </div>
+                                    <div class="ref row-sm-12" style="font-weight: bold;">
+                                        &nbsp;* 본인의 메일주소를 아이디로 입력해주시기 바랍니다. 입력된 아이디(메일)로 합격 결과가 발송됩니다.
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="table-light" scope="row">지원직무</th>
+                                <td class="table-light" colspan="3">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <select class="form-select app_code" name="app_code">
+                                                <option></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="table-light" scope="row">비밀번호</th>
+                                <td class="table-light" colspan="3">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <input type="password" class="form-control" id="user_password"
+                                                name="user_password" autocomplete="new-password">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="table-light" scope="row">비밀번호 확인</th>
+                                <td class="table-light" colspan="3">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <input type="password" class="form-control" id="user_password_check"
+                                                autocomplete="new-password">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="table-light" scope="row">성명</th>
+                                <td class="table-light" colspan="3">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control" id="user_name" name="user_name">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="table-light" scope="row">생년월일</th>
+                                <td class="table-light" colspan="3">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <input type="text" class="form-control date" id="user_birth"
+                                                name="user_birth">
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+            <div class="col m-5 text-center">
+                <button type="button" class="btn btn-secondary btn-lg mx-2 btn" id="btn_close">취소</button>
+                <button type="button" class="btn btn-secondary btn-lg mx-2 btn" id="btn_next">지원서 작성</button>
+            </div>
+        </div>
+    </div>
+    <!-- 공통 스크립트-->
+    <th:block th:replace="~{fragments/script :: scriptFragment}"></th:block>
+    <th:block th:replace="~{fragments/resume_script :: resumeScriptFragment}"></th:block>
+    <script>
+
+        /* 이메일 유효성 */
+        function validateEmail(email) {
+            var re = /\S+@\S+\.\S+/;
+            return re.test(email);
+        }
+
+        // T를 클릭했을 때의 동작
+        $('input[type="radio"][name="per_agree_ap"][value="T"]').click(function () {
+            if (!$('#per_agree').hasClass('show')) {
+                // 모달이 열린 적이 없으면 F에 계속 체크하고 alert 창을 띄웁니다.
+                $('input[type="radio"][name="per_agree_ap"][value="F"]').prop('checked', true);
+                alert('약관을 확인해주세요.');
+            } else {
+                // 모달이 열린 적이 있으면 약관 모달을 닫은 후 T에 자동으로 체크합니다.
+                $('#per_agree').modal('hide');
+            }
+        });
+
+        $('#per_agree').on('hidden.bs.modal', function () {
+            // 약관 모달이 닫힐 때 T에 자동으로 체크합니다.
+            $('input[type="radio"][name="per_agree_ap"][value="T"]').prop('checked', true);
+        });
+
+        $('.confirm-agreement').click(function () {
+            // 약관 확인 버튼을 클릭했을 때 T에 체크합니다.
+            $('input[type="radio"][name="per_agree_ap"][value="T"]').prop('checked', true);
+        });
+
+
+        function checkDuplicateEmail(email, years, degrees, callback) {
+            $.ajax({
+                type: "POST",
+                url: "/api_user/checkDuplicateEmail",
+                data: {
+                    user_email: email,
+                    yyyy: years,
+                    degrees: degrees,
+                },
+                success: function (response) {
+                    callback(response); // 중복 확인 결과를 콜백 함수에 전달
+                },
+                error: function (xhr, status, error) {
+                    console.error("Failed to check duplicate email:", error);
+                    alert("중복 이메일 확인에 실패했습니다.");
+                }
+            });
+            return true;
+        }
+
+        /* 비밀번호 일치 */
+        function checkPasswordsMatch() {
+            var password = $('#user_password').val();
+            var password_chk = $('#user_password_check').val();
+
+            // 비밀번호 입력란과 확인란이 모두 비어 있는 경우
+            if (password === '' && password_chk === '') {
+                alert('비밀번호를 입력해주세요.');
+                return false;
+            }
+            // 비밀번호 입력란이나 확인란 중 하나만 비어 있는 경우
+            if (password === '' || password_chk === '') {
+                alert('비밀번호를 확인해주세요.');
+                return false;
+            }
+            if (password !== password_chk) {
+                alert('비밀번호가 일치하지 않습니다.');
+                return false;
+            }
+            return true;
+        }
+
+        /* 성명 */
+        function validateName(name) {
+            if (!name || name.trim() === '' || name.includes(' ')) {
+                alert('성명을 확인하세요.');
+                return false;
+            }
+            return true;
+        }
+
+        function validatebirth(birth) {
+            if (!birth || birth.trim() === '') {
+                alert('생년월일을 입력하세요.');
+                return false;
+            }
+            return true;
+        }
+
+        var duplicateChecked = false;
+
+        $('#btn_duplicate_check').click(function () {
+            var email = $('#email_id').val() + '@' + $('#email_domain').val();
+            var years = $("#yyyy").val();
+            var degrees = $("#degrees").val();
+
+
+            if (validateEmail(email)) {
+                checkDuplicateEmail(email, years, degrees, function (isDuplicate) {
+                    if (!isDuplicate) {
+                        // 중복되지 않은 경우
+                        duplicateChecked = true;
+                        alert("사용 가능한 이메일입니다.\n인증메일발송 버튼을 누르시면 인증번호가 발송됩니다.");
+                    } else {
+                        // 중복된 경우
+                        alert("이미 사용 중인 이메일입니다.");
+                    }
+                });
+            } else {
+                alert('올바른 이메일 주소를 입력하세요.');
+            }
+        });
+
+        $('#btn_auth_mail').click(function () {
+            var email_val = $('#email_id').val() + "@" + $('#email_domain').val();
+            var email = email_val;
+
+            if (!duplicateChecked) {
+                alert('이메일 중복여부를 먼저 확인해주세요.');
+                return; // 중복 체크가 완료되지 않았다면 여기서 함수를 종료합니다.
+            }
+
+            $.ajax({
+                method: "POST",
+                url: "/email/authEmail",
+                data: { 'email': email }, // FormData 객체 대신 직접 데이터 객체를 전달
+                // contentType과 processData 설정을 제거
+            }).done(function (data) {
+                alert("해당 이메일 주소로 인증 이메일이 전송되었습니다.")
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                console.error("Request failed:", textStatus, errorThrown);
+                alert("Failed to send email.");
+            });
+        });
+
+        function emailAuth() {
+            // Promise 반환
+            return new Promise((resolve, reject) => {
+                $.ajax({
+                    url: "/email/auth",
+                    type: "GET",
+                    success: function (response) {
+                        if (response === 'authenticated') {
+                            resolve(true); // 인증 성공
+                        } else {
+                            resolve(false); // 인증 실패, 하지만 처리는 성공적으로 마침
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Failed to check email authentication:", error);
+                        reject(new Error("Failed to check email authentication")); // 실제 오류 발생
+                    }
+                });
+            });
+        }
+
+        // 폼 전체 유효성 검사 함수
+        async function validateForm() {
+            var email = $('#email_id').val() + "@" + $('#email_domain').val();
+            var user_email = $('#user_email').val(email);
+            var name = $('#user_name').val();
+            var birth = $('#user_birth').val();
+
+            if (!($('#per_agree_ap_T').is(':checked'))) {
+                alert('개인정보보호법 동의 체크 해주셔야 등록가능합니다.');
+                return false;
+            }
+
+            if (!validateEmail(email)) {
+                alert('올바른 이메일 주소를 입력하세요.');
+                return false;
+            }
+
+            if (!duplicateChecked) {
+                alert('이메일 중복여부를 확인해주세요.');
+                return false;
+            }
+
+            try {
+                const authenticated = await emailAuth();
+                if (!authenticated) {
+                    alert('이메일 인증을 먼저 완료해주세요.');
+                    return false;
+                }
+            } catch (error) {
+                console.error(error);
+                // 오류 처리
+                return false;
+            }
+
+            if (!checkPasswordsMatch()) {
+                return false;
+            }
+
+            if (!validateName(name)) {
+                return false;
+            }
+
+            if (!validatebirth(birth)) {
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+    <script>
+        selectOpt("emailSelection");
+
+        $.get("/api_comm_code/selectJobCode", function (data) {
+            $(".form-select.app_code").select2({
+                data: data,
+                placeholder: "선택",
+                allowClear: false
+            });
+        });
+
+        $("#btn_close").on("click", function (e) {
+            location.href = "/job-posting/list";
+        });
+
+        $('.emailSelection').change(function () {
+            var emailSelectionValue = $(this).val();
+            $('#email_domain').prop('readonly', emailSelectionValue !== 'typing');
+        });
+
+        $("#btn_next").on("click", async function (e) { // async 키워드 추가
+
+            const isValid = await validateForm();
+            if (!isValid) {
+                return; // 유효성 검사를 통과하지 못했으면 여기서 함수 종료
+            }
+            var email_val = $('#email_id').val() + "@" + $('#email_domain').val();
+            $('#user_email').val(email_val);
+
+            var formData = $("#appRegForm").serialize();
+
+            $.ajax({
+                method: "POST",
+                url: "/api_user/appRegForm",
+                data: formData
+            })
+                .done(function (response) {
+                    $.ajax({
+                        method: "GET",
+                        url: "/resume/basic-info",
+                        data: { 'seq': response.seq },
+                    })
+                        .done(function (data) {
+                            location.href = "/resume/basic-info";
+                        })
+                        .fail(function (data, textStatus, errorThrown) {
+                            alert(xhr.responseText);
+                            callback(data);
+                        });
+                })
+                .fail(function (xhr, status, error) {
+                    alert(xhr.responseText);
+                });
+        });
+    </script>
+</body>
+
+</html>

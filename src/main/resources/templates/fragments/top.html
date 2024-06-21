@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="topbarFragment">
+    <header>
+        <div class="container-fluid" id="header">
+            <nav class="navbar">
+                <div class="container-fluid">
+                    <!-- 좌측 영역 -->
+                    <div class="col-sm-1">
+                        <a class="navbar-brand ms-5" href="/job-posting/list" th:href="@{/job-posting/list}">
+                            <img src="/images/layout/logo.png"  th:src="@{/images/layout/logo.png}"alt="logo">
+                        </a>
+                    </div>
+                    <!-- 중앙 영역 -->
+                    <div class="col-sm-auto">
+                        <ul class="nav navbar-nav text-center">
+                            <li><a class="hoverable" href="http://dage.co.kr/contents/04_employment/sub01.html" target='_blank'>채용안내</a></li>
+                            <li><a class="hoverable" href="job-posting/list" th:href="@{/job-posting/list}">채용공고</a></li>
+                            <li><a class="hoverable" th:if="${userSession != null}" href="apply_list" th:href="@{/apply_list}">전형결과</a>
+                                <a class="hoverable" th:if="${userSession == null}" href="applicant_login" th:href="@{/applicant_login}">전형결과</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- 우측 영역 -->
+                    <div class="col-sm-1">
+                        <a href="/logout" th:if="${userSession != null}">
+                            <img src="/images/layout/log-out.svg" th:src="@{/images/layout/log-out.svg}" alt="logout"></a>
+                    </div>
+                </div>
+            </nav>
+            <div id="what-the-hell-is-this">
+                <div class="page-title">
+                    <h1 class="leads" id="leadsContent"></h1>
+                </div>
+            </div>
+        </div>
+    </header>
+</th:block>
+</html>

@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 공통 헤드-->
+<th:block th:replace="~{fragments/head :: headFragment}"></th:block>
+
+<!-- Custom Stylesheets -->
+<link rel="stylesheet" href="/css/layout/top.css" th:href="@{/css/layout/top.css}">
+<link rel="stylesheet" href="/css/form/form.css" th:href="@{/css/form/form.css}">
+
+</head>
+<!-- 공통 Nav -->
+<th:block th:replace="~{fragments/top :: topbarFragment}"></th:block>
+
+<body>
+    <!-- content -->
+    <div class="container my-5">
+        <div class="row p-5">
+            <div class="col text-left">
+                <h4 class="headline" th:text="${user.remarks}"></h4>
+            </div>
+            <div class="row-sm-12 mt-3">
+                <th:block th:replace="~{fragments/resume_tab :: resumeTabFragment}"></th:block>
+                <div class="tab-content mx-5 my-4" id="myTabContent">
+                    <form name="infoBasicForm" id="infoBasicForm">
+                        <div class="row-sm-12 mx-2 table_margin">
+                            <div class="row mx-2">
+                                <div class="col-sm-6 p-0">
+                                    <h4 class="subtitle mb-1"><span class="marking">&#42;
+                                        </span>지원정보</h4>
+                                </div>
+                                <div class="col-sm-6 text-end p-0">
+                                    <p class="mb-1"><span class="marking">&#42; </span>필수입력항목</p>
+                                </div>
+                            </div>
+                            <table class="table mb-5">
+                                <tbody>
+                                    <tr>
+                                        <th class="table-light text-center" scope="row">
+                                            <span>지원직무</span>
+                                        </th>
+                                        <td class="table-light" colspan="2">
+                                            <div class="row">
+                                                <div class="col text-center">
+                                                    <span class="mx-2" style="font-weight: bold; font-size: 16px;"
+                                                        th:text="${appJob}"></span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <th class="table-light text-center" scope="row">
+                                            <span>이메일</span>
+                                        </th>
+                                        <td class="table-light" colspan="2">
+                                            <div class="row">
+                                                <div class="col text-center">
+                                                    <span class="mx-2" style="font-weight: bold; font-size: 16px;"
+                                                        th:text="${user.email}"></span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row-sm-12 mx-2 table_margin">
+                            <div class="row mx-2">
+                                <div class="col-sm-6 p-0">
+                                    <h4 class="subtitle mb-1"><span class="marking">&#42;
+                                        </span>인적사항</h4>
+                                </div>
+                                <div class="col-sm-6 text-end p-0">
+                                    <p class="mb-1"><span class="marking">&#42; </span>필수입력항목</p>
+                                </div>
+                            </div>
+                            <table class="table mb-5">
+                                <tbody>
+                                    <tr>
+                                        <td class="table-light" id="idPhoto" rowspan="5">
+                                            <img class="userPhoto" th:src="@{/file/{photo}(photo=${user.email})}"
+                                                alt="profile"/>
+                                            <input type="file" id="user_profile" name="user_profile"
+                                                accept="image/gif, image/png, image/jpeg" style="display: none;">
+                                            <button type="button" class="btn btn-dark my-2"
+                                                onclick="document.getElementById('user_profile').click();">사진등록
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="table-light" scope="row"><span class="marking">&#42;
+                                            </span>성명
+                                        </th>
+                                        <td class="table-light" colspan="5">
+                                            <div class="col-sm-5">
+                                                <span th:text="${user.name}" class="ms-3"
+                                                    style="font-weight: bold;"></span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="table-light" scope="row"><span class="marking">&#42;
+                                            </span>생년월일
+                                        </th>
+                                        <td class="table-light" colspan="5">
+                                            <div class="col-sm-5">
+                                                <span
+                                                    th:text="${#strings.substring(user.birthDay, 0, 4) + '.' + #strings.substring(user.birthDay, 4, 6) + '.' + #strings.substring(user.birthDay, 6, 8)}"
+                                                    class="ms-3" style="font-weight: bold;"></span>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="table-light" scope="row"><span class="marking">&#42;
+                                            </span>성별
+                                        </th>
+                                        <td class="table-light" colspan="5">
+                                            <div class="col-sm-5 ms-3">
+                                                <label id="gender">
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="sex_tag"
+                                                            id="male" value="M"
+                                                            th:checked="${infoBasicFormDTO.sexTag=='M'}">
+                                                        <label class="form-check-label" for="male">남성</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="sex_tag"
+                                                            id="female" value="W"
+                                                            th:checked="${infoBasicFormDTO.sexTag=='W'}">
+                                                        <label class="form-check-label" for="female">여성</label>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="table-light" scope="row"><span class="marking">&#42;
+                                            </span>보훈여부
+                                        </th>
+                                        <td class="table-light" colspan="3">
+                                            <div class="col-sm-auto ms-3">
+                                                <label id="welfare_tag">
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="welfare_tag"
+                                                            id="t" value="01"
+                                                            th:checked="${infoBasicFormDTO.welfareTag=='01'}">
+                                                        <label class="form-check-label" for="T">해당</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="welfare_tag"
+                                                            id="f" value="02"
+                                                            th:checked="${infoBasicFormDTO.welfareTag=='02'}">
+                                                        <label class="form-check-label" for="F">비해당</label>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <th class="table-light" scope="row"><span class="marking">&#42;
+                                            </span>장애여부
+                                        </th>
+                                        <td class="table-light" colspan="3">
+                                            <div class="col-sm-auto ms-3">
+                                                <label id="obstacle_tag">
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="obstacle_tag"
+                                                            id="t" value="01"
+                                                            th:checked="${infoBasicFormDTO.obstacleTag=='01'}">
+                                                        <label class="form-check-label" for="T">해당</label>
+                                                    </div>
+                                                    <div class="form-check form-check-inline">
+                                                        <input class="form-check-input" type="radio" name="obstacle_tag"
+                                                            id="f" value="02"
+                                                            th:checked="${infoBasicFormDTO.obstacleTag=='02'}">
+                                                        <label class="form-check-label" for="F">비해당</label>
+                                                    </div>
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row-sm-12 mx-2 table_margin">
+                            <div class="row mx-2">
+                                <div class="col-sm-6 p-0">
+                                    <h4 class="subtitle mb-1"><span class="marking">&#42;
+                                        </span>연락사항</h4>
+                                </div>
+                                <div class="col-sm-6 text-end p-0">
+                                    <p class="mb-1"><span class="marking">&#42; </span>필수입력항목</p>
+                                </div>
+                            </div>
+                            <table class="table mb-5">
+                                <tbody>
+                                    <tr>
+                                        <th class="table-light" scope="row"><span class="marking">&#42;
+                                            </span>주소지
+                                        </th>
+                                        <td class="table-light" colspan="3">
+                                            <div class="row mb-1">
+                                                <div class="col-sm-2 pe-1">
+                                                    <input type="text" class="form-control" name="post_num_h"
+                                                        id="post_num_h" readonly
+                                                        style="background-color: rgb(240, 240, 240); pointer-events: none;"
+                                                        th:value="${infoBasicFormDTO.postNumH}">
+                                                </div>
+                                                <div class="col-sm-3 ps-1">
+                                                    <button type="button" class="btn btn-dark" id="postcode_btn"
+                                                        onclick="findAddr()">우편번호조회
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="row mt-1">
+                                                <div class="col-sm-7 pe-1">
+                                                    <input type="text" class="form-control" name="address_h"
+                                                        id="address_h" readonly
+                                                        style="background-color: rgb(240, 240, 240); pointer-events: none;"
+                                                        th:value="${infoBasicFormDTO.addressH}">
+                                                </div>
+                                                <div class="col-sm-5 ps-1">
+                                                    <input type="text" class="form-control" name="address_h2"
+                                                        id="address_h2" placeholder="상세 주소"
+                                                        th:value="${infoBasicFormDTO.addressH2}">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="table-light" scope="row"><span class="marking">&#42;
+                                            </span>휴대전화
+                                        </th>
+                                        <td class="table-light" colspan="3">
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <input type="text" class="form-control" name="user_cp" id="user_cp"
+                                                        minlength="13" maxlength="13"
+                                                        oninput="formatPhoneNumber('user_cp')"
+                                                        th:value="${infoBasicFormDTO.phoneMobile}">
+                                                </div>
+                                                <div class="hypen col-sm-3">
+                                                    * 하이픈(-) 제외
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th class="table-light" scope="row"><span class="marking">&#42;
+                                            </span>비상연락처
+                                        </th>
+                                        <td class="table-light" colspan="3">
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <input type="text" class="form-control" name="user_tel"
+                                                        id="user_tel" minlength="12" maxlength="13"
+                                                        oninput="formatPhoneNumber('user_tel')"
+                                                        th:value="${infoBasicFormDTO.phone}">
+                                                </div>
+                                                <div class="hypen col-sm-3">
+                                                    * 하이픈(-) 제외
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row-sm-12 mx-2 table_margin">
+                            <div class="row mx-2">
+                                <div class="col-sm-6 p-0">
+                                    <h4 class="subtitle mb-1"><span class="marking">&#42;
+                                        </span>병역사항</h4>
+                                </div>
+                                <div class="col-sm-6 text-end p-0">
+                                    <p class="mb-1"><span class="marking">&#42; </span>필수입력항목</p>
+                                </div>
+                            </div>
+                            <table class="table mb-5">
+                                <tbody>
+                                    <tr>
+                                        <th class="table-light" scope="row"><span class="marking">&#42;
+                                            </span>병역여부
+                                        </th>
+                                        <td class="table-light style_width" colspan="1">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <select class="form-select mil_srvc" name="mil_srvc" id="mil_srvc">
+                                                        <option></option>
+                                                        <option th:if="${infoBasicFormDTO.a101!=null}" selected
+                                                            th:value="${infoBasicFormDTO.a101}"
+                                                            th:text="${infoBasicFormDTO.a101}"></option>
+                                                        <option value="필">필</option>
+                                                        <option value="특례필">특례필</option>
+                                                        <option value="상근필">상근필</option>
+                                                        <option value="미필">미필</option>
+                                                        <option value="면제">면제</option>
+                                                        <option value="비대상">비대상</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <th class="table-light" scope="row"><span class="marking">&nbsp;
+                                            </span>구분
+                                        </th>
+                                        <td class="table-light style_width" colspan="1">
+                                            <div class="row">
+                                                <th:block
+                                                    th:with="milDisabled=${infoBasicFormDTO.a101 == '미필' or infoBasicFormDTO.a101 == '비대상' or infoBasicFormDTO.a101 == '면제'}">
+                                                    <div class="col-sm-6 pe-1">
+                                                        <select class="form-select mil_type" name="mil_type"
+                                                            id="mil_type" th:disabled="${milDisabled}">
+                                                            <option></option>
+                                                            <option th:unless="${infoBasicFormDTO.a103 == null}"
+                                                                selected th:value="${infoBasicFormDTO.a103}"
+                                                                th:text="${infoBasicFormDTO.a103}">
+                                                            </option>
+                                                            <option value="육군">육군</option>
+                                                            <option value="해군">해군</option>
+                                                            <option value="해병">해병</option>
+                                                            <option value="공군">공군</option>
+                                                            <option value="카투사">카투사</option>
+                                                            <option value="의경">의경</option>
+                                                            <option value="전경">전경</option>
+                                                            <option value="상근">상근</option>
+                                                            <option value="교도">교도</option>
+                                                            <option value="해경">해경</option>
+                                                            <option value="사회복무요원">사회복무요원</option>
+                                                            <option value="의무소방원">의무소방원</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-sm-6 ps-1">
+                                                        <select class="form-select mil_type_rank" name="mil_type_rank"
+                                                            id="mil_type_rank" th:disabled="${milDisabled}">
+                                                            <option></option>
+                                                            <option th:unless="${infoBasicFormDTO.a104 == null}"
+                                                                selected th:value="${infoBasicFormDTO.a104}"
+                                                                th:text="${infoBasicFormDTO.a104}">
+                                                            </option>
+                                                            <option value="이병">이병</option>
+                                                            <option value="일병">일병</option>
+                                                            <option value="상병">상병</option>
+                                                            <option value="병장">병장</option>
+                                                            <option value="하사">하사</option>
+                                                            <option value="중사">중사</option>
+                                                            <option value="상사">상사</option>
+                                                            <option value="원사">원사</option>
+                                                            <option value="준위">준위</option>
+                                                            <option value="소위">소위</option>
+                                                            <option value="중위">중위</option>
+                                                            <option value="대위">대위</option>
+                                                            <option value="소령">소령</option>
+                                                            <option value="중령">중령</option>
+                                                            <option value="대령">대령</option>
+                                                            <option value="준장">준장</option>
+                                                            <option value="소장">소장</option>
+                                                            <option value="중장">중장</option>
+                                                            <option value="대장">대장</option>
+                                                        </select>
+                                                    </div>
+                                                </th:block>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th:block
+                                            th:with="milDisabled=${infoBasicFormDTO.a101 == '미필' or infoBasicFormDTO.a101 == '비대상' or infoBasicFormDTO.a101 == '면제'}">
+                                            <th class="table-light" scope="row"><span class="marking">&nbsp;
+                                                </span>전역사유
+                                            </th>
+                                            <td class="table-light style_width" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <select class="form-select mil_discharge" id="mil_discharge"
+                                                            name="mil_discharge" th:disabled="${milDisabled}">
+                                                            <option></option>
+                                                            <option th:if="${infoBasicFormDTO.a105!=null}" selected
+                                                                th:value="${infoBasicFormDTO.a105}"
+                                                                th:text="${infoBasicFormDTO.a105}"></option>
+                                                            <option value="전역">전역</option>
+                                                            <option value="예편">예편</option>
+                                                            <option value="방위소집해제">방위소집해제</option>
+                                                            <option value="연령미달">연령미달</option>
+                                                            <option value="입영연기">입영연기</option>
+                                                            <option value="신검불합격">신검불합격</option>
+                                                            <option value="징병종결">징병종결</option>
+                                                            <option value="징집대기소집해제">징집대기소집해제</option>
+                                                            <option value="연령초과">연령초과</option>
+                                                            <option value="독자">독자</option>
+                                                            <option value="특례">특례</option>
+                                                            <option value="상이군경">상이군경</option>
+                                                            <option value="심신장애">심신장애</option>
+                                                            <option value="민방위">민방위</option>
+                                                            <option value="기타">기타</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <th class="table-light" scope="row"><span class="marking">&nbsp;
+                                                </span>복무기간
+                                            </th>
+                                            <td class="table-light style_width" colspan="1">
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="input-group dateMonth">
+                                                            <input type="text" class="form-control"
+                                                                name="mil_start_date" id="mil_start_date"
+                                                                th:value="${infoBasicFormDTO.a1Sdt}"
+                                                                th:disabled="${milDisabled}">
+                                                            <span class="input-group-text">~</span>
+                                                            <input type="text" class="form-control" name="mil_end_date"
+                                                                id="mil_end_date" th:value="${infoBasicFormDTO.a1Edt}"
+                                                                th:disabled="${milDisabled}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </th:block>
+                                    </tr>
+                                    <tr>
+                                        <th class="table-light" scope="row"><span class="marking">&nbsp;
+                                            </span>면제사유
+                                        </th>
+                                        <td class="table-light" colspan="3">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <input type="text" class="form-control" name="mil_exem"
+                                                        id="mil_exem" th:value="${infoBasicFormDTO.a112}"
+                                                        th:disabled="${infoBasicFormDTO.a112 != '면제'}">
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+            <!-- 버튼 -->
+            <div class="col mb-5 text-center">
+                <button type="button" class="btn btn-secondary btn-lg mx-2" id="btn_next">다음</button>
+                <button type="button" class="btn btn-secondary btn-lg mx-2" id="btn_save">저장</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 공통 스크립트-->
+    <th:block th:replace="~{fragments/script :: scriptFragment}"></th:block>
+    <th:block th:replace="~{fragments/resume_script :: resumeScriptFragment}"></th:block>
+    <script src="/js/layout/form.js" th:src="@{/js/layout/form.js}"></script>
+    <script>
+        selectOpt("mil_srvc");
+        selectOpt("mil_type");
+        selectOpt("mil_type_rank");
+        selectOpt("mil_discharge");
+
+        function formatPhoneNumber(inputId) {
+            var inputElement = $("#" + inputId);
+            var inputValue = inputElement.val();
+
+            var numericValue = inputValue.replace(/\D/g, '');
+
+            var formattedValue = numericValue.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+
+            var formattedValue = numericValue.replace(/(\d{2,3})(\d{3,4})(\d{4})/, '$1-$2-$3');
+
+            inputElement.val(formattedValue);
+        }
+
+        /* 우편 번호 조회 */
+        function findAddr() {
+            new daum.Postcode({
+                oncomplete: function (data) {
+                    var addr = '';
+                    var extraAddr = '';
+
+                    if (data.userSelectedType === 'R') {
+                        addr = data.roadAddress;
+                    } else {
+                        addr = data.jibunAddress;
+                    }
+
+                    if (data.userSelectedType === 'R') {
+                        if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                            extraAddr += data.bname;
+                        }
+                        if (data.buildingName !== '' && data.apartment === 'Y') {
+                            extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                        }
+                        if (extraAddr !== '') {
+                            extraAddr = ' (' + extraAddr + ')';
+                        }
+                        document.getElementById("address_h").value = extraAddr;
+
+                    } else {
+                        document.getElementById("address_h").value = '';
+                    }
+
+                    document.getElementById('post_num_h').value = data.zonecode;
+                    document.getElementById("address_h").value = addr + extraAddr;
+                    document.getElementById("address_h2").focus();
+                }
+            }).open();
+        }
+    </script>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        let photo_path = $('.userPhoto').attr('src');
+        let my_photo; //회원이 업로드할 이미지 담을 변수
+
+        $('#user_profile').change(function () {
+            my_photo = this.files[0];
+            if (!my_photo) {
+                $('.userPhoto').attr('src', photo_path);
+                return
+            }
+            if (my_photo.size > 1024 * 1024) {
+                alert('(' + Math.round(my_photo.size / 1024 / 1024) + 'MB까지만 업로드 가능)');
+                $('.userPhoto').attr('src', photo_path);
+                $(this).val('');
+                return;
+            }
+            /* 이미지 미리보기 처리 */
+            let reader = new FileReader();
+            reader.readAsDataURL(my_photo);
+
+            reader.onload = function () {
+                $('.userPhoto').attr('src', reader.result);
+            };
+        });
+
+
+
+        function user_info_valid(silentMode = false) {
+            var isValid = true; // isValid 변수를 선언하고 기본값을 true로 설정합니다.
+
+            // 각 유효성 검사를 수행하고 결과를 isValid 변수에 할당합니다.
+            if (!validateFieldName('sex_tag', "성별을 선택해 주세요.", silentMode)) return false;
+            if (!validateFieldName('welfare_tag', "보훈여부를 선택해 주세요.", silentMode)) return false;
+            if (!validateFieldName('obstacle_tag', "장애여부를 선택해 주세요.", silentMode)) return false;
+            if (!validateFieldAdr('address_h', "주소지를 입력해 주세요.", silentMode)) return false;
+            if (!validateField('address_h2', "상세주소를 입력해 주세요.", silentMode)) return false;
+            if (!validateField('user_cp', "휴대전화번호를 입력해 주세요.", silentMode)) return false;
+            if (!validateField('user_tel', "비상연락처를 입력해 주세요.", silentMode)) return false;
+            if (!validateField('mil_srvc', "병역여부를 선택해 주세요.", silentMode)) return false;
+
+            // 전화번호 길이 검사
+            if ($('#user_cp').val().length < 12 && !silentMode) {
+                alert("휴대전화번호는 최소 10자리를 입력해 주세요.");
+                return false;
+            }
+
+            if ($('#user_tel').val().length < 12 && !silentMode) {
+                alert("비상연락처는 최소 10자리를 입력해 주세요.");
+                return false;
+            }
+
+            if ($('#mil_srvc').val()) {
+                // 면제사유 입력 확인 유효성 검사
+                if ($('#mil_srvc').val() === "면제" && !$("#mil_exem").val() && !silentMode) {
+                    alert("면제사유를 입력해 주세요.");
+                    return false;
+                }
+
+                // 병역사항 입력 확인 유효성 검사
+                if (!($('#mil_srvc').val() === "면제" ||
+                    $('#mil_srvc').val() === "미필" ||
+                    $('#mil_srvc').val() === "비대상") &&
+                    (!$("#mil_type").val() || !$("#mil_type_rank").val() || !$("#mil_discharge").val() || !$("#mil_start_date").val() || !$("#mil_end_date").val()) &&
+                    !silentMode) {
+                    alert("병역사항을 입력해 주세요.");
+                    return false;
+                }
+            }
+
+            return isValid; // 유효성 검사 결과 반환
+        }
+
+        $("#btn_next, #btn_save, #btn_prev").on("click", function (e) {
+
+            var href = '';
+
+            // FormData 객체 생성
+            var formData = new FormData($("#infoBasicForm")[0]);
+
+            // "다음" 또는 "이전" 버튼인 경우에만 href 설정
+            if ($(this).attr('id') === "btn_next") {
+                if (!user_info_valid()) return false;
+                href = "/resume/education";
+            } else if ($(this).attr('id') === "btn_prev") {
+                if (!user_info_valid()) return false;
+                href = "/job-posting/list";
+            } else if ($(this).attr('id') === "btn_save") {
+                if (!user_info_valid()) return false;
+                href = "";
+            } else {
+                href = $(this).find('a').attr('href');
+            }
+
+
+            // 사진 첨부 여부 확인
+            var my_photo = $('#user_profile')[0].files[0] || null;
+            console.log(my_photo);
+
+            if (my_photo) {
+                formData.append('user_profile', my_photo);
+            }
+
+            $.ajax({
+                method: "POST",
+                url: "/api_resume/basicInfo",
+                data: formData,
+                contentType: false,
+                processData: false
+            }).done(function (data) {
+                if (href == '') {
+                    alert("저장되었습니다.");
+                } else {
+                    location.href = href;
+                }
+            }).fail(function (data, textStatus, errorThrown) {
+                alert("부득이한 사정으로 인해 현재 서비스 이용이 제한될 수 있습니다.\n\n불편을 드려 죄송합니다. 관리자에게 문의하여 주십시오.\n\n문의번호 : 051-580-5546");
+                callback(data);
+            });
+        });
+        /*]]>*/
+    </script>
+</body>
+
+</html>

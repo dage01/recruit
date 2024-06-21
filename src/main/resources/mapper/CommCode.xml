@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dage.recruit.dao.CommCodeDAO">
+    <select id="selectJobCodeList" resultType="com.dage.recruit.dto.SelectCodeDTO">
+        SELECT
+            APPJOB_CODE AS id,
+            APPJOB_NAME AS text
+        FROM
+            THR_APPJOB_CODE
+        ORDER BY APPJOB_NAME
+    </select>
+
+    <select id="selectCollegeList" resultType="com.dage.recruit.dto.SelectCodeDTO">
+        SELECT
+            SCHOOL_NAME AS id,
+            SCHOOL_NAME || ' (' || CAMPUS_TAG || ')' AS text
+        FROM
+            PROFE_UNIVERS_DATA
+        ORDER BY
+            CASE
+                WHEN REGEXP_LIKE(SCHOOL_NAME, '^[ㄱ-힣]') THEN 1
+                ELSE 2
+            END,
+            SCHOOL_NAME,
+            CAMPUS_TAG
+    </select>
+    <select id="selectUnivList" resultType="com.dage.recruit.dto.SelectCodeDTO">
+        SELECT
+            SCHOOL_NAME id,
+            SCHOOL_NAME || '(' || CAMPUS_TAG || ')' AS text
+        FROM
+            REGUL_UNIVERS_DATA
+        ORDER BY
+            CASE
+                WHEN REGEXP_LIKE(SCHOOL_NAME, '^[ㄱ-힣]') THEN 1
+                ELSE 2
+            END,
+            SCHOOL_NAME, CAMPUS_TAG
+    </select>
+</mapper>

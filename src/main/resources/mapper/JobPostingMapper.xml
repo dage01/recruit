@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dage.recruit.dao.JobPostingDAO">
+    <select id="jobPostingList" resultType="com.dage.recruit.dto.JobPostingDTO">
+        SELECT
+        YYYY,
+        DEGREES,
+        REMARKS,
+        CASE
+        WHEN END_DT IS NULL THEN ''
+        ELSE TO_CHAR(
+        TO_DATE(
+        END_DT || ' ' ||
+        NVL(END_TIME_H, '00') || ':' ||
+        NVL(END_TIME_M, '00'),
+        'YY/MM/DD HH24:MI'
+        ),
+        'YYYY.MM.DD HH24:MI'
+        )
+        END AS END_DATE,
+        OPEN_TG
+        FROM
+        THR_APPJOB_DEGREE
+<!--        WHERE OPEN_TG = 'T'-->
+        ORDER BY YYYY DESC, DEGREES DESC
+    </select>
+
+
+    <update id="ChangeOpenTag">
+        UPDATE THR_APPJOB_DEGREE
+        SET
+        OPEN_TG = 'F'
+        WHERE OPEN_TG = 'T' AND YYYY = #{yyyy} AND DEGREES = #{degrees} AND REMARKS = #{remarks}
+    </update>
+
+    <select id="selectJobPosting" resultType="com.dage.recruit.dto.JobPostingDTO">
+        SELECT * FROM
+            (SELECT
+                YYYY,
+                DEGREES,
+                REMARKS
+            FROM
+                THR_APPJOB_DEGREE
+            <where>
+<!--                OPEN_TG = 'T'-->
+                <if test="yyyy != null">
+                    AND YYYY = #{yyyy}
+                </if>
+                <if test="degrees != null">
+                    AND DEGREES = #{degrees}
+                </if>
+            </where>
+                ORDER BY DEGREES DESC NULLS LAST)
+        WHERE ROWNUM = 1
+    </select>
+</mapper>

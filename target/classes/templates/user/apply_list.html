@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 공통 헤드-->
+<th:block th:replace="~{fragments/head :: headFragment}"></th:block>
+
+<!-- Custom Stylesheets -->
+<link rel="stylesheet" href="/css/layout/top.css" th:href="@{/css/layout/top.css}">
+<link rel="stylesheet" href="/css/form/form.css" th:href="@{/css/form/form.css}">
+
+<style>
+    tr {
+        text-align: center;
+    }
+
+    span {
+        font-size: 18px;
+        font-weight: bold;
+    }
+</style>
+</head>
+<!-- 공통 Nav -->
+<th:block th:replace="~{fragments/top :: topbarFragment}"></th:block>
+
+<body>
+    <!-- content -->
+    <div class="container my-5">
+        <div class="row p-5">
+            <table class="table mb-5">
+                <tbody>
+                    <tr>
+                        <th class="table-light" scope="col" colspan="4" style="width: 60%;">
+                            <span>지원공고</span>
+                        </th>
+                        <th class="table-light" scope="col" style="width: 20%;">
+                            <span>지원서 조회/수정</span>
+                        </th>
+                        <!-- <th class="table-light" scope="col" style="width: 20%;">
+                            <span>전형결과 확인</span>
+                        </th> -->
+                    </tr>
+                    <tr th:each="app : ${appList}">
+                        <td class="table-light text-start" colspan="4">
+                            <span class="ms-3" th:text="${app.remarks}"></span>
+                        </td>
+                        <td class="table-light text-center">
+                            <button type="button" class="btn btn-dark btn_modify" th:data-seq="${app.seq}">지원서
+                                수정</button>
+                        </td>
+                        <!-- <td class="table-light text-center">
+                            <button type="button" class="btn btn-dark btn_result" th:data-seq="${app.seq}">결과
+                                조회</button>
+                        </td> -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- 공통 스크립트-->
+    <th:block th:replace="~{fragments/script :: scriptFragment}"></th:block>
+    <th:block th:replace="~{fragments/resume_script :: resumeScriptFragment}"></th:block>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        $(document).ready(function () {
+            var sessionExpired = /*[[${sessionExpired}]]*/ false;
+            if (sessionExpired) {
+                alert("세션이 만료되었습니다. 다시 로그인해 주세요.");
+                // Optional: Redirect to the login page
+                window.location.href = "/applicant_login"; // 로그인 페이지로 리다이렉트
+            }
+        });
+        /*]]>*/
+    </script>
+    <script>
+        $(".btn_modify, .btn_result").on("click", function () {
+            var seq = $(this).data("seq");
+            if ($(this).hasClass('btn_modify')) {
+                $.ajax({
+                    method: "POST",
+                    url: "/resume/basic-info",
+                    data: { 'seq': seq },
+                })
+                    .done(function (data) {
+                        location.href = "/resume/basic-info";
+                    })
+                    .fail(function (data, textStatus, errorThrown) {
+                        alert("실패")
+                    });
+            } else if ($(this).hasClass('btn_result')) {
+                $.ajax({
+                    method: "POST",
+                    url: "/resume/basic-info",
+                    data: { 'seq': seq },
+                })
+                    .done(function (data) {
+                        ("성공");
+                    })
+                    .fail(function (data, textStatus, errorThrown) {
+                        alert("실패")
+                    });
+            }
+        });
+    </script>
+</body>
+
+</html>
